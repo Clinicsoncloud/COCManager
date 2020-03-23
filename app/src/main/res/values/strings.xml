@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">COC Manager</string>
+
+    <!--<Login in screen strings>-->
+    <string name="txt_login">Login</string>
+    <string name="txt_email">Enter Email</string>
+    <string name="txt_password">Enter Password</string>
+
+    <!--<Hamburger strings>-->
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_installation">Installation</string>
+    <string name="nav_item_inventary">Inventory</string>
+    <string name="nav_item_summary">Summary</string>
+    <string name="nav_item_users">Users</string>
+    <string name="nav_item_logout">Log Out</string>
+
+    <!--<drawer close open strings>-->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!--<installation home fragment strings>-->
+    <string name="txt_installation">Installation</string>
+    <string name="txt_transport">Transport</string>
+    <string name="txt_pipeline">Pipeline</string>
+
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_installation</item>
+        <item>@string/nav_item_inventary</item>
+        <item>@string/nav_item_summary</item>
+        <item>@string/nav_item_users</item>
+        <item>@string/nav_item_logout</item>
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/appmenu5</item>
+        <item>@drawable/appmenu1</item>
+        <item>@drawable/ic_mypackges</item>
+        <item>@drawable/appmenu2</item>
+    </array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_clinic_name">Clinic Name</string>
+    <string name="txt_clinic_id">Kiosk id</string>
+    <string name="txt_clinic_location">Location</string>
+    <string name="txt_clinic_date">22 july 2020</string>
+    <string name="txt_client_name">Client Name</string>
+
+    <!--<>-->
+    <string name="txt_clinic_id_name">Client ID</string>
+    <string name="txt_installation_date">Installation Date</string>
+    <string name="txt_address">Address</string>
+    <string name="txt_status">Status</string>
+    <string name="txt_app_version">App Version</string>
+    <string name="txt_last_sync">Last Sync</string>
+    <string name="txt_licence_expiry">Licence Expiry</string>
+    <string name="txt_actofit_expiry">Actofit Expiry</string>
+    <string name="txt_gmail_id">Gmail Id</string>
+    <string name="txt_gmail_password">Gmail Password</string>
+    <string name="txt_actofit_id">Actofit ID</string>
+    <string name="txt_actofit_password">Actofit Password</string>
+    <string name="txt_installed_by">Installed By</string>
+    <string name="txt_operator_name">Operator Name</string>
+    <string name="txt_operator_number">Operator Number</string>
+
+
+    <string name="txt_clinic_name_1">Clinic Name 1</string>
+    <string name="txt_clinic_name_2">Clinic Name 2</string>
+    <string name="txt_clinic_name_3">Clinic Name 3</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--<Add new Pipeline>-->
+    <string name="txt_add_new">Add New Form</string>
+    <string name="txt_pipeline_details">Pipeline Machine Details</string>
+    <string name="txt_move_to_transport">Move To Transport</string>
+
+    <string-array name="array_clinic_name">
+        <item>@string/txt_clinic_name_1</item>
+        <item>@string/txt_clinic_name_2</item>
+        <item>@string/txt_clinic_name_3</item>
+    </string-array>
+
+    <!--<transport details>-->
+    <string name="txt_transport_detail">Transport Machine Details</string>
+    <string name="txt_move_to_pipeline">Move To Pipeline</string>
+</resources>
