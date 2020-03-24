@@ -13,18 +13,17 @@ import android.view.ViewGroup;
 import com.coc.cocmanager.R;
 
 /**
- * created by 23-3-2020
+ * created by ketan 24-3-2020
  */
+public class InventorySummaryFragment extends Fragment {
 
-public class InstallationDetailFragment extends Fragment {
-
-    public InstallationDetailFragment() {
+    public InventorySummaryFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static InstallationDetailFragment newInstance(String param1, String param2) {
-        InstallationDetailFragment fragment = new InstallationDetailFragment();
+    public static InventorySummaryFragment newInstance() {
+        InventorySummaryFragment fragment = new InventorySummaryFragment();
         return fragment;
     }
 
@@ -37,13 +36,12 @@ public class InstallationDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.layout_installation_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_inventory_summary, container, false);
         return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-    }
+    public void onButtonPressed(Uri uri) { }
 
     @Override
     public void onAttach(Context context) {
@@ -54,4 +52,5 @@ public class InstallationDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }

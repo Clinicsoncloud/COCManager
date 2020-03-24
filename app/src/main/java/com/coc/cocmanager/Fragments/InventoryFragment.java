@@ -12,19 +12,15 @@ import android.view.ViewGroup;
 
 import com.coc.cocmanager.R;
 
-/**
- * created by 23-3-2020
- */
+public class InventoryFragment extends Fragment {
 
-public class InstallationDetailFragment extends Fragment {
-
-    public InstallationDetailFragment() {
+    public InventoryFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static InstallationDetailFragment newInstance(String param1, String param2) {
-        InstallationDetailFragment fragment = new InstallationDetailFragment();
+    public static InventoryFragment newInstance(String param1, String param2) {
+        InventoryFragment fragment = new InventoryFragment();
         return fragment;
     }
 
@@ -37,7 +33,7 @@ public class InstallationDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.layout_installation_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_inventory, container, false);
         return rootView;
     }
 

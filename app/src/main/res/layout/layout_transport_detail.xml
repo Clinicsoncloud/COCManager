@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,11 +18,10 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
                 android:gravity="center"
-                android:text="@string/txt_add_new"
-                android:textSize="@dimen/_18sdp" />
-
+                android:text="@string/txt_transport_detail"
+                android:textSize="@dimen/_18sdp"
+                android:layout_margin="@dimen/_10sdp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,17 +39,16 @@
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/edt_installation_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_installataion_type"
+                    android:text="Tranport"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,72 +87,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
-                    android:text="@string/txt_clinic_id_name"
-                    android:textSize="@dimen/_15sdp" />
-
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:background="@drawable/rectangle"
-                    android:gravity="left"
-                    android:padding="@dimen/_10sdp"
-                    android:text="@string/txt_clinic_id"
-                    android:textSize="@dimen/_12sdp" />
-
-               <!-- <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:gravity="left">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Clinic ID"
-                        android:textSize="@dimen/_18sdp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="21075"
-                        android:textSize="@dimen/_18sdp" />
-                </LinearLayout>-->
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="1">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:gravity="center"
                     android:text="@string/txt_gmail_id"
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_gmail_id"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gmail_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_gmail_id"
+                    android:text="21075"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -176,8 +118,8 @@
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_password"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gmail_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
@@ -186,7 +128,6 @@
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -202,17 +143,16 @@
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_actofit_id"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_actofit_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_actofit_id"
+                    android:text="actofit@actofit.com"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -228,8 +168,8 @@
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_actofit_password"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_actofit_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
@@ -238,7 +178,6 @@
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -260,7 +199,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_actofit_expiry"
+                    android:text="20 july 2020"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -290,26 +229,26 @@
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp">
-
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:visibility="visible">
                 <Button
-                    android:id="@+id/btn_save"
+                    android:id="@+id/btn_move_to_pipeline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_20sdp"
                     android:background="@color/colorAccent"
-                    android:text="Save"
-                    android:textAllCaps="false"
+                    android:text="@string/txt_move_to_pipeline"
+                    android:textSize="@dimen/_15sdp"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textAllCaps="false"/>
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
 
-</FrameLayout>
+</RelativeLayout>

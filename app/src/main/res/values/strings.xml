@@ -24,9 +24,9 @@
     <string name="txt_pipeline">Pipeline</string>
 
     <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_summary</item>
         <item>@string/nav_item_installation</item>
         <item>@string/nav_item_inventary</item>
-        <item>@string/nav_item_summary</item>
         <item>@string/nav_item_users</item>
         <item>@string/nav_item_logout</item>
     </string-array>
@@ -72,6 +72,7 @@
 
     <!--<Add new Pipeline>-->
     <string name="txt_add_new">Add New Form</string>
+    <string name="txt_installataion_type">Installation Type</string>
     <string name="txt_pipeline_details">Pipeline Machine Details</string>
     <string name="txt_move_to_transport">Move To Transport</string>
 

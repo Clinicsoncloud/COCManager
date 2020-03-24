@@ -1,22 +1,25 @@
 package com.coc.cocmanager.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
+import android.os.Bundle;
+import android.content.Intent;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.coc.cocmanager.Fragments.HomeFragment;
-import com.coc.cocmanager.Fragments.InstallationHomeFragment;
+import com.coc.cocmanager.Fragments.InventoryFragment;
+import com.coc.cocmanager.Fragments.SummaryFragment;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.Utils.SharedPrefClass;
+import com.coc.cocmanager.Fragments.HomeFragment;
+import com.coc.cocmanager.Fragments.InstallationHomeFragment;
 
 /**
  * created by ketan 23-03-2020
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState == null) {
+            Fragment fragment= new SummaryFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.container_body, fragment);
+            fragmentTransaction.commit();
+        }
+
         setupUI();
         setupEvents();
         initializeData();
@@ -68,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, drawerLayout, mToolbar);
         drawerFragment.setDrawerListener(this);
-
     }
 
     @Override
@@ -82,27 +91,22 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         switch (position) {
             case 0:
-                fragment = new InstallationHomeFragment();
-                // fragment = new BookingFragment();
+                fragment = new SummaryFragment();
                 break;
             case 1:
-                fragment = new HomeFragment();
-                // fragment = new BookingFragment();
+                fragment = new InstallationHomeFragment();
                 break;
             case 2:
-                fragment = new HomeFragment();
-                // fragment = new BookingFragment();
+                fragment = new InventoryFragment();
                 break;
 
             case 3:
                 fragment = new HomeFragment();
-                // fragment = new BookingFragment();
                 break;
 
 
             case 4:
                 fragment = new HomeFragment();
-                // fragment = new BookingFragment();
                 startActivity(new Intent(getApplicationContext(), Loginctivity.class));
                 finish();
                 int count = getSupportFragmentManager().getBackStackEntryCount();
