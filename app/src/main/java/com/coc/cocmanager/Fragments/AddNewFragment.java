@@ -90,8 +90,7 @@ public class AddNewFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-    }
+    public void onButtonPressed(Uri uri) { }
 
     @Override
     public void onAttach(Context context) {

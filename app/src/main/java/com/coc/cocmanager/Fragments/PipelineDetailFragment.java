@@ -10,11 +10,17 @@ import androidx.fragment.app.Fragment;
 import android.view.View;
 import java.util.Calendar;
 import com.coc.cocmanager.R;
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.DatePicker;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
+import butterknife.ButterKnife;
 
 
 /**
@@ -22,9 +28,19 @@ import android.view.LayoutInflater;
  */
 public class PipelineDetailFragment extends Fragment {
 
-
+    //region variables
     private TextView tvActofitExpiry;
     private int mYear,mMonth,mDay;
+
+    private ImageView ivMinus;
+    private ImageView ivPlus;
+    private TextView tvQty;
+
+    private int count = 0;
+
+    private ExpandableRelativeLayout expandableConsumables;
+    private Button btnConsumables;
+    //endregion
 
     public static PipelineDetailFragment newInstance(String param1, String param2) {
         PipelineDetailFragment fragment = new PipelineDetailFragment();
@@ -41,6 +57,7 @@ public class PipelineDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.layout_pipeline_detail, container, false);
+        ButterKnife.bind(this,rootView);
 
         setupUI(rootView);
         setupEvents();
@@ -51,7 +68,24 @@ public class PipelineDetailFragment extends Fragment {
     private void setupEvents() {
         tvActofitExpiry.setOnClickListener(v -> {
             openCalender();
-        }); }
+        });
+
+        btnConsumables.setOnClickListener(v -> {
+            expandableConsumables.toggle();
+        });
+
+        ivPlus.setOnClickListener(v -> {
+            count = count + 1;
+            tvQty.setText(count);
+        });
+
+        ivMinus.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Can't minus right now", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+
+
 
     private void openCalender() {
         // Get Current Date
@@ -76,6 +110,11 @@ public class PipelineDetailFragment extends Fragment {
 
     private void setupUI(View rootView) {
         tvActofitExpiry = rootView.findViewById(R.id.tv_actofit_expiry);
+        btnConsumables = rootView.findViewById(R.id.btn_consumables);
+        expandableConsumables = rootView.findViewById(R.id.expandable_consumables);
+        ivMinus = rootView.findViewById(R.id.iv_minus);
+        ivPlus = rootView.findViewById(R.id.iv_plus);
+        tvQty = rootView.findViewById(R.id.tv_qty_menu);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

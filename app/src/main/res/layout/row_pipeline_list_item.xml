@@ -61,7 +61,7 @@
                             android:id="@+id/tv_clinic_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_clinic_id"
+                            android:text="@string/txt_clinic_id_name"
                             android:textSize="@dimen/_13sdp" />
                     </LinearLayout>
 

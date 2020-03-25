@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="2">
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textAppearance="?attr/textAppearanceSubtitle1"
-        />
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="15sp"
+            android:text="Demo item"
+            android:textColor="@android:color/black"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="15sp"
+            android:text="10"
+            android:textColor="@android:color/black"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            />
+    </LinearLayout>
+
 </LinearLayout>
