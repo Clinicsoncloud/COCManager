@@ -39,6 +39,8 @@ public class InstallationFragment extends Fragment implements ListClickListener,
     private TextView tvEndDate;
     //endregion
 
+    //region methods
+
     public InstallationFragment() {
         // Required empty public constructor
     }
@@ -65,15 +67,26 @@ public class InstallationFragment extends Fragment implements ListClickListener,
         return rootView;
     }
 
+    /**
+     * set up the click events on views
+     */
     private void setupEvents() {
         tvStartDate.setOnClickListener(this);
         tvEndDate.setOnClickListener(this);
     }
 
+    /**
+     * Initialization of methods
+     */
     private void initalizeData() {
-        setListAdapter();
+        setInstallationListAdapter();
     }
 
+    /**
+     * created the openCalender function to open a calender on textview click
+     * sets the date to the textview
+     * @param textView
+     */
     private void openCalender(TextView textView) {
         // Get Current Date
         mYear = c.get(Calendar.YEAR);
@@ -83,9 +96,7 @@ public class InstallationFragment extends Fragment implements ListClickListener,
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-
+                    public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
                         textView.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                     }
@@ -99,7 +110,11 @@ public class InstallationFragment extends Fragment implements ListClickListener,
         tvEndDate = rootView.findViewById(R.id.tv_end_date);
     }
 
-    private void setListAdapter() {
+    /**
+     * This method is used to set the installation list
+     * Adapter is created and set to the recyclerview variables
+     */
+    private void setInstallationListAdapter() {
         ArrayList list = new ArrayList<>();
         list.add("");
         list.add("");
@@ -139,7 +154,7 @@ public class InstallationFragment extends Fragment implements ListClickListener,
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_start_date:
                 openCalender(tvStartDate);
                 break;
@@ -149,4 +164,6 @@ public class InstallationFragment extends Fragment implements ListClickListener,
                 break;
         }
     }
+
+    //endregion
 }

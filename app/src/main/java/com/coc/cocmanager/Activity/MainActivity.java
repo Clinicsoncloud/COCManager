@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.coc.cocmanager.Fragments.InventoryFragment;
 import com.coc.cocmanager.Fragments.SummaryFragment;
+import com.coc.cocmanager.Fragments.UsersFragment;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.Utils.SharedPrefClass;
 import com.coc.cocmanager.Fragments.HomeFragment;
@@ -101,9 +102,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
 
             case 3:
-                fragment = new HomeFragment();
+                fragment = new UsersFragment();
                 break;
-
 
             case 4:
                 fragment = new HomeFragment();

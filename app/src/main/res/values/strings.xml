@@ -78,6 +78,11 @@
     <string name="txt_clinic_name_2">Clinic Name 2</string>
     <string name="txt_clinic_name_3">Clinic Name 3</string>
 
+    <!--<user type>-->
+    <string name="txt_no_user">No user Type</string>
+    <string name="txt_user_admin">Admin</string>
+    <string name="txt_user_normal">Normal User</string>
+
     <!--<item name>-->
     <string name="txt_item_name0">No item Selected</string>
     <string name="txt_item_name1">Item Name 1</string>
@@ -90,6 +95,13 @@
     <string name="txt_category_name1">In House</string>
     <string name="txt_category_name2">Vendor</string>
     <string name="txt_category_name3">Factory</string>
+
+    <!--<stock out category>-->
+    <string name="txt_stock_out_category">No item Selected</string>
+    <string name="txt_stock_out_category1">In House</string>
+    <string name="txt_stock_out_category2">Client</string>
+    <string name="txt_stock_out_category3">Factory</string>
+    <string name="txt_stock_out_category4">Damage</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -106,6 +118,11 @@
         <item>@string/txt_clinic_name_3</item>
     </string-array>
 
+    <string-array name="array_user_type">
+        <item>@string/txt_no_user</item>
+        <item>@string/txt_user_admin</item>
+        <item>@string/txt_user_normal</item>
+    </string-array>
 
     <string-array name="array_item_list">
         <item>@string/txt_item_name0</item>
@@ -122,7 +139,24 @@
         <item>@string/txt_category_name3</item>
     </string-array>
 
+    <!--<>-->
+    <string-array name="array_stock_out_category">
+        <item>@string/txt_stock_out_category</item>
+        <item>@string/txt_stock_out_category1</item>
+        <item>@string/txt_stock_out_category2</item>
+        <item>@string/txt_stock_out_category3</item>
+        <item>@string/txt_stock_out_category4</item>
+    </string-array>
     <!--<transport details>-->
     <string name="txt_transport_detail">Transport Machine Details</string>
-    <string name="txt_move_to_pipeline">Move To Pipeline</string>
+    <string name="txt_move_to_pipeline">Move To Pipeline</string>_
+
+    <!--<user screen>-->
+    <string name="txt_user_name">User Name</string>_
+    <string name="txt_create_user">Create User</string>_
+    <string name="txt_username">Username</string>_
+    <string name="txt_user_password">Password</string>_
+    <string name="txt_user_type">User Type</string>_
+    <string name="txt_create_user_btn">Create User</string>_
+    <string name="txt_enter_kiosk_count">Enter Kiosk Number</string>_
 </resources>

@@ -13,19 +13,20 @@ import android.view.ViewGroup;
 import com.coc.cocmanager.R;
 
 /**
- * created by 23-3-2020
+ * created by ketan 27-3-2020
  */
+public class AddNewUserFragment extends Fragment {
 
-public class InstallationDetailFragment extends Fragment {
+    //region variables
 
-    // region methods
-    public InstallationDetailFragment() {
+    //endregion
+
+    public AddNewUserFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static InstallationDetailFragment newInstance(String param1, String param2) {
-        InstallationDetailFragment fragment = new InstallationDetailFragment();
+    public static AddNewUserFragment newInstance() {
+        AddNewUserFragment fragment = new AddNewUserFragment();
         return fragment;
     }
 
@@ -38,13 +39,27 @@ public class InstallationDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.layout_installation_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_new_user, container, false);
+
+        setupUI(rootView);
+        setupEvents();
+        initializeData();
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    private void initializeData() {
+
     }
+
+    private void setupEvents() {
+    }
+
+    private void setupUI(View rootView) {
+
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) { }
 
     @Override
     public void onAttach(Context context) {
@@ -55,6 +70,4 @@ public class InstallationDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-    //endregion
 }

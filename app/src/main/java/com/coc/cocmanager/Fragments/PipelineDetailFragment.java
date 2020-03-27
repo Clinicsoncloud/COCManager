@@ -6,22 +6,19 @@ import android.content.Context;
 import android.app.DatePickerDialog;
 import androidx.fragment.app.Fragment;
 
-
 import android.view.View;
 import java.util.Calendar;
 import com.coc.cocmanager.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
-import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import butterknife.ButterKnife;
+import android.widget.ImageView;
 import android.widget.DatePicker;
 import android.view.LayoutInflater;
-import android.widget.Toast;
-
-import butterknife.ButterKnife;
-
 
 /**
  * created by ketan 23-3-2020
@@ -74,18 +71,24 @@ public class PipelineDetailFragment extends Fragment {
             expandableConsumables.toggle();
         });
 
-        ivPlus.setOnClickListener(v -> {
-            count = count + 1;
-            tvQty.setText(count);
+        ivPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(count >= 0) {
+                    count = count + 1;
+                    tvQty.setText(""+count);
+                }
+            }
         });
 
-        ivMinus.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Can't minus right now", Toast.LENGTH_SHORT).show();
+
+        ivMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Can't minus right now", Toast.LENGTH_SHORT).show();
+            }
         });
     }
-
-
-
 
     private void openCalender() {
         // Get Current Date
@@ -114,7 +117,7 @@ public class PipelineDetailFragment extends Fragment {
         expandableConsumables = rootView.findViewById(R.id.expandable_consumables);
         ivMinus = rootView.findViewById(R.id.iv_minus);
         ivPlus = rootView.findViewById(R.id.iv_plus);
-        tvQty = rootView.findViewById(R.id.tv_qty_menu);
+        tvQty = rootView.findViewById(R.id.tv_count);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

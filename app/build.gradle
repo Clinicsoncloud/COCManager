@@ -57,4 +57,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'com.github.aakira:expandable-layout:1.4.2@aar'
+
+    implementation 'com.thoughtbot:expandablerecyclerview:1.3'
 }

@@ -343,8 +343,8 @@
                                 android:layout_gravity="center"
                                 android:paddingLeft="@dimen/_5sdp"/>
 
-                            <TextView
-                                android:id="@+id/tv_qty_menu"
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1"
@@ -402,7 +402,7 @@
                                 android:layout_gravity="center"
                                 android:paddingLeft="@dimen/_5sdp"/>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1"
