@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/txt_clinic_name"
                     android:textSize="@dimen/_18sdp" />
 
@@ -61,7 +61,7 @@
                             android:id="@+id/tv_clinic_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_clinic_id"
+                            android:text="@string/txt_clinic_id_name"
                             android:textSize="@dimen/_13sdp" />
                     </LinearLayout>
 
@@ -74,10 +74,10 @@
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/tv_pipeline_date"
+                            android:id="@+id/tv_client_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_clinic_date"
+                            android:text="@string/txt_client_name"
                             android:textSize="@dimen/_13sdp" />
                     </LinearLayout>
                 </LinearLayout>

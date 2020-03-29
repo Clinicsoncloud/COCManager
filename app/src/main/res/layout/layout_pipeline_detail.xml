@@ -87,17 +87,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
-                    android:text="@string/txt_gmail_id"
+                    android:text="@string/txt_clinic_id_name"
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_gmail_id"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_clinic_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_gmail_id"
+                    android:padding="@dimen/_10sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="@string/txt_gmail_id"
+                    android:textSize="@dimen/_15sdp" />
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_gmail_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle"
+                    android:layout_margin="@dimen/_10sdp"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -118,13 +142,12 @@
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_gmail_password"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_gmail_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_gmail_password"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -143,13 +166,12 @@
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_actofit_id"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_actofit_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_actofit_id"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -168,13 +190,12 @@
                     android:textSize="@dimen/_15sdp" />
 
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_actofit_password"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_actofit_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_actofit_password"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -199,7 +220,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:hint="@string/txt_actofit_expiry"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>

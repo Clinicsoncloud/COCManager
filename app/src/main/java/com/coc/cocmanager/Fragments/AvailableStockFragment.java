@@ -64,8 +64,6 @@ public class AvailableStockFragment extends Fragment {
         rvAvailableStock.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<StockItem> list = new ArrayList<>();
-
-
         ArrayList<StockSubItem> Items = new ArrayList<>();
 
         Items.add(new StockSubItem("demo item 1","demo item 1"));
@@ -98,7 +96,6 @@ public class AvailableStockFragment extends Fragment {
 
         StockListAdapter adapter = new StockListAdapter(list);
         rvAvailableStock.setAdapter(adapter);
-
     }
 
     private void setupEvents() { }
