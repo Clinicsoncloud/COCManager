@@ -173,7 +173,7 @@ public class StockOutListingFragment extends Fragment implements ListClickListen
                 openCalender(tvEndDate);
                 break;
 
-            case R.id.iv_add_stock:
+            case R.id.iv_remove_stock:
                 openAddStock();
                 break;
         }

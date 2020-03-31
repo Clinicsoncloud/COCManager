@@ -9,6 +9,7 @@ import com.coc.cocmanager.Fragments.InstallationFragment;
 import com.coc.cocmanager.Fragments.PipelineFragment;
 import com.coc.cocmanager.Fragments.StockInFragment;
 import com.coc.cocmanager.Fragments.StockOutFragment;
+import com.coc.cocmanager.Fragments.StockOutListingFragment;
 import com.coc.cocmanager.Fragments.TransportFragment;
 
 /**
@@ -37,7 +38,7 @@ public class InventoryViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return StockInFragment.newInstance();
             case 2:
-                return StockOutFragment.newInstance();
+                return StockOutListingFragment.newInstance();
             default:
                 return AvailableStockFragment.newInstance();
         }
