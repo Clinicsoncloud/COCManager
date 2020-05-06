@@ -1,14 +1,26 @@
 package com.coc.cocmanager.Fragments;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Context;
 import android.app.DatePickerDialog;
+
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.View;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
+import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.Constants;
+import com.coc.cocmanager.Utils.HttpService;
+import com.coc.cocmanager.Utils.Utils;
+import com.coc.cocmanager.model.LoginData;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import android.widget.Toast;
@@ -26,17 +38,16 @@ import android.view.LayoutInflater;
 public class PipelineDetailFragment extends Fragment {
 
     //region variables
-    private TextView tvActofitExpiry;
     private int mYear,mMonth,mDay;
-
-    private ImageView ivMinus;
-    private ImageView ivPlus;
-    private TextView tvQty;
+    private TextView tvActofitExpiry;
 
     private int count = 0;
+    private TextView tvQty;
+    private ImageView ivPlus;
+    private ImageView ivMinus;
 
-    private ExpandableRelativeLayout expandableConsumables;
     private Button btnConsumables;
+    private ExpandableRelativeLayout expandableConsumables;
     //endregion
 
     public static PipelineDetailFragment newInstance(String param1, String param2) {
@@ -49,6 +60,7 @@ public class PipelineDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,9 +70,10 @@ public class PipelineDetailFragment extends Fragment {
 
         setupUI(rootView);
         setupEvents();
-
+        initializeData();
         return rootView;
     }
+
 
     private void setupEvents() {
         tvActofitExpiry.setOnClickListener(v -> {
@@ -89,6 +102,51 @@ public class PipelineDetailFragment extends Fragment {
             }
         });
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initializeData() {
+        showPipelineDetails();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showPipelineDetails() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String ,String> params = new HashMap<>();
+                params.put(Constants.Fields.USERNAME,"");
+                params.put(Constants.Fields.PASSWORD,"");
+                params.put(Constants.Fields.USERTYPE,"");
+
+                Map<String, String> headerParams;
+                headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.LOGIN_URL,
+                        params, headerParams,
+                        (response, error, status) -> handleAPIResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(),"No Internet connectivity..!");
+            }
+        } catch (Exception e) { }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void handleAPIResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                LoginData patientData = (LoginData) Utils.parseResponse(response,LoginData.class);
+                if(patientData.getFound()){
+                    //TODO AFTER SUCCESS
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     private void openCalender() {
         // Get Current Date

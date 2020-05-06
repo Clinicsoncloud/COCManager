@@ -1,6 +1,7 @@
 package com.coc.cocmanager.Fragments;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Context;
 
@@ -9,17 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
+import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.Constants;
+import com.coc.cocmanager.Utils.HttpService;
+import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.adapter.InstallationsListAdapter;
 import com.coc.cocmanager.adapter.PipelineListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
+import com.coc.cocmanager.model.LoginData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * created by ketan 23-3-2020
@@ -69,6 +80,47 @@ public class PipelineFragment extends Fragment implements ListClickListener {
         Fragment fragment = new AddNewFragment();
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void getPipelineList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+
+                Map<String ,String> params = new HashMap<>();
+
+                params.put(Constants.Fields.USERNAME,"");
+                params.put(Constants.Fields.PASSWORD,"");
+                params.put(Constants.Fields.USERTYPE,"");
+
+                Map<String, String> headerParams;
+                headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.LOGIN_URL,
+                        params, headerParams,
+                        (response, error, status) -> handleAPIResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(),"No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void handleAPIResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                LoginData patientData = (LoginData) Utils.parseResponse(response,LoginData.class);
+                if(patientData.getFound()){
+                    //TODO AFTER SUCCESS
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

@@ -8,9 +8,11 @@ package com.coc.cocmanager.Utils;
 public class Constants {
 
     public static class Fields {
+        public static final String TOKEN = "token";
         public static final String EMAIL = "email";
         public static final String PASSWORD = "password";
-        public static final String TOKEN = "token";
+        public static final String USERNAME = "username";
+        public static final String USERTYPE = "usertype";
     }
 
 }

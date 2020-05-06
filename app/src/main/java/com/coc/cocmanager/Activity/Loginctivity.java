@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * created  by ketan 23-03-2020
  */
 
-public class Loginctivity extends AppCompatActivity{
+public class Loginctivity extends AppCompatActivity {
 
     //region variables
     @BindView(R.id.edt_email)
@@ -65,7 +65,7 @@ public class Loginctivity extends AppCompatActivity{
     private void setupEvents() {
         btnLogin.setOnClickListener(View -> {
 //        doLogin();
-        context.startActivity(new Intent(context,MainActivity.class));
+            context.startActivity(new Intent(context, MainActivity.class));
         });
     }
 
@@ -74,7 +74,6 @@ public class Loginctivity extends AppCompatActivity{
      * after entering email and password user can login
      */
     private void doLogin() {
-
         Map<String, String> headerParams = new HashMap<>();
         Map<String, String> requestBodyParams = new HashMap<>();
 
@@ -90,26 +89,12 @@ public class Loginctivity extends AppCompatActivity{
     }
 
     private void handleAPIResponse(String response, VolleyError error, String status) {
-        Log.e("status_log"," : " + status);
+        Log.e("status_log", " : " + status);
         if (status.equals("response")) {
             try {
-/*
-                   JSONObject jsonResponse = new JSONObject(response);
-
-                    Log.e("else_response"," : " + jsonResponse);
-
-                    writePersonalSharedPreferences(jsonResponse);
-
-                    Intent objIntent = new Intent(getApplicationContext(), OtpVerifyScreen.class);
-                    objIntent.putExtra(Constants.Fields.MOBILE_NUMBER, etMobileNumber.getText().toString());
-                    objIntent.putExtra(Constants.Fields.PATIENT_ID, patient_id);
-                    objIntent.putExtra(Constants.Fields.KIOSK_ID, kiosk_id);
-                    objIntent.putExtra("connectivity", "online");
-                    startActivity(objIntent);
-
-                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
-
-                    finish();*/
+                Intent objIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(objIntent);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
             } catch (Exception e) {
                 // TODO: Handle exception
                 e.printStackTrace();
