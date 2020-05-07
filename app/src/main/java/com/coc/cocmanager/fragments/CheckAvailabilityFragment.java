@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.View;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.adapter.ItemListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.view.ViewGroup;

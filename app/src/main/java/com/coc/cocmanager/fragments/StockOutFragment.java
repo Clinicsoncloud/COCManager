@@ -1,24 +1,35 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.content.Context;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
-
-import com.coc.cocmanager.R;
 import androidx.fragment.app.Fragment;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.coc.cocmanager.R;
+
 /**
- * created by ketan 23-03-2020
+ * created by ketan 25-3-2020
  */
 
-public class HomeFragment extends Fragment {
+public class StockOutFragment extends Fragment {
 
-    public HomeFragment() {
+    //region variables
+
+
+    //endregion
+
+    public StockOutFragment() {
         // Required empty public constructor
+    }
+
+    public static StockOutFragment newInstance() {
+        StockOutFragment fragment = new StockOutFragment();
+        return fragment;
     }
 
     @Override
@@ -30,14 +41,12 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_stock_out, container, false);
         return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-
-    }
+    public void onButtonPressed(Uri uri) { }
 
     @Override
     public void onAttach(Context context) {
@@ -48,5 +57,4 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
 }

@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,16 +13,19 @@ import android.view.ViewGroup;
 import com.coc.cocmanager.R;
 
 /**
- * created by ketan 23-3-2020
+ * created by 23-3-2020
  */
-public class InstallationSummaryFragment extends Fragment {
 
-    public InstallationSummaryFragment() {
+public class InstallationDetailFragment extends Fragment {
+
+    // region methods
+    public InstallationDetailFragment() {
         // Required empty public constructor
     }
 
-    public static InstallationSummaryFragment newInstance() {
-        InstallationSummaryFragment fragment = new InstallationSummaryFragment();
+    // TODO: Rename and change types and number of parameters
+    public static InstallationDetailFragment newInstance(String param1, String param2) {
+        InstallationDetailFragment fragment = new InstallationDetailFragment();
         return fragment;
     }
 
@@ -35,8 +38,7 @@ public class InstallationSummaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_installation_summary, container, false);
-
+        View rootView = inflater.inflate(R.layout.layout_installation_details, container, false);
         return rootView;
     }
 
@@ -54,5 +56,5 @@ public class InstallationSummaryFragment extends Fragment {
         super.onDetach();
     }
 
-
+    //endregion
 }

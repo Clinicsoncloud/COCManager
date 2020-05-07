@@ -1,21 +1,20 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.content.Context;
-
-
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
@@ -23,35 +22,32 @@ import com.coc.cocmanager.Utils.ApiUtils;
 import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
-import com.coc.cocmanager.adapter.InstallationsListAdapter;
-import com.coc.cocmanager.adapter.PipelineListAdapter;
-import com.coc.cocmanager.interfaces.ListClickListener;
 import com.coc.cocmanager.model.LoginData;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * created by ketan 23-3-2020
  */
-public class PipelineFragment extends Fragment implements ListClickListener {
+public class AddNewFragment extends Fragment {
 
     //region variables
-    private RecyclerView rvPipeline;
-    private ImageView ivAddNew;
-    private Context context = getContext();
+    private int mDay;
+    private int mYear;
+    private int mMonth;
 
+    private TextView tvActofitExpiry;
     //endregion
 
     //region methods
-
-    public PipelineFragment() {
+    public AddNewFragment() {
         // Required empty public constructor
     }
 
-    public static PipelineFragment newInstance() {
-        PipelineFragment fragment = new PipelineFragment();
+    public static AddNewFragment newInstance() {
+        AddNewFragment fragment = new AddNewFragment();
         return fragment;
     }
 
@@ -60,30 +56,25 @@ public class PipelineFragment extends Fragment implements ListClickListener {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_pipeline, container, false);
-
+        View rootView = inflater.inflate(R.layout.fragment_add_new, container, false);
         setupUI(rootView);
         setupEvents();
         initializeData();
         return rootView;
     }
 
-    private void setupEvents() {
-        ivAddNew.setOnClickListener(View->{ addNewForm(); });
-    }
-
-    private void addNewForm() {
-        Fragment fragment = new AddNewFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
-                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initializeData() {
+        addNewKioskTOPipeline();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void getPipelineList() {
+    private void addNewKioskTOPipeline() {
         try {
             if (Utils.isOnline(getContext())) {
 
@@ -123,45 +114,39 @@ public class PipelineFragment extends Fragment implements ListClickListener {
         }
     }
 
-    /**
-     *
-     */
-    private void initializeData() {
-        setListAdapter();
+
+    private void setupEvents() {
+        tvActofitExpiry.setOnClickListener(v -> {
+            openCalender();
+        });
     }
 
-    /**
-     *
-     */
-    private void setListAdapter() {
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
+    private void openCalender() {
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        rvPipeline.setLayoutManager(linearLayoutManager);
-        PipelineListAdapter adapter = new PipelineListAdapter(context, list);
-        rvPipeline.setAdapter(adapter);
-        adapter.setListClickListener(this);
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        tvActofitExpiry.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
-    /**
-     *
-     * @param rootView
-     */
     private void setupUI(View rootView) {
-        rvPipeline = rootView.findViewById(R.id.rv_pipeline_list);
-        ivAddNew = rootView.findViewById(R.id.iv_add_new);
+        tvActofitExpiry = rootView.findViewById(R.id.tv_actofit_expiry);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-    }
+    public void onButtonPressed(Uri uri) { }
 
     @Override
     public void onAttach(Context context) {
@@ -173,14 +158,5 @@ public class PipelineFragment extends Fragment implements ListClickListener {
         super.onDetach();
     }
 
-    @Override
-    public void click(int position, int value) {
-        Fragment fragment = new PipelineDetailFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
-                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
-    }
-
     //endregion
-
-
 }

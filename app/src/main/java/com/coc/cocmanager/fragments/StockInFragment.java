@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.adapter.AddOnListAdapter;
 import com.coc.cocmanager.adapter.ConsumableListAdapter;
-import com.coc.cocmanager.adapter.InstallationsListAdapter;
 import com.coc.cocmanager.adapter.ItemListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
 

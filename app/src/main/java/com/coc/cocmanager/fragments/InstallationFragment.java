@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -20,8 +20,6 @@ import com.coc.cocmanager.interfaces.ListClickListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import butterknife.BindView;
 
 /**
  * created by ketan 23-3-2020

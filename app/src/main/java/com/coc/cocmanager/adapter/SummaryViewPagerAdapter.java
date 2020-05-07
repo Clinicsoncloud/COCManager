@@ -4,12 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.coc.cocmanager.Fragments.InstallationFragment;
-import com.coc.cocmanager.Fragments.InstallationSummaryFragment;
-import com.coc.cocmanager.Fragments.InventoryFragment;
-import com.coc.cocmanager.Fragments.InventorySummaryFragment;
-import com.coc.cocmanager.Fragments.PipelineFragment;
-import com.coc.cocmanager.Fragments.TransportFragment;
+import com.coc.cocmanager.fragments.InstallationSummaryFragment;
+import com.coc.cocmanager.fragments.InventorySummaryFragment;
 
 /**
  * created by ketan 23-3-2020

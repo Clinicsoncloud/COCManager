@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,24 +13,26 @@ import android.view.ViewGroup;
 
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.adapter.InstallationViewPagerAdapter;
-import com.coc.cocmanager.adapter.InventoryViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class InventoryFragment extends Fragment {
+/**
+ *created by ketan 23-3-2020
+ */
+public class InstallationHomeFragment extends Fragment {
 
     //region variables
-
-    private TabLayout tabInventory;
-    private ViewPager pagerInventory;
+    private ViewPager pager;
+    private TabLayout tabLayout;
 
     //endregion
-    public InventoryFragment() {
+
+    public InstallationHomeFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static InventoryFragment newInstance(String param1, String param2) {
-        InventoryFragment fragment = new InventoryFragment();
+    public static InstallationHomeFragment newInstance() {
+        InstallationHomeFragment fragment = new InstallationHomeFragment();
         return fragment;
     }
 
@@ -43,34 +45,43 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_inventory, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_installation_home, container, false);
 
         setupUI(rootView);
+        setupEvents();
         initializeData();
         return rootView;
     }
 
+    /**
+     *
+     */
     private void initializeData() {
-
-        setViewPagerAdapter();
+        pager.setAdapter(new InstallationViewPagerAdapter(getChildFragmentManager()));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        InstallationViewPagerAdapter adapter = new InstallationViewPagerAdapter(getChildFragmentManager());
+        tabLayout.setupWithViewPager(pager);
+        pager.setAdapter(adapter);
     }
 
-    private void setViewPagerAdapter() {
-        pagerInventory.setAdapter(new InstallationViewPagerAdapter(getChildFragmentManager()));
-        tabInventory.setTabGravity(TabLayout.GRAVITY_FILL);
-        InventoryViewPagerAdapter adapter = new InventoryViewPagerAdapter(getChildFragmentManager());
-        tabInventory.setupWithViewPager(pagerInventory);
-        pagerInventory.setAdapter(adapter);
+    /**
+     *
+     */
+    private void setupEvents() {
+
     }
 
+    /**
+     *
+     * @param rootView
+     */
     private void setupUI(View rootView) {
-        tabInventory = rootView.findViewById(R.id.tab_inventory);
-        pagerInventory = rootView.findViewById(R.id.pager_inventory);
+        pager = rootView.findViewById(R.id.viewpager_instatllation);
+        tabLayout = rootView.findViewById(R.id.tab_layout);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-    }
+    public void onButtonPressed(Uri uri) { }
 
     @Override
     public void onAttach(Context context) {
@@ -81,4 +92,5 @@ public class InventoryFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }

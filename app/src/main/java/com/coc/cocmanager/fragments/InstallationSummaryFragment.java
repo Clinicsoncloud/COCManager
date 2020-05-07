@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,22 +13,16 @@ import android.view.ViewGroup;
 import com.coc.cocmanager.R;
 
 /**
- * created by ketan 25-3-2020
+ * created by ketan 23-3-2020
  */
+public class InstallationSummaryFragment extends Fragment {
 
-public class StockOutFragment extends Fragment {
-
-    //region variables
-
-
-    //endregion
-
-    public StockOutFragment() {
+    public InstallationSummaryFragment() {
         // Required empty public constructor
     }
 
-    public static StockOutFragment newInstance() {
-        StockOutFragment fragment = new StockOutFragment();
+    public static InstallationSummaryFragment newInstance() {
+        InstallationSummaryFragment fragment = new InstallationSummaryFragment();
         return fragment;
     }
 
@@ -41,12 +35,14 @@ public class StockOutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_stock_out, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_installation_summary, container, false);
+
         return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) { }
+    public void onButtonPressed(Uri uri) {
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -57,4 +53,6 @@ public class StockOutFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+
 }

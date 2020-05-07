@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.coc.cocmanager.R;
-import com.coc.cocmanager.adapter.InstallationsListAdapter;
 import com.coc.cocmanager.adapter.TransportListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
 

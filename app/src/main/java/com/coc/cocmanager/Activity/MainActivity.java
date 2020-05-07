@@ -14,13 +14,13 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.coc.cocmanager.Fragments.InventoryFragment;
-import com.coc.cocmanager.Fragments.SummaryFragment;
-import com.coc.cocmanager.Fragments.UsersFragment;
+import com.coc.cocmanager.fragments.InventoryFragment;
+import com.coc.cocmanager.fragments.SummaryFragment;
+import com.coc.cocmanager.fragments.UsersFragment;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.Utils.SharedPrefClass;
-import com.coc.cocmanager.Fragments.HomeFragment;
-import com.coc.cocmanager.Fragments.InstallationHomeFragment;
+import com.coc.cocmanager.fragments.HomeFragment;
+import com.coc.cocmanager.fragments.InstallationHomeFragment;
 
 /**
  * created by ketan 23-03-2020

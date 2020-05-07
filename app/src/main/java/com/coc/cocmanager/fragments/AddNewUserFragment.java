@@ -1,4 +1,4 @@
-package com.coc.cocmanager.Fragments;
+package com.coc.cocmanager.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -85,15 +85,16 @@ public class AddNewUserFragment extends Fragment {
     private void createNewUserAPIcall() {
         try {
             if (Utils.isOnline(getContext())) {
-
                 Map<String ,String> params = new HashMap<>();
+                params.put(Constants.Fields.EMAIL,"");
+                params.put(Constants.Fields.PHONE,"");
+                params.put(Constants.Fields.GENDER,"");
+                params.put(Constants.Fields.STATUS,"");
+                params.put(Constants.Fields.ROLE_ID,"");
+                params.put(Constants.Fields.LAST_NAME,"");
+                params.put(Constants.Fields.FIRST_NAME,"");
 
-                params.put(Constants.Fields.USERNAME,"");
-                params.put(Constants.Fields.PASSWORD,"");
-                params.put(Constants.Fields.USERTYPE,"");
-
-                Map<String, String> headerParams;
-                headerParams = new HashMap<>();
+                Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(
                         getContext(), ApiUtils.LOGIN_URL,

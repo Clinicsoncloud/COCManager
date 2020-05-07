@@ -1,6 +1,7 @@
 package com.coc.cocmanager.Utils;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
@@ -20,10 +21,12 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import static com.coc.cocmanager.Utils.Utils.showImageDialog;
+
 public class HttpService {
 
     public static void accessWebServices(final Context context, String url, final Map param, final Map headerParam, final VolleyResponse responseListner) {
-        final ProgressDialog loading = ProgressDialog.show(context, "Loading.....", "Please wait...", true);
+        Dialog loading = showImageDialog(context);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
