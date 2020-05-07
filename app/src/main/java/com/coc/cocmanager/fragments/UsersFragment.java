@@ -128,13 +128,49 @@ public class UsersFragment extends Fragment implements ListClickListener {
         }
     }
 
-    private void setUserListAdapter(List<UserData.User_Info> list) {
-       /* ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");*/
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void deleteUserAPI(int position) {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String,String> params = new HashMap<>();
+                params.put("id","");
 
+                Map<String, String> headerParams  = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.DELETE_USER,
+                        params, headerParams,
+                        (response, error, status) -> handleResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(),"No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void handleResponse(String response, VolleyError error, String status) {
+        Log.e("response_log"," = "+response);
+        if (status.equals("response")) {
+            try {
+                UserData userData = (UserData) Utils.parseResponse(response,UserData.class);
+                if(userData.getFound()){
+                    //TODO AFTER SUCCESS
+                    if(userData.getData() != null) {
+                        setUserListAdapter(userData.getData());
+                    }else{
+                        Toast.makeText(getContext(), "No users created", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setUserListAdapter(List<UserData.User_Info> list) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvUserList.setLayoutManager(linearLayoutManager);
         UsersListAdapter adapter = new UsersListAdapter(getContext(), list);
@@ -160,8 +196,16 @@ public class UsersFragment extends Fragment implements ListClickListener {
         super.onDetach();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void click(int position, int value) { }
+    public void click(int position, int value) {
+        deleteUser(position);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void deleteUser(int position) {
+        deleteUserAPI(position);
+    }
 
     //endregion
 }

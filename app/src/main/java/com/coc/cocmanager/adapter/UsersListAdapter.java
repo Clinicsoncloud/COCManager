@@ -19,14 +19,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * creat
+ */
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> {
-
-    @BindView(R.id.tv_user_name)
-    TextView tvUserName;
-    @BindView(R.id.iv_edit_user)
-    ImageView ivEditUser;
-    @BindView(R.id.iv_delete_user)
-    ImageView ivDeleteUser;
 
     private Context context;
     private View itemView;
@@ -62,15 +58,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_user_list_item, parent, false);
         ViewHolder vh = new ViewHolder(itemView);
-
-       /* itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                listClickListener.click(1, 1);
-
-            }
-        });*/
         return vh;
     }
 
@@ -94,6 +81,8 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
             holder.tvUserName.setText(""+list.get(position).getFirst_name());
         else
            holder.tvUserName.setText("");
+
+        holder.ivDeleteUser.setOnClickListener(v -> {listClickListener.click(position,0);});
     }
 
     @Override

@@ -93,6 +93,9 @@ public class AddNewUserFragment extends Fragment {
                 params.put(Constants.Fields.ROLE_ID,"");
                 params.put(Constants.Fields.LAST_NAME,"");
                 params.put(Constants.Fields.FIRST_NAME,"");
+                params.put(Constants.Fields.USERNAME,edtUserName.getText().toString());
+                params.put(Constants.Fields.PASSWORD,edtUserPassword.getText().toString());
+                params.put(Constants.Fields.USERTYPE,"");
 
                 Map<String, String> headerParams = new HashMap<>();
 
