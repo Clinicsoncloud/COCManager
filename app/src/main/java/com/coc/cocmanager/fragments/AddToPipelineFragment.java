@@ -186,10 +186,12 @@ public class AddToPipelineFragment extends Fragment {
     }
 
     private void setLocationListToSpinner(List<LocationModel.LocationInfo> data) {
+        int i;
+        final int pos = 0;
         locationList = new ArrayList<>();
         locationList.add("Select Location");
 
-        for(int i = 0 ; i< data.size() ; i++) {
+        for(i = 0 ; i< data.size() ; i++) {
             locationList.add(data.get(i).getName());
         }
 
@@ -199,13 +201,13 @@ public class AddToPipelineFragment extends Fragment {
         dataAdapter.setDropDownViewResource(R.layout.simple_item);
         spnLocation.setAdapter(dataAdapter);
 
+        final int position = i;
         spnLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (position != 0) {
-                    int pos = (int) spnLocation.getSelectedItemId();
-                    location_id = data.get(pos).getId();
+                    location_id = data.get(0).getId();
                     getClinicList(location_id);
                 }
             }

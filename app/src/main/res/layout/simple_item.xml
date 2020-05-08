@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:ellipsize="marquee"
-    android:padding="@dimen/pad10"
-    android:singleLine="true"
-    android:textColor="#ff000000"
-    android:textSize="15sp" />
+    android:layout_margin="@dimen/_10sdp"
+    android:padding="@dimen/_10sdp"
+    android:gravity="center_vertical"
+    tools:text="Genre"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
