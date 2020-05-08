@@ -7,7 +7,10 @@
     android:background="@android:color/white"
     tools:context=".fragments.AddNewFragment">
 
-    <LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -31,6 +34,75 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
+                    android:text="@string/txt_name"
+                    android:textSize="@dimen/_15sdp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="@string/txt_email"
+                    android:textSize="@dimen/_15sdp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="@string/txt_phone"
+                    android:textSize="@dimen/_15sdp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:gravity="center"
                     android:text="@string/txt_username"
                     android:textSize="@dimen/_15sdp" />
 
@@ -40,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_5sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -63,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_5sdp" />
 
             </LinearLayout>
 
@@ -89,7 +161,32 @@
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/rectangle"
                     android:entries="@array/array_user_type"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_5sdp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="@string/txt_spn_gender"
+                    android:textSize="@dimen/_15sdp" />
+
+                <Spinner
+                    android:id="@+id/spn_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/rectangle"
+                    android:entries="@array/array_user_gender"
+                    android:padding="@dimen/_5sdp" />
 
             </LinearLayout>
 
@@ -112,5 +209,6 @@
             </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

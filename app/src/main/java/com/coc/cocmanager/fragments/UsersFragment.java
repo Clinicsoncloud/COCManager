@@ -128,6 +128,11 @@ public class UsersFragment extends Fragment implements ListClickListener {
         }
     }
 
+    /**
+     * delete user API call method
+     * handle response usign handleRespone method
+     * @param position
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void deleteUserAPI(int position) {
         try {
@@ -150,7 +155,6 @@ public class UsersFragment extends Fragment implements ListClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void handleResponse(String response, VolleyError error, String status) {
-        Log.e("response_log"," = "+response);
         if (status.equals("response")) {
             try {
                 UserData userData = (UserData) Utils.parseResponse(response,UserData.class);
@@ -196,6 +200,11 @@ public class UsersFragment extends Fragment implements ListClickListener {
         super.onDetach();
     }
 
+    /**
+     * list item click listener
+     * @param position
+     * @param value
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void click(int position, int value) {

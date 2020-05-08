@@ -3,6 +3,8 @@
 
     <!--<Login in screen strings>-->
     <string name="txt_login">Login</string>
+    <string name="txt_phone">Phone</string>
+    <string name="txt_name">Name</string>
     <string name="txt_email">Enter Email</string>
     <string name="txt_password">Enter Password</string>
 
@@ -80,8 +82,14 @@
 
     <!--<user type>-->
     <string name="txt_no_user">No user Type</string>
-    <string name="txt_user_admin">Admin</string>
-    <string name="txt_user_normal">Normal User</string>
+    <string name="txt_user_admin">Administrator</string>
+    <string name="txt_user_customer">Customer</string>
+    <string name="txt_user_normal">User</string>
+
+    <!--gender array text-->
+    <string name="txt_no_gender">No gender Selected</string>
+    <string name="txt_gender_male">Male</string>
+    <string name="txt_gender_female">Female</string>
 
     <!--<item name>-->
     <string name="txt_item_name0">No item Selected</string>
@@ -121,8 +129,16 @@
     <string-array name="array_user_type">
         <item>@string/txt_no_user</item>
         <item>@string/txt_user_admin</item>
+        <item>@string/txt_user_customer</item>
         <item>@string/txt_user_normal</item>
     </string-array>
+
+    <string-array name="array_user_gender">
+        <item>@string/txt_no_gender</item>
+        <item>@string/txt_gender_male</item>
+        <item>@string/txt_gender_female</item>
+    </string-array>
+
 
     <string-array name="array_item_list">
         <item>@string/txt_item_name0</item>
@@ -153,10 +169,11 @@
 
     <!--<user screen>-->
     <string name="txt_user_name">User Name</string>_
-    <string name="txt_create_user">Create User</string>_
-    <string name="txt_username">Username</string>_
-    <string name="txt_user_password">Password</string>_
-    <string name="txt_user_type">User Type</string>_
-    <string name="txt_create_user_btn">Create User</string>_
-    <string name="txt_enter_kiosk_count">Enter Kiosk Number</string>_
+    <string name="txt_create_user">Create User</string>
+    <string name="txt_username">Username</string>
+    <string name="txt_user_password">Password</string>
+    <string name="txt_user_type">User Type</string>
+    <string name="txt_spn_gender">Gender</string>
+    <string name="txt_create_user_btn">Create User</string>
+    <string name="txt_enter_kiosk_count">Enter Kiosk Number</string>
 </resources>
