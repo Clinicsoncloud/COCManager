@@ -128,7 +128,6 @@ public class AddNewUserFragment extends Fragment {
                 params.put(Constants.Fields.GENDER, spnGender.getSelectedItem().toString());
                 params.put(Constants.Fields.PASSWORD, edtUserPassword.getText().toString());
 
-                Log.e("request_body"," = "+params);
                 Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(

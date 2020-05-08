@@ -76,7 +76,7 @@ public class PipelineFragment extends Fragment implements ListClickListener {
     }
 
     private void addNewForm() {
-        Fragment fragment = new AddNewFragment();
+        Fragment fragment = new AddToPipelineFragment();
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }
