@@ -88,6 +88,9 @@ public class AddNewUserFragment extends Fragment {
         });
     }
 
+    /**
+     * create new user with validation of the each field
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNewUser() {
         if (edtName.getText().length() <= 0) {
