@@ -3,6 +3,7 @@ package com.coc.cocmanager.fragments;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -215,7 +216,7 @@ public class AddToPipelineFragment extends Fragment {
                 params.put(Constants.Fields.CLIENT_NAME, spnClientName.getSelectedItem().toString());
                 params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
-                params.put(Constants.Fields.ACTOFIT_END_DATE, tvActofitExpiry.getText().toString());
+                params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
                 params.put(Constants.Fields.INSTALLATION_STEP, edtInstallationType.getText().toString());
 
                 Map<String, String> headerParams = new HashMap<>();
@@ -308,7 +309,7 @@ public class AddToPipelineFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     selectedItem = spnClinicName.getSelectedItem().toString();
-                    clinic_id = data.get(position).getId();
+                    clinic_id = data.get(position -1).getId();
                     tvClinicId.setText(clinic_id);
                 }
             }

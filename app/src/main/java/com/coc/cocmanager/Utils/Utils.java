@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.view.Display;
 import android.view.Window;
 import android.widget.ImageView;
@@ -18,6 +19,10 @@ import androidx.appcompat.app.ActionBar;
 
 import com.coc.cocmanager.R;
 import com.google.gson.Gson;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Utils {
 
@@ -69,5 +74,21 @@ public class Utils {
         } else {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    public static String get_yyyy_mm_dd_HMS(String timeZoneDate) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = originalFormat.parse(timeZoneDate);
+            System.out.println("Old Format :   " + originalFormat.format(date));
+            System.out.println("New Format :   " + targetFormat.format(date));
+
+        } catch (ParseException ex) {
+            // Handle Exception.
+        }
+
+        return targetFormat.format(date);
     }
 }
