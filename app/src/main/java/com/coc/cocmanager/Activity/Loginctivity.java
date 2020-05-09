@@ -2,10 +2,8 @@ package com.coc.cocmanager.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,7 +34,7 @@ public class Loginctivity extends AppCompatActivity {
     //region variables
     @BindView(R.id.edt_email)
     EditText edtEmail;
-    @BindView(R.id.edt_password)
+    @BindView(R.id.edt_gmail_password)
     EditText edtPassword;
     @BindView(R.id.btn_login)
     Button btnLogin;

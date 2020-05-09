@@ -49,7 +49,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="txt_clinic_name">Clinic Name</string>
-    <string name="txt_clinic_id">Kiosk id</string>
+    <string name="txt_clinic_id">Clinic id</string>
     <string name="txt_clinic_location">Location</string>
     <string name="txt_clinic_date">22 july 2020</string>
     <string name="txt_client_name">Client Name</string>

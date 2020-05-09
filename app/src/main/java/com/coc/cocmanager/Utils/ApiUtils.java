@@ -12,4 +12,5 @@ public class ApiUtils {
     public static String USER_LIST = PROTOCOL + SERVER_URL +"/api/v1/user/filter";
     public static String LOCATION_LIST = PROTOCOL + SERVER_URL + "/api/v1/location/";
     public static String CLINIC_LIST = PROTOCOL + SERVER_URL + "/api/v1/clinic/filter";
+    public static String ADD_TO_PIPELINE = PROTOCOL + SERVER_URL + "/api/v1/clinic/";
 }

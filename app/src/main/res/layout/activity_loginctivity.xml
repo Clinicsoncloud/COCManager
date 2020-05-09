@@ -30,7 +30,7 @@
             android:padding="@dimen/_10sdp"/>
 
         <EditText
-            android:id="@+id/edt_password"
+            android:id="@+id/edt_gmail_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle"
