@@ -15,7 +15,7 @@ public class UserData {
         @Expose
         private Boolean found;
 
-        public List<User_Info> getData() {
+        public List<UserData.User_Info> getData() {
             return data;
         }
 

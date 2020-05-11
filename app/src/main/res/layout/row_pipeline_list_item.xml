@@ -35,11 +35,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_clinic_name"
+                    android:id="@+id/tv_clinic_name_pipeline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center"
                     android:text="@string/txt_clinic_name"
                     android:textSize="@dimen/_18sdp" />

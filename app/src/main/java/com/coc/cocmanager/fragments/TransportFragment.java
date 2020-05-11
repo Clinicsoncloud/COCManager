@@ -11,12 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
+import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.Constants;
+import com.coc.cocmanager.Utils.HttpService;
+import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.adapter.TransportListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
+import com.coc.cocmanager.model.ClinicListModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * created by ketan 23-3-2020
@@ -55,18 +65,45 @@ public class TransportFragment extends Fragment implements ListClickListener {
     }
 
     private void initializeData() {
-        setAdapter();
+        getTransportClincList();
     }
 
-    private void setAdapter() {
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
+    private void getTransportClincList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.INSTALLATION_STEP, "Transport");
 
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.CLINIC_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleAPIResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleAPIResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                ClinicListModel clinicData = (ClinicListModel) Utils.parseResponse(response, ClinicListModel.class);
+                if (clinicData.getFound()) {
+                    //TODO AFTER SUCCESS
+                    setTransportListAdapter(clinicData.getData());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setTransportListAdapter(List<ClinicListModel.ClinicListInfo> list) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         rvTransport.setLayoutManager(linearLayoutManager);
         TransportListAdapter adapter = new TransportListAdapter(context, list);
@@ -95,6 +132,9 @@ public class TransportFragment extends Fragment implements ListClickListener {
     @Override
     public void click(int position, int value) {
         Fragment fragment = new TransportDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("position",""+position);
+        fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }

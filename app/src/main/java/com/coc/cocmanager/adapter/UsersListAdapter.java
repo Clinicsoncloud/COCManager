@@ -1,7 +1,6 @@
 package com.coc.cocmanager.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,6 @@ import com.coc.cocmanager.interfaces.ListClickListener;
 import com.coc.cocmanager.model.UserData;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * creat

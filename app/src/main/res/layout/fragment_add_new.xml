@@ -91,7 +91,7 @@
                     android:textSize="@dimen/_15sdp" />
 
                 <Spinner
-                    android:id="@+id/spn_clinic_name"
+                    android:id="@+id/tv_clinic_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.Utils.ApiUtils;
@@ -25,8 +26,8 @@ import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.adapter.UsersListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
 import com.coc.cocmanager.model.UserData;
+import com.coc.cocmanager.model.DeleteUserModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,8 @@ public class UsersFragment extends Fragment implements ListClickListener {
     //region variables
     private RecyclerView rvUserList;
     private ImageView ivAddNewUser;
+
+    UserData userData;
     //endregion
 
     //region methods
@@ -111,7 +114,7 @@ public class UsersFragment extends Fragment implements ListClickListener {
         Log.e("response_log"," = "+response);
         if (status.equals("response")) {
             try {
-                UserData userData = (UserData) Utils.parseResponse(response,UserData.class);
+                userData = (UserData) Utils.parseResponse(response,UserData.class);
                 if(userData.getFound()){
                     //TODO AFTER SUCCESS
                     if(userData.getData() != null) {
@@ -137,14 +140,15 @@ public class UsersFragment extends Fragment implements ListClickListener {
     private void deleteUserAPI(int position) {
         try {
             if (Utils.isOnline(getContext())) {
-                Map<String,String> params = new HashMap<>();
-                params.put("id","");
-
                 Map<String, String> headerParams  = new HashMap<>();
-
-                HttpService.accessWebServices(
-                        getContext(), ApiUtils.DELETE_USER,
-                        params, headerParams,
+                String url = ApiUtils.DELETE_USER + position;
+                Log.e("url_log"," = "+url);
+                HttpService.accessWebServicess(
+                        getContext(),
+                        url,
+                        Request.Method.DELETE,
+                        null,
+                        headerParams,
                         (response, error, status) -> handleResponse(response, error, status));
             } else {
                 Utils.showToast(getContext(),"No Internet connectivity..!");
@@ -155,16 +159,14 @@ public class UsersFragment extends Fragment implements ListClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void handleResponse(String response, VolleyError error, String status) {
+        Log.e("response_log"," = "+response);
         if (status.equals("response")) {
             try {
-                UserData userData = (UserData) Utils.parseResponse(response,UserData.class);
-                if(userData.getFound()){
+                DeleteUserModel userModel = (DeleteUserModel) Utils.parseResponse(response, DeleteUserModel.class);
+                if(userModel.getSuccess()){
                     //TODO AFTER SUCCESS
-                    if(userData.getData() != null) {
-                        setUserListAdapter(userData.getData());
-                    }else{
-                        Toast.makeText(getContext(), "No users created", Toast.LENGTH_SHORT).show();
-                    }
+                    setUserListAdapter(userData.getData());
+                    Toast.makeText(getContext(), "User Deleted Successfully", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -177,9 +179,10 @@ public class UsersFragment extends Fragment implements ListClickListener {
     private void setUserListAdapter(List<UserData.User_Info> list) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvUserList.setLayoutManager(linearLayoutManager);
-        UsersListAdapter adapter = new UsersListAdapter(getContext(), list);
+        UsersListAdapter adapter = new UsersListAdapter(getContext(),list);
         rvUserList.setAdapter(adapter);
         adapter.setListClickListener(this);
+        adapter.notifyDataSetChanged();
     }
 
     private void setupUI(View rootView) {
@@ -208,13 +211,13 @@ public class UsersFragment extends Fragment implements ListClickListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void click(int position, int value) {
-        deleteUser(position);
+        int id = Integer.parseInt(userData.getData().get(position).getId());
+        deleteUser(id);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void deleteUser(int position) {
         deleteUserAPI(position);
     }
-
     //endregion
 }

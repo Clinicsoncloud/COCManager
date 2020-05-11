@@ -25,10 +25,12 @@ import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.adapter.PipelineListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
+import com.coc.cocmanager.model.ClinicListModel;
 import com.coc.cocmanager.model.LoginData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +61,7 @@ public class PipelineFragment extends Fragment implements ListClickListener {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +78,14 @@ public class PipelineFragment extends Fragment implements ListClickListener {
         ivAddNew.setOnClickListener(View->{ addNewForm(); });
     }
 
+    /**
+     *
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initializeData() {
+        getPipelineList();
+    }
+
     private void addNewForm() {
         Fragment fragment = new AddToPipelineFragment();
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
@@ -85,18 +96,13 @@ public class PipelineFragment extends Fragment implements ListClickListener {
     private void getPipelineList() {
         try {
             if (Utils.isOnline(getContext())) {
-
                 Map<String ,String> params = new HashMap<>();
+                params.put(Constants.Fields.INSTALLATION_STEP,"Pipeline");
 
-                params.put(Constants.Fields.USERNAME,"");
-                params.put(Constants.Fields.PASSWORD,"");
-                params.put(Constants.Fields.USERTYPE,"");
-
-                Map<String, String> headerParams;
-                headerParams = new HashMap<>();
+                Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(
-                        getContext(), ApiUtils.LOGIN_URL,
+                        getContext(), ApiUtils.CLINIC_LIST,
                         params, headerParams,
                         (response, error, status) -> handleAPIResponse(response, error, status));
             } else {
@@ -110,9 +116,10 @@ public class PipelineFragment extends Fragment implements ListClickListener {
     private void handleAPIResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                LoginData patientData = (LoginData) Utils.parseResponse(response,LoginData.class);
-                if(patientData.getFound()){
+                ClinicListModel clinicData = (ClinicListModel) Utils.parseResponse(response,ClinicListModel.class);
+                if(clinicData.getFound()){
                     //TODO AFTER SUCCESS
+                    setPipelineListAdapter(clinicData.getData());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -122,11 +129,12 @@ public class PipelineFragment extends Fragment implements ListClickListener {
         }
     }
 
-    /**
-     *
-     */
-    private void initializeData() {
-        setListAdapter();
+    private void setPipelineListAdapter(List<ClinicListModel.ClinicListInfo> list) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        rvPipeline.setLayoutManager(linearLayoutManager);
+        PipelineListAdapter adapter = new PipelineListAdapter(context, list);
+        rvPipeline.setAdapter(adapter);
+        adapter.setListClickListener(this);
     }
 
     /**
@@ -175,6 +183,10 @@ public class PipelineFragment extends Fragment implements ListClickListener {
     @Override
     public void click(int position, int value) {
         Fragment fragment = new PipelineDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("position",""+position);
+        fragment.setArguments(args);
+
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }

@@ -4,31 +4,47 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.interfaces.ListClickListener;
+import com.coc.cocmanager.model.ClinicListModel;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 
 public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdapter.ViewHolder> {
-    private final ArrayList list;
+
     private Context context;
     private View itemView;
     private ListClickListener listClickListener;
+    private final List<ClinicListModel.ClinicListInfo> list;
 
-    public TransportListAdapter(Context context, ArrayList list) {
+    public TransportListAdapter(Context context, List<ClinicListModel.ClinicListInfo> list) {
         this.context = context;
         this.list = list;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView tvClinicId;
+        TextView tvClientName;
+        TextView tvClinicName;
+        CardView cardviewTransport;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            tvClinicId = itemView.findViewById(R.id.tv_clinic_id);
+            tvClientName = itemView.findViewById(R.id.tv_client_name);
+            tvClinicName = itemView.findViewById(R.id.tv_clinic_name);
+            cardviewTransport = itemView.findViewById(R.id.cardview_transport);
         }
+
 
     }
 
@@ -42,14 +58,6 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
                 .inflate(R.layout.row_transport_list_item, parent, false);
         ViewHolder vh = new ViewHolder(itemView);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                listClickListener.click(1, 1);
-
-            }
-        });
         return vh;
     }
 
@@ -73,23 +81,21 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+        holder.tvClinicName.setText(list.get(position).getName());
+        holder.tvClinicId.setText("Clinic Id -"+list.get(position).getId());
+        holder.tvClientName.setText("");
 
-        /*holder.tv_particulars.setText(list.get(position).getServiceName());*/
-       /* holder.ivAccept.setOnClickListener(new View.OnClickListener() {
+        holder.cardviewTransport.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                listClickListener.click(position,1);
+            public void onClick(View v) {
+                listClickListener.click(position,0);
             }
-        });*/
-
+        });
     }
 
 
     @Override
     public int getItemCount() {
-
         return list.size();
     }
-
 }

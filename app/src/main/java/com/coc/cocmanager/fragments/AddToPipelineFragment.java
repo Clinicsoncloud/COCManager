@@ -3,7 +3,6 @@ package com.coc.cocmanager.fragments;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,7 @@ public class AddToPipelineFragment extends Fragment {
     MaterialTextView edtInstallationType;
     @BindView(R.id.spn_location)
     Spinner spnLocation;
-    @BindView(R.id.spn_clinic_name)
+    @BindView(R.id.tv_clinic_name)
     Spinner spnClinicName;
     @BindView(R.id.edt_gmail_id)
     TextInputEditText edtGmailId;
