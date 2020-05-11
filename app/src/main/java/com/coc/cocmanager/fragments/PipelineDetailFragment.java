@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.Utils.ApiUtils;
@@ -140,6 +141,49 @@ public class PipelineDetailFragment extends Fragment {
                 Toast.makeText(getContext(), "Can't minus right now", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveToTransport();
+            }
+        });
+    }
+
+    private void moveToTransport() {
+     /*   try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+//                params.put(Constants.Fields.LOCATION_ID, location_id);
+                params.put(Constants.Fields.GMAIL_ID, edtGmailId.getText().toString());
+                params.put(Constants.Fields.ACTOFIT_ID, edtActofitId.getText().toString());
+                params.put(Constants.Fields.CLIENT_NAME, spnClientName.getSelectedItem().toString());
+                params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
+                params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
+                params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
+//                params.put(Constants.Fields.INSTALLATION_STEP, edtInstallationType.getText().toString());
+
+//                Map<String, String> headerParams = new HashMap<>();
+
+//                String url = ApiUtils.ADD_TO_PIPELINE + clinic_id;
+
+                HttpService.accessWebServicess(
+                        getContext(),
+                        url,
+                        Request.Method.PUT,
+                        params,
+                        headerParams,
+                        (response, error, status) -> handleMoveToTransportResponse(response, error, status));
+
+            } else {
+                Toast.makeText(getContext(), "No Internet connection, Please Try again", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+        }*/
+    }
+
+    private void handleMoveToTransportResponse(String response, VolleyError error, String status) {
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -198,7 +242,7 @@ public class PipelineDetailFragment extends Fragment {
         edtGmailPassword.setText(clinicListInfo.getGmail_password());
         tvActofitExpiry.setText(clinicListInfo.getActofit_end_date());
         edtActofitPassword.setText(clinicListInfo.getActofit_password());
-        edtLocation.setText(clinicListInfo.getLocation().getData().get(Integer.parseInt(selected_position)).getName());
+        edtLocation.setText(clinicListInfo.getLocation().getName());
     }
 
     private void openCalender() {

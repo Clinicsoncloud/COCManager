@@ -161,7 +161,7 @@ public class ClinicListModel {
 
         @SerializedName("location")
         @Expose
-        private LocationModel location;
+        private LocationModel.LocationInfo location;
 
         @SerializedName("user")
         @Expose
@@ -423,13 +423,21 @@ public class ClinicListModel {
             this.allowed_trial_tests = allowed_trial_tests;
         }
 
-        public LocationModel getLocation() {
+        public LocationModel.LocationInfo getLocation() {
+            return location;
+        }
+
+        public void setLocation(LocationModel.LocationInfo location) {
+            this.location = location;
+        }
+
+        /*public LocationModel getLocation() {
             return location;
         }
 
         public void setLocation(LocationModel location) {
             this.location = location;
-        }
+        }*/
 
         public CreateUserInfo getUser() {
             return user;

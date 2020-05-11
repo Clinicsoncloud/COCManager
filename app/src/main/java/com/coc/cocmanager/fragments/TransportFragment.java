@@ -83,8 +83,7 @@ public class TransportFragment extends Fragment implements ListClickListener {
             } else {
                 Utils.showToast(getContext(), "No Internet connectivity..!");
             }
-        } catch (Exception e) {
-        }
+        } catch (Exception e) { }
     }
 
     private void handleAPIResponse(String response, VolleyError error, String status) {
