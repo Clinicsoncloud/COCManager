@@ -5,21 +5,20 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class UserData {
-
+public class UpdateUserModel {
     @SerializedName("data")
     @Expose
-    private List<UserData.User_Info> data;
+    private UpdateUserModel.User_Info data;
 
     @SerializedName("found")
     @Expose
     private Boolean found;
 
-    public List<UserData.User_Info> getData() {
+    public UpdateUserModel.User_Info getData() {
         return data;
     }
 
-    public void setData(List<UserData.User_Info> data) {
+    public void setData(UpdateUserModel.User_Info data) {
         this.data = data;
     }
 
@@ -273,4 +272,3 @@ public class UserData {
         }
     }
 }
-

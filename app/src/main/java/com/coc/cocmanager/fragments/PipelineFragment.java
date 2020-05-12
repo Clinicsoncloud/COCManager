@@ -139,26 +139,6 @@ public class PipelineFragment extends Fragment implements ListClickListener {
 
     /**
      *
-     */
-    private void setListAdapter() {
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        rvPipeline.setLayoutManager(linearLayoutManager);
-        PipelineListAdapter adapter = new PipelineListAdapter(context, list);
-        rvPipeline.setAdapter(adapter);
-        adapter.setListClickListener(this);
-    }
-
-    /**
-     *
      * @param rootView
      */
     private void setupUI(View rootView) {

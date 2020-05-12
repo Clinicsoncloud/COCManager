@@ -111,7 +111,6 @@ public class UsersFragment extends Fragment implements ListClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void handleAPIResponse(String response, VolleyError error, String status) {
-        Log.e("response_log"," = "+response);
         if (status.equals("response")) {
             try {
                 userData = (UserData) Utils.parseResponse(response,UserData.class);
@@ -211,8 +210,23 @@ public class UsersFragment extends Fragment implements ListClickListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void click(int position, int value) {
-        int id = Integer.parseInt(userData.getData().get(position).getId());
-        deleteUser(id);
+        int id = 0;
+        id = Integer.parseInt(userData.getData().get(position).getId());
+        if(value == 0) {
+            deleteUser(id);
+        }else if(value == 1){
+            editUser(id,position);
+        }
+    }
+
+    private void editUser(int id,int position) {
+        Fragment fragment = new EditUserFragment();
+        Bundle args = new Bundle();
+        args.putString("id",""+id);
+        args.putString("position",""+position);
+        fragment.setArguments(args);
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
+                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

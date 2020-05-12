@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,8 @@ import butterknife.ButterKnife;
 /**
  * created by ketan 23-3-2020
  */
-public class TransportDetailFragment extends Fragment {
+public class TransportDetailFragment extends Fragment implements View.OnClickListener {
 
-    // region variables
     @BindView(R.id.tv_installation_type)
     MaterialTextView tvInstallationType;
     @BindView(R.id.tv_clinic_name)
@@ -64,19 +64,46 @@ public class TransportDetailFragment extends Fragment {
     TextInputEditText edtAddress;
     @BindView(R.id.btn_consumables)
     Button btnConsumables;
-    @BindView(R.id.iv_minus)
-    ImageView ivMinus;
-    @BindView(R.id.tv_count)
-    MaterialTextView tvCount;
-    @BindView(R.id.iv_plus)
-    ImageView ivPlus;
+    @BindView(R.id.iv_minus_lancets)
+    ImageView ivMinusLancets;
+    @BindView(R.id.tv_count_lancets)
+    MaterialTextView tvCountLancets;
+    @BindView(R.id.iv_plus_lancets)
+    ImageView ivPlusLancets;
     @BindView(R.id.ll_plus_minus)
     LinearLayout llPlusMinus;
+    @BindView(R.id.iv_minus_hb_strips)
+    ImageView ivMinusHbStrips;
+    @BindView(R.id.tv_qty_hb_strips)
+    MaterialTextView tvQtyHbStrips;
+    @BindView(R.id.iv_plus_hb_strips)
+    ImageView ivPlusHbStrips;
+    @BindView(R.id.iv_minus_sugar_strips)
+    ImageView ivMinusSugarStrips;
+    @BindView(R.id.tv_qty_sugar_strips)
+    MaterialTextView tvQtySugarStrips;
+    @BindView(R.id.iv_plus_sugar_strips)
+    ImageView ivPlusSugarStrips;
+    @BindView(R.id.iv_minus_screw_drivers)
+    ImageView ivMinusScrewDrivers;
+    @BindView(R.id.tv_qty_screw_drivers)
+    MaterialTextView tvQtyScrewDrivers;
+    @BindView(R.id.iv_plus_screw_drivers)
+    ImageView ivPlusScrewDrivers;
+    @BindView(R.id.iv_minus_cells)
+    ImageView ivMinusCells;
+    @BindView(R.id.tv_qty_cells)
+    MaterialTextView tvQtyCells;
+    @BindView(R.id.iv_plus_cells)
+    ImageView ivPlusCells;
     @BindView(R.id.expandable_consumables)
     ExpandableRelativeLayout expandableConsumables;
     @BindView(R.id.btn_move_to_pipeline)
     Button btnMoveToPipeline;
 
+    // region variables
+
+    private int count = 0;
     private int mYear, mMonth, mDay;
     private String selected_position;
     //endregion
@@ -100,7 +127,7 @@ public class TransportDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.layout_transport_detail, container, false);
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
 
         setupEvents();
         initializeData();
@@ -113,9 +140,30 @@ public class TransportDetailFragment extends Fragment {
     }
 
     private void setupEvents() {
+
         tvActofitExpiry.setOnClickListener(View -> {
             openCalender();
         });
+
+        btnConsumables.setOnClickListener(v -> {
+            expandView();
+        });
+
+        ivMinusCells.setOnClickListener(this);
+        ivMinusLancets.setOnClickListener(this);
+        ivMinusHbStrips.setOnClickListener(this);
+        ivMinusSugarStrips.setOnClickListener(this);
+        ivMinusScrewDrivers.setOnClickListener(this);
+
+        ivPlusCells.setOnClickListener(this);
+        ivPlusLancets.setOnClickListener(this);
+        ivPlusHbStrips.setOnClickListener(this);
+        ivPlusSugarStrips.setOnClickListener(this);
+        ivPlusScrewDrivers.setOnClickListener(this);
+    }
+
+    private void expandView() {
+        expandableConsumables.toggle();
     }
 
     private void openCalender() {
@@ -142,8 +190,7 @@ public class TransportDetailFragment extends Fragment {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.INSTALLATION_STEP, "Pipeline");
-
+                params.put(Constants.Fields.INSTALLATION_STEP, "Transport");
                 Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(
@@ -178,8 +225,8 @@ public class TransportDetailFragment extends Fragment {
     private void setTransportDetails(ClinicListModel.ClinicListInfo clinicListInfo) {
         tvClinicId.setText(clinicListInfo.getId());
         tvClinicName.setText(clinicListInfo.getName());
-        edtAddress.setText(clinicListInfo.getAddress());
         tvGmailId.setText(clinicListInfo.getGmailid());
+        edtAddress.setText(clinicListInfo.getAddress());
         tvActofitId.setText(clinicListInfo.getActofit_id());
         edtLocation.setText(clinicListInfo.getLocation().getName());
         tvGmailPassword.setText(clinicListInfo.getGmail_password());
@@ -203,4 +250,66 @@ public class TransportDetailFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.iv_minus_lancets:
+                removeCount(tvCountLancets);
+                break;
+
+            case R.id.iv_minus_hb_strips:
+                removeCount(tvQtyHbStrips);
+                break;
+
+            case R.id.iv_minus_sugar_strips:
+                removeCount(tvQtySugarStrips);
+                break;
+
+            case R.id.iv_minus_screw_drivers:
+                removeCount(tvQtyScrewDrivers);
+                break;
+
+            case R.id.iv_minus_cells:
+                removeCount(tvQtyCells);
+                break;
+
+            case R.id.iv_plus_lancets:
+                addCount(tvCountLancets);
+                break;
+
+            case R.id.iv_plus_hb_strips:
+                addCount(tvQtyHbStrips);
+                break;
+
+            case R.id.iv_plus_sugar_strips:
+                addCount(tvQtySugarStrips);
+                break;
+
+            case R.id.iv_plus_screw_drivers:
+                addCount(tvQtyScrewDrivers);
+                break;
+
+            case R.id.iv_plus_cells:
+                addCount(tvQtyCells);
+                break;
+        }
+    }
+
+    private void addCount(MaterialTextView tvAddCount) {
+        if (count != 0) {
+            count = count + 1;
+            tvAddCount.setText("" + count);
+            Log.e("countplus_log"," = "+count);
+        }
+    }
+
+    private void removeCount(MaterialTextView tvCount) {
+        if (count > 0) {
+            count = count - 1;
+            tvCount.setText("" + count);
+            Log.e("countminus_log"," = "+count);
+        }
+    }
 }

@@ -134,7 +134,6 @@ public class TransportFragment extends Fragment implements ListClickListener {
         Fragment fragment = new TransportDetailFragment();
         Bundle args = new Bundle();
         args.putString("position",""+position);
-        args.putString("data",""+clinicData.getData());
         fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();

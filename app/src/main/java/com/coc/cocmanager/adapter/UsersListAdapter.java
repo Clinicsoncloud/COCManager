@@ -79,6 +79,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
            holder.tvUserName.setText("");
 
         holder.ivDeleteUser.setOnClickListener(v -> {listClickListener.click(position,0);});
+        holder.ivEditUser.setOnClickListener(v -> {listClickListener.click(position,1);});
     }
 
     @Override
