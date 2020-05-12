@@ -28,6 +28,7 @@ import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.model.ClinicListModel;
 import com.coc.cocmanager.model.LocationModel;
+import com.coc.cocmanager.model.UserData;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -88,6 +89,7 @@ public class PipelineDetailFragment extends Fragment {
     private int count = 0;
     private TextView tvQty;
 
+    private String clinic_id;
     private String selected_position;
     //endregion
 
@@ -138,34 +140,67 @@ public class PipelineDetailFragment extends Fragment {
         ivMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Can't minus right now", Toast.LENGTH_SHORT).show();
+                if (count > 0) {
+                    count = count - 1;
+                    tvQty.setText("" + count);
+                } else
+                    Toast.makeText(getContext(), "Can't minus now", Toast.LENGTH_SHORT).show();
             }
         });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveToTransport();
+                if (valid())
+                    moveToTransport();
             }
         });
     }
 
+    private boolean valid() {
+        if (edtLocation.getText().length() == 0) {
+            Toast.makeText(getContext(), "Please Enter Location", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (tvClinicName.getText().length() == 0) {
+            Toast.makeText(getContext(), "Please Enter Clinic", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (edtGmailId.getText().length() == 0) {
+            edtGmailId.setError("Please Enter Gmail id");
+            return false;
+        } else if (edtGmailPassword.getText().length() == 0) {
+            edtGmailPassword.setError("Please Enter Password");
+            return false;
+        } else if (edtActofitId.getText().length() == 0) {
+            edtActofitId.setError("Please Enter Actofit ID");
+            return false;
+        } else if (edtActofitPassword.getText().length() == 0) {
+            edtActofitPassword.setError("Please Enter Actofit Password");
+            return false;
+        } else if (spnClientName.getSelectedItemId() == -1) {
+            Toast.makeText(getContext(), "Please select the client Name", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (edtAddress.getText().length() == 0) {
+            edtAddress.setError("Please Enter Address");
+            return false;
+        }
+        return true;
+    }
+
     private void moveToTransport() {
-     /*   try {
+        try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-//                params.put(Constants.Fields.LOCATION_ID, location_id);
+                clinic_id = tvClinicId.getText().toString();
+                params.put(Constants.Fields.INSTALLATION_STEP, "Transport");
                 params.put(Constants.Fields.GMAIL_ID, edtGmailId.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_ID, edtActofitId.getText().toString());
-                params.put(Constants.Fields.CLIENT_NAME, spnClientName.getSelectedItem().toString());
                 params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
+                params.put(Constants.Fields.CLIENT_NAME, spnClientName.getSelectedItem().toString());
                 params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
-//                params.put(Constants.Fields.INSTALLATION_STEP, edtInstallationType.getText().toString());
+                Map<String, String> headerParams = new HashMap<>();
 
-//                Map<String, String> headerParams = new HashMap<>();
-
-//                String url = ApiUtils.ADD_TO_PIPELINE + clinic_id;
+                String url = ApiUtils.ADD_TO_PIPELINE + clinic_id;
 
                 HttpService.accessWebServicess(
                         getContext(),
@@ -179,11 +214,22 @@ public class PipelineDetailFragment extends Fragment {
                 Toast.makeText(getContext(), "No Internet connection, Please Try again", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-        }*/
+        }
     }
 
     private void handleMoveToTransportResponse(String response, VolleyError error, String status) {
-
+        if (status.equals("response")) {
+            try {
+                ClinicListModel clinicData = (ClinicListModel) Utils.parseResponse(response, ClinicListModel.class);
+                if (clinicData.getFound()) {
+                    //TODO AFTER SUCCESS
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -239,10 +285,10 @@ public class PipelineDetailFragment extends Fragment {
         edtAddress.setText(clinicListInfo.getAddress());
         edtGmailId.setText(clinicListInfo.getGmailid());
         edtActofitId.setText(clinicListInfo.getActofit_id());
+        edtLocation.setText(clinicListInfo.getLocation().getName());
         edtGmailPassword.setText(clinicListInfo.getGmail_password());
         tvActofitExpiry.setText(clinicListInfo.getActofit_end_date());
         edtActofitPassword.setText(clinicListInfo.getActofit_password());
-        edtLocation.setText(clinicListInfo.getLocation().getName());
     }
 
     private void openCalender() {
