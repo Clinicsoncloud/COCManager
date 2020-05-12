@@ -35,6 +35,7 @@ import java.util.Map;
 public class TransportFragment extends Fragment implements ListClickListener {
 
     //region variables
+    ClinicListModel clinicData;
     private RecyclerView rvTransport;
     private Context context = getContext();
     //endregion
@@ -89,7 +90,7 @@ public class TransportFragment extends Fragment implements ListClickListener {
     private void handleAPIResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                ClinicListModel clinicData = (ClinicListModel) Utils.parseResponse(response, ClinicListModel.class);
+                clinicData = (ClinicListModel) Utils.parseResponse(response, ClinicListModel.class);
                 if (clinicData.getFound()) {
                     //TODO AFTER SUCCESS
                     setTransportListAdapter(clinicData.getData());
@@ -133,6 +134,7 @@ public class TransportFragment extends Fragment implements ListClickListener {
         Fragment fragment = new TransportDetailFragment();
         Bundle args = new Bundle();
         args.putString("position",""+position);
+        args.putString("data",""+clinicData.getData());
         fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();

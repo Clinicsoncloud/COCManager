@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -27,16 +29,15 @@ import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.model.ClinicListModel;
-import com.coc.cocmanager.model.LocationModel;
 import com.coc.cocmanager.model.UserData;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
-import org.w3c.dom.Text;
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -63,7 +64,7 @@ public class PipelineDetailFragment extends Fragment {
     TextInputEditText edtActofitPassword;
     @BindView(R.id.tv_actofit_expiry)
     MaterialTextView tvActofitExpiry;
-    @BindView(R.id.spn_client_name)
+    @BindView(R.id.tv_client_name)
     Spinner spnClientName;
     @BindView(R.id.edt_location)
     TextInputEditText edtLocation;
@@ -91,6 +92,8 @@ public class PipelineDetailFragment extends Fragment {
 
     private String clinic_id;
     private String selected_position;
+    private ArrayList<String> clientNamelist;
+    private String assign_user_id;
     //endregion
 
     public static PipelineDetailFragment newInstance(String param1, String param2) {
@@ -192,10 +195,10 @@ public class PipelineDetailFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 clinic_id = tvClinicId.getText().toString();
                 params.put(Constants.Fields.INSTALLATION_STEP, "Transport");
+                params.put(Constants.Fields.ASSIGN_USER_ID, assign_user_id);
                 params.put(Constants.Fields.GMAIL_ID, edtGmailId.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_ID, edtActofitId.getText().toString());
                 params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
-                params.put(Constants.Fields.CLIENT_NAME, spnClientName.getSelectedItem().toString());
                 params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
                 Map<String, String> headerParams = new HashMap<>();
@@ -270,6 +273,7 @@ public class PipelineDetailFragment extends Fragment {
                 if (clinicData.getFound()) {
                     //TODO AFTER SUCCESS
                     setPipelineDetailData(clinicData.getData().get(Integer.parseInt(selected_position)));
+                    getClientList();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -277,6 +281,69 @@ public class PipelineDetailFragment extends Fragment {
         } else if (status.equals("error")) {
             Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getClientList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.USERTYPE, "Customer");
+
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.USER_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleClientNameResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleClientNameResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                UserData userData = (UserData) Utils.parseResponse(response, UserData.class);
+                if (userData.getFound()) {
+                    //TODO AFTER SUCCESS
+                    setClientList(userData.getData());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setClientList(List<UserData.User_Info> data) {
+        int i;
+        clientNamelist = new ArrayList<>();
+        clientNamelist.add("Select Client");
+
+        for (i = 0; i < data.size(); i++) {
+            clientNamelist.add(data.get(i).getFirst_name());
+        }
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
+                R.layout.simple_item_selected, clientNamelist);
+        dataAdapter.setDropDownViewResource(R.layout.simple_item);
+        spnClientName.setAdapter(dataAdapter);
+
+        spnClientName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    assign_user_id = data.get(position - 1).getId();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void setPipelineDetailData(ClinicListModel.ClinicListInfo clinicListInfo) {

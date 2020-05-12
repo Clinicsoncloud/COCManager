@@ -431,14 +431,6 @@ public class ClinicListModel {
             this.location = location;
         }
 
-        /*public LocationModel getLocation() {
-            return location;
-        }
-
-        public void setLocation(LocationModel location) {
-            this.location = location;
-        }*/
-
         public CreateUserInfo getUser() {
             return user;
         }

@@ -170,10 +170,12 @@
     <!--<user screen>-->
     <string name="txt_user_name">User Name</string>_
     <string name="txt_create_user">Create User</string>
+    <string name="txt_update_user">Update User</string>
     <string name="txt_username">Username</string>
     <string name="txt_user_password">Password</string>
     <string name="txt_user_type">User Type</string>
     <string name="txt_spn_gender">Gender</string>
     <string name="txt_create_user_btn">Create User</string>
+    <string name="txt_update_user_btn">Update User</string>
     <string name="txt_enter_kiosk_count">Enter Kiosk Number</string>
 </resources>

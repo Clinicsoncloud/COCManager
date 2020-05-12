@@ -26,6 +26,7 @@ import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.model.AddPipelineModel;
 import com.coc.cocmanager.model.ClinicListModel;
 import com.coc.cocmanager.model.LocationModel;
+import com.coc.cocmanager.model.UserData;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -59,7 +60,7 @@ public class AddToPipelineFragment extends Fragment {
     TextInputEditText edtActofitId;
     @BindView(R.id.edt_actofit_password)
     TextInputEditText edtActofitPassword;
-    @BindView(R.id.spn_client_name)
+    @BindView(R.id.tv_client_name)
     Spinner spnClientName;
     @BindView(R.id.btn_save)
     Button btnSave;
@@ -78,8 +79,10 @@ public class AddToPipelineFragment extends Fragment {
     private String clinic_id;
     private String location_id;
     private String selectedItem;
+    private String assign_user_id;
     private ArrayList<String> clinicList;
     private ArrayList<String> locationList;
+    private ArrayList<String> clientNamelist;
 
     //endregion
 
@@ -146,9 +149,6 @@ public class AddToPipelineFragment extends Fragment {
         }else if(edtActofitPassword.getText().length() == 0){
             edtActofitPassword.setError("Please Enter Actofit Password");
             return false;
-        }else if(spnClientName.getSelectedItemId() == -1){
-            Toast.makeText(getContext(), "Please select the client Name", Toast.LENGTH_SHORT).show();
-            return false;
         }
         return true;
     }
@@ -156,6 +156,72 @@ public class AddToPipelineFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initializeData() {
         getLocationList();
+        getClientNameList();
+    }
+
+    private void getClientNameList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.USERTYPE,"Customer");
+
+                Map<String, String> headerParams;
+                headerParams = new HashMap<>();
+
+                HttpService.accessWebServicesGet(
+                        getContext(), ApiUtils.USER_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleClientNameListResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleClientNameListResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                UserData userData = (UserData) Utils.parseResponse(response, UserData.class);
+                if (userData.getFound() && userData.getData() != null) {
+                    //TODO AFTER SUCCESS
+                    setClientNameList(userData.getData());
+                    Toast.makeText(getContext(), "Successfully loaded list", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setClientNameList(List<UserData.User_Info> data) {
+        int i;
+        clientNamelist = new ArrayList<>();
+        clientNamelist.add("Select Client");
+
+        for (i = 0; i < data.size(); i++) {
+            clientNamelist.add(data.get(i).getFirst_name());
+        }
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
+                R.layout.simple_item_selected, clientNamelist);
+        dataAdapter.setDropDownViewResource(R.layout.simple_item);
+        spnClientName.setAdapter(dataAdapter);
+
+        spnClientName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    assign_user_id = data.get(position - 1).getId();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void openCalender() {
@@ -210,9 +276,9 @@ public class AddToPipelineFragment extends Fragment {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
                 params.put(Constants.Fields.LOCATION_ID, location_id);
+                params.put(Constants.Fields.ASSIGN_USER_ID, assign_user_id);
                 params.put(Constants.Fields.GMAIL_ID, edtGmailId.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_ID, edtActofitId.getText().toString());
-                params.put(Constants.Fields.CLIENT_NAME, spnClientName.getSelectedItem().toString());
                 params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));

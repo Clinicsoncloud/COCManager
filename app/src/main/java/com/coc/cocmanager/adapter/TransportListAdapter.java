@@ -17,6 +17,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ *created by ketan 12-5-2020
+ */
 public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdapter.ViewHolder> {
 
     private Context context;
@@ -44,8 +47,6 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
             tvClinicName = itemView.findViewById(R.id.tv_clinic_name);
             cardviewTransport = itemView.findViewById(R.id.cardview_transport);
         }
-
-
     }
 
     public void setListClickListener(ListClickListener listClickListener) {
@@ -66,24 +67,21 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
         return position;
     }
 
-
     public Object getItem(int position) {
         return list.get(position);
     }
-
 
     @Override
     public int getItemViewType(int position) {
         return position;
     }
 
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.tvClinicName.setText(list.get(position).getName());
-        holder.tvClinicId.setText("Clinic Id -"+list.get(position).getId());
-        holder.tvClientName.setText("");
+        holder.tvClinicId.setText("Id -"+list.get(position).getId());
+        holder.tvClientName.setText("Client -"+list.get(position).getUser().getFirstname());
 
         holder.cardviewTransport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +90,6 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
             }
         });
     }
-
 
     @Override
     public int getItemCount() {

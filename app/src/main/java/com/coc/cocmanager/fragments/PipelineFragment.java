@@ -162,8 +162,8 @@ public class PipelineFragment extends Fragment implements ListClickListener {
      * @param rootView
      */
     private void setupUI(View rootView) {
-        rvPipeline = rootView.findViewById(R.id.rv_pipeline_list);
         ivAddNew = rootView.findViewById(R.id.iv_add_new);
+        rvPipeline = rootView.findViewById(R.id.rv_pipeline_list);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
