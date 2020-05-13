@@ -50,7 +50,7 @@ public class AddToPipelineFragment extends Fragment {
     MaterialTextView edtInstallationType;
     @BindView(R.id.spn_location)
     Spinner spnLocation;
-    @BindView(R.id.tv_clinic_name)
+    @BindView(R.id.spn_clinic_name)
     Spinner spnClinicName;
     @BindView(R.id.edt_gmail_id)
     TextInputEditText edtGmailId;
@@ -60,7 +60,7 @@ public class AddToPipelineFragment extends Fragment {
     TextInputEditText edtActofitId;
     @BindView(R.id.edt_actofit_password)
     TextInputEditText edtActofitPassword;
-    @BindView(R.id.tv_client_name)
+    @BindView(R.id.spn_client_name)
     Spinner spnClientName;
     @BindView(R.id.btn_save)
     Button btnSave;
@@ -149,6 +149,9 @@ public class AddToPipelineFragment extends Fragment {
         }else if(edtActofitPassword.getText().length() == 0){
             edtActofitPassword.setError("Please Enter Actofit Password");
             return false;
+        }else if(spnClientName.getSelectedItemId() == -1){
+            Toast.makeText(getContext(), "Please Select Client", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }
@@ -156,72 +159,7 @@ public class AddToPipelineFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initializeData() {
         getLocationList();
-        getClientNameList();
-    }
-
-    private void getClientNameList() {
-        try {
-            if (Utils.isOnline(getContext())) {
-                Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.USERTYPE,"Customer");
-
-                Map<String, String> headerParams;
-                headerParams = new HashMap<>();
-
-                HttpService.accessWebServicesGet(
-                        getContext(), ApiUtils.USER_LIST,
-                        params, headerParams,
-                        (response, error, status) -> handleClientNameListResponse(response, error, status));
-            } else {
-                Utils.showToast(getContext(), "No Internet connectivity..!");
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    private void handleClientNameListResponse(String response, VolleyError error, String status) {
-        if (status.equals("response")) {
-            try {
-                UserData userData = (UserData) Utils.parseResponse(response, UserData.class);
-                if (userData.getFound() && userData.getData() != null) {
-                    //TODO AFTER SUCCESS
-                    setClientNameList(userData.getData());
-                    Toast.makeText(getContext(), "Successfully loaded list", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (status.equals("error")) {
-            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void setClientNameList(List<UserData.User_Info> data) {
-        int i;
-        clientNamelist = new ArrayList<>();
-        clientNamelist.add("Select Client");
-
-        for (i = 0; i < data.size(); i++) {
-            clientNamelist.add(data.get(i).getFirst_name());
-        }
-
-        ArrayAdapter<String> dataAdapter;
-        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
-                R.layout.simple_item_selected, clientNamelist);
-        dataAdapter.setDropDownViewResource(R.layout.simple_item);
-        spnClientName.setAdapter(dataAdapter);
-
-        spnClientName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    assign_user_id = data.get(position - 1).getId();
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        getClientList();
     }
 
     private void openCalender() {
@@ -240,15 +178,23 @@ public class AddToPipelineFragment extends Fragment {
         datePickerDialog.show();
     }
 
-    private void clearFormData() {
-        edtGmailId.setText("");
-        tvClinicId.setText("");
-        edtActofitId.setText("");
-        spnLocation.setSelection(0);
-        edtGmailPassword.setText("");
-        spnClinicName.setSelection(0);
-        spnClientName.setSelection(0);
-        edtActofitPassword.setText("");
+    private void getClientList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put("status", "true");
+
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.CLIENT_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleClientNameResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
     }
 
     private void getLocationList() {
@@ -281,8 +227,8 @@ public class AddToPipelineFragment extends Fragment {
                 params.put(Constants.Fields.ACTOFIT_ID, edtActofitId.getText().toString());
                 params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
-                params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
                 params.put(Constants.Fields.INSTALLATION_STEP, edtInstallationType.getText().toString());
+                params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
 
                 Map<String, String> headerParams = new HashMap<>();
 
@@ -303,6 +249,12 @@ public class AddToPipelineFragment extends Fragment {
         }
     }
 
+    private void goToPipelineListScreen() {
+        Fragment fragment = new PipelineFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
+                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
+    }
+
     private void getClinicList(String locationId) {
         try {
             if (Utils.isOnline(getContext())) {
@@ -321,6 +273,35 @@ public class AddToPipelineFragment extends Fragment {
             }
         } catch (Exception e) {
         }
+    }
+
+    private void setClientList(List<UserData.User_Info> data) {
+        int i;
+        clientNamelist = new ArrayList<>();
+        clientNamelist.add("Select Client");
+
+        for (i = 0; i < data.size(); i++) {
+            clientNamelist.add(data.get(i).getFirst_name() + " " + data.get(i).getLast_name());
+        }
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
+                R.layout.simple_item_selected, clientNamelist);
+        dataAdapter.setDropDownViewResource(R.layout.simple_item);
+        spnClientName.setAdapter(dataAdapter);
+
+        spnClientName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    assign_user_id = data.get(position - 1).getId();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void setLocationListToSpinner(List<LocationModel.LocationInfo> data) {
@@ -380,9 +361,7 @@ public class AddToPipelineFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 
@@ -394,6 +373,25 @@ public class AddToPipelineFragment extends Fragment {
                     //TODO AFTER SUCCESS
                     setLocationListToSpinner(locationModel.getData());
                     Toast.makeText(getContext(), "Successfully loaded list", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void handlePipelineResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                AddPipelineModel pipelineData = (AddPipelineModel) Utils.parseResponse(response, AddPipelineModel.class);
+                if (pipelineData.getSuccess()) {
+                    //TODO AFTER SUCCESS
+                    goToPipelineListScreen();
+                    Toast.makeText(getContext(), "Successfully added to pipeline", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Error in updating to pipeline", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -420,16 +418,13 @@ public class AddToPipelineFragment extends Fragment {
         }
     }
 
-    private void handlePipelineResponse(String response, VolleyError error, String status) {
+    private void handleClientNameResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                AddPipelineModel pipelineData = (AddPipelineModel) Utils.parseResponse(response, AddPipelineModel.class);
-                if (pipelineData.getSuccess()) {
+                UserData userData = (UserData) Utils.parseResponse(response, UserData.class);
+                if (userData.getFound()) {
                     //TODO AFTER SUCCESS
-                    clearFormData();
-                    Toast.makeText(getContext(), "Successfully added to pipeline", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Error in updating to pipeline", Toast.LENGTH_SHORT).show();
+                    setClientList(userData.getData());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -438,6 +433,7 @@ public class AddToPipelineFragment extends Fragment {
             Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
         }
     }
+
 
     //endregion
 }

@@ -48,6 +48,8 @@ import butterknife.ButterKnife;
  */
 public class PipelineDetailFragment extends Fragment {
 
+    //region variables
+
     @BindView(R.id.tv_installation_type)
     MaterialTextView tvInstallationType;
     @BindView(R.id.tv_clinic_name)
@@ -72,11 +74,11 @@ public class PipelineDetailFragment extends Fragment {
     TextInputEditText edtAddress;
     @BindView(R.id.btn_consumables)
     Button btnConsumables;
-    @BindView(R.id.iv_minus)
+    @BindView(R.id.iv_minus_lancets)
     ImageView ivMinus;
-    @BindView(R.id.tv_count)
+    @BindView(R.id.tv_count_lancets)
     MaterialTextView tvCount;
-    @BindView(R.id.iv_plus)
+    @BindView(R.id.iv_plus_lancets)
     ImageView ivPlus;
     @BindView(R.id.ll_plus_minus)
     LinearLayout llPlusMinus;
@@ -84,16 +86,41 @@ public class PipelineDetailFragment extends Fragment {
     ExpandableRelativeLayout expandableConsumables;
     @BindView(R.id.btn_save)
     Button btnSave;
-    //region variables
+    @BindView(R.id.iv_minus_hb_strips)
+    ImageView ivMinusHbStrips;
+    @BindView(R.id.tv_count_hb_strips)
+    MaterialTextView tvCountHbStrips;
+    @BindView(R.id.iv_plus_hb_strips)
+    ImageView ivPlusHbStrips;
+    @BindView(R.id.iv_minus_sugar_strips)
+    ImageView ivMinusSugarStrips;
+    @BindView(R.id.tv_count_sugar_strips)
+    MaterialTextView tvCountSugarStrips;
+    @BindView(R.id.iv_plus_sugar_strips)
+    ImageView ivPlusSugarStrips;
+    @BindView(R.id.iv_minus_screw_drivers)
+    ImageView ivMinusScrewDrivers;
+    @BindView(R.id.tv_count_screw_drivers)
+    MaterialTextView tvCountScrewDrivers;
+    @BindView(R.id.iv_plus_screw_drivers)
+    ImageView ivPlusScrewDrivers;
+    @BindView(R.id.iv_minus_cells)
+    ImageView ivMinusCells;
+    @BindView(R.id.tv_count_cells)
+    MaterialTextView tvCountCells;
+    @BindView(R.id.iv_plus_cells)
+    ImageView ivPlusCells;
+
     private int mYear, mMonth, mDay;
 
     private int count = 0;
     private TextView tvQty;
 
     private String clinic_id;
+    private String assign_user_id;
     private String selected_position;
     private ArrayList<String> clientNamelist;
-    private String assign_user_id;
+
     //endregion
 
     public static PipelineDetailFragment newInstance(String param1, String param2) {
@@ -122,42 +149,37 @@ public class PipelineDetailFragment extends Fragment {
 
 
     private void setupEvents() {
-        tvActofitExpiry.setOnClickListener(v -> {
-            openCalender();
-        });
+        btnSave.setOnClickListener(v -> {moveToTransport();});
+        tvActofitExpiry.setOnClickListener(v -> {openCalender();});
+        btnConsumables.setOnClickListener(v -> { expandableConsumables.toggle(); });
 
-        btnConsumables.setOnClickListener(v -> {
-            expandableConsumables.toggle();
-        });
+        ivMinus.setOnClickListener(v -> {removeCount(tvQty);});
+        ivMinusCells.setOnClickListener(v -> {removeCount(tvCountCells);});
+        ivMinusHbStrips.setOnClickListener(v -> {removeCount(tvCountHbStrips);});
+        ivMinusSugarStrips.setOnClickListener(v -> {removeCount(tvCountSugarStrips);});
+        ivMinusScrewDrivers.setOnClickListener(v -> {removeCount(tvCountScrewDrivers);});
 
-        ivPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (count >= 0) {
-                    count = count + 1;
-                    tvQty.setText("" + count);
-                }
-            }
-        });
+        ivPlus.setOnClickListener(v -> {addCount(tvQty);});
+        ivPlusCells.setOnClickListener(v -> {addCount(tvCountCells);});
+        ivPlusHbStrips.setOnClickListener(v -> {addCount(tvCountHbStrips);});
+        ivPlusSugarStrips.setOnClickListener(v -> {addCount(tvCountSugarStrips);});
+        ivPlusScrewDrivers.setOnClickListener(v -> {addCount(tvCountScrewDrivers);});
 
-        ivMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (count > 0) {
-                    count = count - 1;
-                    tvQty.setText("" + count);
-                } else
-                    Toast.makeText(getContext(), "Can't minus now", Toast.LENGTH_SHORT).show();
-            }
-        });
+    }
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (valid())
-                    moveToTransport();
-            }
-        });
+    private void removeCount(TextView tvQty) {
+        if (count > 0) {
+            count = count - 1;
+            tvQty.setText("" + count);
+        } else
+            Toast.makeText(getContext(), "Can't minus now", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addCount(TextView tvQty) {
+        if (count >= 0) {
+            count = count + 1;
+            tvQty.setText("" + count);
+        }
     }
 
     private boolean valid() {
@@ -287,12 +309,12 @@ public class PipelineDetailFragment extends Fragment {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.USERTYPE, "Customer");
+                params.put("status", "true");
 
                 Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(
-                        getContext(), ApiUtils.USER_LIST,
+                        getContext(), ApiUtils.CLIENT_LIST,
                         params, headerParams,
                         (response, error, status) -> handleClientNameResponse(response, error, status));
             } else {
@@ -324,7 +346,7 @@ public class PipelineDetailFragment extends Fragment {
         clientNamelist.add("Select Client");
 
         for (i = 0; i < data.size(); i++) {
-            clientNamelist.add(data.get(i).getFirst_name());
+            clientNamelist.add(data.get(i).getFirst_name() + " " + data.get(i).getLast_name());
         }
 
         ArrayAdapter<String> dataAdapter;
@@ -340,6 +362,7 @@ public class PipelineDetailFragment extends Fragment {
                     assign_user_id = data.get(position - 1).getId();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -376,9 +399,24 @@ public class PipelineDetailFragment extends Fragment {
     }
 
     private void setupUI(View rootView) {
-        ivPlus = rootView.findViewById(R.id.iv_plus);
-        tvQty = rootView.findViewById(R.id.tv_count);
-        ivMinus = rootView.findViewById(R.id.iv_minus);
+        tvQty = rootView.findViewById(R.id.tv_count_lancets);
+        tvCountCells = rootView.findViewById(R.id.tv_count_cells);
+        tvCountHbStrips = rootView.findViewById(R.id.tv_count_hb_strips);
+        tvCountSugarStrips = rootView.findViewById(R.id.tv_count_sugar_strips);
+        tvCountScrewDrivers = rootView.findViewById(R.id.tv_count_screw_drivers);
+
+        ivMinus = rootView.findViewById(R.id.iv_minus_lancets);
+        ivMinusCells = rootView.findViewById(R.id.iv_minus_cells);
+        ivMinusHbStrips = rootView.findViewById(R.id.iv_minus_hb_strips);
+        ivMinusSugarStrips = rootView.findViewById(R.id.iv_minus_sugar_strips);
+        ivMinusScrewDrivers = rootView.findViewById(R.id.iv_minus_screw_drivers);
+
+        ivPlus = rootView.findViewById(R.id.iv_plus_lancets);
+        ivPlusCells = rootView.findViewById(R.id.iv_plus_cells);
+        ivPlusHbStrips = rootView.findViewById(R.id.iv_plus_hb_strips);
+        ivPlusSugarStrips = rootView.findViewById(R.id.iv_plus_sugar_strips);
+        ivPlusScrewDrivers = rootView.findViewById(R.id.iv_plus_screw_drivers);
+
         btnConsumables = rootView.findViewById(R.id.btn_consumables);
         tvActofitExpiry = rootView.findViewById(R.id.tv_actofit_expiry);
         expandableConsumables = rootView.findViewById(R.id.expandable_consumables);

@@ -355,7 +355,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
-                                android:id="@+id/iv_minus"
+                                android:id="@+id/iv_minus_lancets"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -364,10 +364,10 @@
                                 android:paddingLeft="@dimen/_5sdp"/>
 
                             <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/tv_count"
+                                android:id="@+id/tv_count_lancets"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:paddingLeft="5dp"
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorGreen"
@@ -377,7 +377,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
-                                android:id="@+id/iv_plus"
+                                android:id="@+id/iv_plus_lancets"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -415,6 +415,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
+                                android:id="@+id/iv_minus_hb_strips"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -423,9 +424,10 @@
                                 android:paddingLeft="@dimen/_5sdp"/>
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_count_hb_strips"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:paddingLeft="5dp"
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorGreen"
@@ -435,6 +437,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
+                                android:id="@+id/iv_plus_hb_strips"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -472,6 +475,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
+                                android:id="@+id/iv_minus_sugar_strips"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -479,7 +483,8 @@
                                 android:layout_gravity="center"
                                 android:paddingLeft="@dimen/_5sdp"/>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_count_sugar_strips"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1"
@@ -492,6 +497,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
+                                android:id="@+id/iv_plus_sugar_strips"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -529,6 +535,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
+                                android:id="@+id/iv_minus_screw_drivers"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -536,7 +543,8 @@
                                 android:layout_gravity="center"
                                 android:paddingLeft="@dimen/_5sdp"/>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_count_screw_drivers"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1"
@@ -549,6 +557,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
+                                android:id="@+id/iv_plus_screw_drivers"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -586,6 +595,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
+                                android:id="@+id/iv_minus_cells"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -593,7 +603,8 @@
                                 android:layout_gravity="center"
                                 android:paddingLeft="@dimen/_5sdp"/>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_count_cells"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1"
@@ -606,6 +617,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
+                                android:id="@+id/iv_plus_cells"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"

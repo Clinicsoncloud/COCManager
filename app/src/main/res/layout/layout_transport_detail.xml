@@ -358,7 +358,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
-                                android:id="@+id/iv_minus_lancets"
+                                android:id="@+id/iv_minus_lancet"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -367,10 +367,10 @@
                                 android:paddingLeft="@dimen/_5sdp"/>
 
                             <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/tv_count_lancets"
+                                android:id="@+id/tv_qty_lancets"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:paddingLeft="5dp"
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorGreen"
@@ -380,7 +380,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
-                                android:id="@+id/iv_plus_lancets"
+                                android:id="@+id/iv_plus_lancet"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -418,7 +418,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
-                                android:id="@+id/iv_minus_hb_strips"
+                                android:id="@+id/iv_minus_hb_strip"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -430,7 +430,7 @@
                                 android:id="@+id/tv_qty_hb_strips"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:paddingLeft="5dp"
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorGreen"
@@ -440,7 +440,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
-                                android:id="@+id/iv_plus_hb_strips"
+                                android:id="@+id/iv_plus_hb_strip"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -478,7 +478,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
-                                android:id="@+id/iv_minus_sugar_strips"
+                                android:id="@+id/iv_minus_sugar_strip"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -490,7 +490,7 @@
                                 android:id="@+id/tv_qty_sugar_strips"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:paddingLeft="5dp"
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorGreen"
@@ -500,7 +500,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
-                                android:id="@+id/iv_plus_sugar_strips"
+                                android:id="@+id/iv_plus_sugar_strip"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -538,7 +538,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
-                                android:id="@+id/iv_minus_screw_drivers"
+                                android:id="@+id/iv_minus_screw_driver"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -550,7 +550,7 @@
                                 android:id="@+id/tv_qty_screw_drivers"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:paddingLeft="5dp"
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorGreen"
@@ -560,7 +560,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
-                                android:id="@+id/iv_plus_screw_drivers"
+                                android:id="@+id/iv_plus_screw_driver"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
@@ -598,7 +598,7 @@
                             android:background="@drawable/btn_rounded_corner_with_red_border">
 
                             <ImageView
-                                android:id="@+id/iv_minus_cells"
+                                android:id="@+id/iv_minus_cell"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_minus"
@@ -610,7 +610,7 @@
                                 android:id="@+id/tv_qty_cells"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:paddingLeft="5dp"
                                 android:textSize="@dimen/_14sdp"
                                 android:textColor="@color/colorGreen"
@@ -620,7 +620,7 @@
                                 android:layout_gravity="center"/>
 
                             <ImageView
-                                android:id="@+id/iv_plus_cells"
+                                android:id="@+id/iv_plus_cell"
                                 android:layout_width="@dimen/_13sdp"
                                 android:layout_height="@dimen/_13sdp"
                                 android:src="@drawable/ic_plus"
