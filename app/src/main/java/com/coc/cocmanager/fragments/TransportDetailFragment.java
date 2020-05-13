@@ -150,17 +150,17 @@ public class TransportDetailFragment extends Fragment implements View.OnClickLis
             expandView();
         });
 
-        ivMinusCells.setOnClickListener(this);
-        ivMinusLancets.setOnClickListener(this);
-        ivMinusHbStrips.setOnClickListener(this);
-        ivMinusSugarStrips.setOnClickListener(this);
-        ivMinusScrewDrivers.setOnClickListener(this);
+        expandableConsumables.findViewById(R.id.iv_minus_cells).setOnClickListener(v -> {removeCount(tvQtyCells);});
+        expandableConsumables.findViewById(R.id.iv_minus_lancets).setOnClickListener(v -> {removeCount(tvCountLancets);});
+        ivMinusHbStrips.setOnClickListener(v -> {removeCount(tvQtyHbStrips);});
+        ivMinusSugarStrips.setOnClickListener(v -> {removeCount(tvQtySugarStrips);});
+        ivMinusScrewDrivers.setOnClickListener(v -> {removeCount(tvQtyScrewDrivers);});
 
-        ivPlusCells.setOnClickListener(this);
-        ivPlusLancets.setOnClickListener(this);
-        ivPlusHbStrips.setOnClickListener(this);
-        ivPlusSugarStrips.setOnClickListener(this);
-        ivPlusScrewDrivers.setOnClickListener(this);
+        expandableConsumables.findViewById(R.id.iv_plus_cells).setOnClickListener(v -> {addCount(tvQtyCells);});
+        expandableConsumables.findViewById(R.id.iv_plus_lancets).setOnClickListener(v -> {addCount(tvCountLancets);});
+        ivPlusHbStrips.setOnClickListener(v -> {addCount(tvQtyHbStrips);});
+        ivPlusSugarStrips.setOnClickListener(v -> {addCount(tvQtySugarStrips);});
+        ivPlusScrewDrivers.setOnClickListener(v -> {addCount(tvQtyScrewDrivers);});
     }
 
     private void expandView() {
