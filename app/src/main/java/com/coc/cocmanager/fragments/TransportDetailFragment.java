@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,8 +57,8 @@ public class TransportDetailFragment extends Fragment implements View.OnClickLis
     MaterialTextView tvActofitPassword;
     @BindView(R.id.tv_actofit_expiry)
     MaterialTextView tvActofitExpiry;
-    @BindView(R.id.tv_client_name)
-    MaterialTextView tvClientName;
+    @BindView(R.id.spn_client_name)
+    Spinner tvClientName;
     @BindView(R.id.edt_location)
     TextInputEditText edtLocation;
     @BindView(R.id.edt_address)
@@ -252,7 +253,6 @@ public class TransportDetailFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
 
             case R.id.iv_minus_lancets:

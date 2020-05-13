@@ -241,8 +241,8 @@
                     android:text="@string/txt_client_name"
                     android:textSize="@dimen/_15sdp" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_client_name"
+                <Spinner
+                    android:id="@+id/spn_client_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
