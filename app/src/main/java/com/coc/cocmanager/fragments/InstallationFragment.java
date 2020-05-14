@@ -9,17 +9,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
+import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.Constants;
+import com.coc.cocmanager.Utils.HttpService;
+import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.adapter.InstallationsListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
+import com.coc.cocmanager.model.ClinicListModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * created by ketan 23-3-2020
@@ -59,6 +69,7 @@ public class InstallationFragment extends Fragment implements ListClickListener,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_installation, container, false);
+
         setupUI(rootView);
         setupEvents();
         initalizeData();
@@ -77,7 +88,42 @@ public class InstallationFragment extends Fragment implements ListClickListener,
      * Initialization of methods
      */
     private void initalizeData() {
-        setInstallationListAdapter();
+        getInstalledClinicList();
+    }
+
+    private void getInstalledClinicList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String ,String> params = new HashMap<>();
+                params.put(Constants.Fields.INSTALLATION_STEP,"Installed");
+
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.CLINIC_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleAPIResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(),"No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleAPIResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                ClinicListModel clinicData = (ClinicListModel) Utils.parseResponse(response,ClinicListModel.class);
+                if(clinicData.getFound()){
+                    //TODO AFTER SUCCESS
+                    setInstallationListAdapter(clinicData.getData());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -111,17 +157,9 @@ public class InstallationFragment extends Fragment implements ListClickListener,
     /**
      * This method is used to set the installation list
      * Adapter is created and set to the recyclerview variables
+     * @param data
      */
-    private void setInstallationListAdapter() {
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-
-
+    private void setInstallationListAdapter(List<ClinicListModel.ClinicListInfo> list) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         rvInstallations.setLayoutManager(linearLayoutManager);
         InstallationsListAdapter adapter = new InstallationsListAdapter(context, list);
