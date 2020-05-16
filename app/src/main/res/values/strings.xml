@@ -48,11 +48,13 @@
     </array>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="txt_clinic_name">Clinic Name</string>
+    <string name="txt_item">Select Item</string>
     <string name="txt_clinic_id">Clinic id</string>
-    <string name="txt_clinic_location">Location</string>
-    <string name="txt_clinic_date">22 july 2020</string>
+    <string name="txt_clinic_name">Clinic Name</string>
     <string name="txt_client_name">Client Name</string>
+    <string name="txt_clinic_date">22 july 2020</string>
+    <string name="txt_clinic_location">Location</string>
+    <string name="txt_item_category">Select Item Category</string>
 
     <!--<Add New Stock>-->
     <string name="txt_item_name">Item Name</string>
@@ -74,6 +76,7 @@
     <string name="txt_installed_by">Installed By</string>
     <string name="txt_operator_name">Operator Name</string>
     <string name="txt_operator_number">Operator Number</string>
+    <string name="txt_quantity">Quantity</string>
 
 
     <string name="txt_clinic_name_1">Clinic Name 1</string>

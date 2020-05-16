@@ -34,16 +34,21 @@ public class InstallationsListAdapter extends RecyclerView.Adapter<Installations
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cardViewInstallation;
-        TextView tvClinicName;
-        TextView tvClinicLocation;
         TextView tvClinicId;
+        TextView tvClinicName;
         TextView tvClientName;
+        TextView tvClinicLocation;
+        CardView cardViewInstallation;
 
         public ViewHolder(View itemView) {
             super(itemView);
-        }
 
+            tvClinicId = itemView.findViewById(R.id.tv_clinic_id);
+            tvClinicName = itemView.findViewById(R.id.tv_clinic_name);
+            tvClientName = itemView.findViewById(R.id.tv_client_name);
+            tvClinicLocation = itemView.findViewById(R.id.tv_clinic_location);
+            cardViewInstallation = itemView.findViewById(R.id.cardview_installation);
+        }
     }
 
     public void setListClickListener(ListClickListener listClickListener) {
@@ -75,25 +80,16 @@ public class InstallationsListAdapter extends RecyclerView.Adapter<Installations
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-/*
+        holder.tvClinicId.setText(list.get(position).getId());
+        holder.tvClinicName.setText(list.get(position).getName());
+        holder.tvClientName.setText(list.get(position).getUser().getFirstname());
+        holder.tvClinicLocation.setText(list.get(position).getLocation().getName());
 
-        holder.tv_particulars.setText(list.get(position).getServiceName());
-        holder.ivAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                listClickListener.click(position,1);
-            }
-        });
-*/
-
+        holder.cardViewInstallation.setOnClickListener(v -> {listClickListener.click(position,0);});
     }
-
 
     @Override
     public int getItemCount() {
-
         return list.size();
     }
-
 }

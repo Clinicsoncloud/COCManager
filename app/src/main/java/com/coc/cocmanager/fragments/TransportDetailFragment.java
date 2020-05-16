@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 /**
  * created by ketan 23-3-2020
  */
-public class TransportDetailFragment extends Fragment implements View.OnClickListener {
+public class TransportDetailFragment extends Fragment{
 
     @BindView(R.id.tv_installation_type)
     MaterialTextView tvInstallationType;
@@ -322,52 +322,6 @@ public class TransportDetailFragment extends Fragment implements View.OnClickLis
             }
         } else if (status.equals("error")) {
             Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.iv_minus_lancets:
-                removeCount(tvQtyLancets);
-                break;
-
-            case R.id.iv_minus_hb_strips:
-                removeCount(tvQtyHbStrips);
-                break;
-
-            case R.id.iv_minus_sugar_strips:
-                removeCount(tvQtySugarStrips);
-                break;
-
-            case R.id.iv_minus_screw_drivers:
-                removeCount(tvQtyScrewDrivers);
-                break;
-
-            case R.id.iv_minus_cells:
-                removeCount(tvQtyCells);
-                break;
-
-            case R.id.iv_plus_lancets:
-                addCount(tvQtyLancets);
-                break;
-
-            case R.id.iv_plus_hb_strips:
-                addCount(tvQtyHbStrips);
-                break;
-
-            case R.id.iv_plus_sugar_strips:
-                addCount(tvQtySugarStrips);
-                break;
-
-            case R.id.iv_plus_screw_drivers:
-                addCount(tvQtyScrewDrivers);
-                break;
-
-            case R.id.iv_plus_cells:
-                addCount(tvQtyCells);
-                break;
         }
     }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -29,6 +30,9 @@ import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.model.ClinicListModel;
+import com.coc.cocmanager.model.ItemCategoryInfo;
+import com.coc.cocmanager.model.ItemCategoryModel;
+import com.coc.cocmanager.model.ItemListModel;
 import com.coc.cocmanager.model.UserData;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.android.material.textfield.TextInputEditText;
@@ -68,57 +72,28 @@ public class PipelineDetailFragment extends Fragment {
     MaterialTextView tvActofitExpiry;
     @BindView(R.id.tv_client_name)
     Spinner spnClientName;
+    @BindView(R.id.spn_category)
+    Spinner spnCategory;
+    @BindView(R.id.spn_item_list)
+    Spinner spnItemList;
     @BindView(R.id.edt_location)
     TextInputEditText edtLocation;
+    @BindView(R.id.edt_item_quantity)
+    TextInputEditText edtQuantity;
     @BindView(R.id.edt_address)
     TextInputEditText edtAddress;
-    @BindView(R.id.btn_consumables)
-    Button btnConsumables;
-    @BindView(R.id.iv_minus_lancets)
-    ImageView ivMinus;
-    @BindView(R.id.tv_count_lancets)
-    MaterialTextView tvCount;
-    @BindView(R.id.iv_plus_lancets)
-    ImageView ivPlus;
-    @BindView(R.id.ll_plus_minus)
-    LinearLayout llPlusMinus;
-    @BindView(R.id.expandable_consumables)
-    ExpandableRelativeLayout expandableConsumables;
     @BindView(R.id.btn_save)
     Button btnSave;
-    @BindView(R.id.iv_minus_hb_strips)
-    ImageView ivMinusHbStrips;
-    @BindView(R.id.tv_count_hb_strips)
-    MaterialTextView tvCountHbStrips;
-    @BindView(R.id.iv_plus_hb_strips)
-    ImageView ivPlusHbStrips;
-    @BindView(R.id.iv_minus_sugar_strips)
-    ImageView ivMinusSugarStrips;
-    @BindView(R.id.tv_count_sugar_strips)
-    MaterialTextView tvCountSugarStrips;
-    @BindView(R.id.iv_plus_sugar_strips)
-    ImageView ivPlusSugarStrips;
-    @BindView(R.id.iv_minus_screw_drivers)
-    ImageView ivMinusScrewDrivers;
-    @BindView(R.id.tv_count_screw_drivers)
-    MaterialTextView tvCountScrewDrivers;
-    @BindView(R.id.iv_plus_screw_drivers)
-    ImageView ivPlusScrewDrivers;
-    @BindView(R.id.iv_minus_cells)
-    ImageView ivMinusCells;
-    @BindView(R.id.tv_count_cells)
-    MaterialTextView tvCountCells;
-    @BindView(R.id.iv_plus_cells)
-    ImageView ivPlusCells;
 
     private int mYear, mMonth, mDay;
 
-    private int count = 0;
-    private TextView tvQty;
-
+    private String item_id;
     private String clinic_id;
     private String assign_user_id;
+    private String item_category_id;
     private String selected_position;
+    private ArrayList<String> itemList;
+    private ArrayList<String> categoryList;
     private ArrayList<String> clientNamelist;
 
     //endregion
@@ -151,35 +126,6 @@ public class PipelineDetailFragment extends Fragment {
     private void setupEvents() {
         btnSave.setOnClickListener(v -> {moveToTransport();});
         tvActofitExpiry.setOnClickListener(v -> {openCalender();});
-        btnConsumables.setOnClickListener(v -> { expandableConsumables.toggle(); });
-
-        ivMinus.setOnClickListener(v -> {removeCount(tvQty);});
-        ivMinusCells.setOnClickListener(v -> {removeCount(tvCountCells);});
-        ivMinusHbStrips.setOnClickListener(v -> {removeCount(tvCountHbStrips);});
-        ivMinusSugarStrips.setOnClickListener(v -> {removeCount(tvCountSugarStrips);});
-        ivMinusScrewDrivers.setOnClickListener(v -> {removeCount(tvCountScrewDrivers);});
-
-        ivPlus.setOnClickListener(v -> {addCount(tvQty);});
-        ivPlusCells.setOnClickListener(v -> {addCount(tvCountCells);});
-        ivPlusHbStrips.setOnClickListener(v -> {addCount(tvCountHbStrips);});
-        ivPlusSugarStrips.setOnClickListener(v -> {addCount(tvCountSugarStrips);});
-        ivPlusScrewDrivers.setOnClickListener(v -> {addCount(tvCountScrewDrivers);});
-
-    }
-
-    private void removeCount(TextView tvQty) {
-        if (count > 0) {
-            count = count - 1;
-            tvQty.setText("" + count);
-        } else
-            Toast.makeText(getContext(), "Can't minus now", Toast.LENGTH_SHORT).show();
-    }
-
-    private void addCount(TextView tvQty) {
-        if (count >= 0) {
-            count = count + 1;
-            tvQty.setText("" + count);
-        }
     }
 
     private boolean valid() {
@@ -216,10 +162,10 @@ public class PipelineDetailFragment extends Fragment {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
                 clinic_id = tvClinicId.getText().toString();
-                params.put(Constants.Fields.INSTALLATION_STEP, "Transport");
                 params.put(Constants.Fields.ASSIGN_USER_ID, assign_user_id);
                 params.put(Constants.Fields.GMAIL_ID, edtGmailId.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_ID, edtActofitId.getText().toString());
+                params.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_TRANASPORT);
                 params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
                 params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
@@ -260,7 +206,138 @@ public class PipelineDetailFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initializeData() {
         getPosition();
+        getCategoryList();
         showPipelineDetails();
+    }
+
+    private void getCategoryList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
+
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.ITEM_CATEGORY_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleCategoryItemResponse(response, error, status));
+            } else {
+                Toast.makeText(getContext(), "No Internet Connection..!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleCategoryItemResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                ItemCategoryModel itemCategoryData = (ItemCategoryModel) Utils.parseResponse(response, ItemCategoryModel.class);
+                if (itemCategoryData.getFound()) {
+                    //TODO AFTER SUCCESS
+                    setItemCategoryList(itemCategoryData.getData());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setItemCategoryList(List<ItemCategoryModel.ItemCategoryInfo> data) {
+        int i;
+        categoryList = new ArrayList<>();
+        categoryList.add("Select Item Category");
+
+        for (i = 0; i < data.size(); i++) {
+            categoryList.add(data.get(i).getName());
+        }
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
+                R.layout.simple_item_selected, categoryList);
+        dataAdapter.setDropDownViewResource(R.layout.simple_item);
+        spnCategory.setAdapter(dataAdapter);
+
+        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    item_category_id = data.get(position - 1).getId();
+                    getItemListofSelectedCategory(item_category_id);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    private void getItemListofSelectedCategory(String item_category_id) {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
+                params.put(Constants.Fields.ITEM_CATEGORY_ID, item_category_id);
+
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.ITEM_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleItemListResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleItemListResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                ItemListModel itemListData = (ItemListModel) Utils.parseResponse(response, ItemListModel.class);
+                if (itemListData.getFound()) {
+                    //TODO AFTER SUCCESS
+                    setItemListofSelectedCategory(itemListData.getData());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setItemListofSelectedCategory(List<ItemListModel.ItemListInfo> data) {
+        int i;
+        itemList = new ArrayList<>();
+        itemList.add("Select Item");
+
+        for (i = 0; i < data.size(); i++) {
+            itemList.add(data.get(i).getName());
+        }
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
+                R.layout.simple_item_selected, itemList);
+        dataAdapter.setDropDownViewResource(R.layout.simple_item);
+        spnItemList.setAdapter(dataAdapter);
+
+        spnItemList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    item_id = data.get(position - 1).getId();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void getPosition() {
@@ -272,7 +349,7 @@ public class PipelineDetailFragment extends Fragment {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.INSTALLATION_STEP, "Pipeline");
+                params.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_PIPELINE);
 
                 Map<String, String> headerParams = new HashMap<>();
 
@@ -309,7 +386,7 @@ public class PipelineDetailFragment extends Fragment {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put("status", "true");
+                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
 
                 Map<String, String> headerParams = new HashMap<>();
 
@@ -399,27 +476,7 @@ public class PipelineDetailFragment extends Fragment {
     }
 
     private void setupUI(View rootView) {
-        tvQty = rootView.findViewById(R.id.tv_count_lancets);
-        tvCountCells = rootView.findViewById(R.id.tv_count_cells);
-        tvCountHbStrips = rootView.findViewById(R.id.tv_count_hb_strips);
-        tvCountSugarStrips = rootView.findViewById(R.id.tv_count_sugar_strips);
-        tvCountScrewDrivers = rootView.findViewById(R.id.tv_count_screw_drivers);
-
-        ivMinus = rootView.findViewById(R.id.iv_minus_lancets);
-        ivMinusCells = rootView.findViewById(R.id.iv_minus_cells);
-        ivMinusHbStrips = rootView.findViewById(R.id.iv_minus_hb_strips);
-        ivMinusSugarStrips = rootView.findViewById(R.id.iv_minus_sugar_strips);
-        ivMinusScrewDrivers = rootView.findViewById(R.id.iv_minus_screw_drivers);
-
-        ivPlus = rootView.findViewById(R.id.iv_plus_lancets);
-        ivPlusCells = rootView.findViewById(R.id.iv_plus_cells);
-        ivPlusHbStrips = rootView.findViewById(R.id.iv_plus_hb_strips);
-        ivPlusSugarStrips = rootView.findViewById(R.id.iv_plus_sugar_strips);
-        ivPlusScrewDrivers = rootView.findViewById(R.id.iv_plus_screw_drivers);
-
-        btnConsumables = rootView.findViewById(R.id.btn_consumables);
         tvActofitExpiry = rootView.findViewById(R.id.tv_actofit_expiry);
-        expandableConsumables = rootView.findViewById(R.id.expandable_consumables);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

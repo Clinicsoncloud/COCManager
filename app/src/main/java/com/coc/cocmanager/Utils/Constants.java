@@ -8,6 +8,7 @@ package com.coc.cocmanager.Utils;
 public class Constants {
 
     public static class Fields {
+        public static final String TRUE = "true";
         public static final String TOKEN = "token";
         public static final String EMAIL = "email";
         public static final String PHONE = "phone";
@@ -31,6 +32,11 @@ public class Constants {
         public static final String ACTOFIT_END_DATE = "actofit_end_date";
         public static final String INSTALLATION_STEP = "installation_step";
 
+        public static final String TYPE_PIPELINE = "Pipeline";
+        public static final String TYPE_INSTALLED = "Installed";
+        public static final String TYPE_TRANASPORT = "Transport";
+
+        public static final String ITEM_CATEGORY_ID = "item_category_id";
     }
 
 }

@@ -36,15 +36,14 @@ import java.util.Map;
  */
 public class InstallationFragment extends Fragment implements ListClickListener, View.OnClickListener {
 
-
     //region variables
+    private int mYear, mMonth, mDay;
     private RecyclerView rvInstallations;
     private Context context = getContext();
-    private int mYear, mMonth, mDay;
 
-    final Calendar c = Calendar.getInstance();
-    private TextView tvStartDate;
     private TextView tvEndDate;
+    private TextView tvStartDate;
+    final Calendar c = Calendar.getInstance();
     //endregion
 
     //region methods
@@ -80,8 +79,8 @@ public class InstallationFragment extends Fragment implements ListClickListener,
      * set up the click events on views
      */
     private void setupEvents() {
-        tvStartDate.setOnClickListener(this);
         tvEndDate.setOnClickListener(this);
+        tvStartDate.setOnClickListener(this);
     }
 
     /**
@@ -95,7 +94,8 @@ public class InstallationFragment extends Fragment implements ListClickListener,
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String ,String> params = new HashMap<>();
-                params.put(Constants.Fields.INSTALLATION_STEP,"Installed");
+                params.put(Constants.Fields.STATUS,Constants.Fields.TRUE);
+                params.put(Constants.Fields.INSTALLATION_STEP,Constants.Fields.TYPE_INSTALLED);
 
                 Map<String, String> headerParams = new HashMap<>();
 
@@ -142,7 +142,6 @@ public class InstallationFragment extends Fragment implements ListClickListener,
                     @Override
                     public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
                         textView.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -157,7 +156,7 @@ public class InstallationFragment extends Fragment implements ListClickListener,
     /**
      * This method is used to set the installation list
      * Adapter is created and set to the recyclerview variables
-     * @param data
+     * @param list
      */
     private void setInstallationListAdapter(List<ClinicListModel.ClinicListInfo> list) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
@@ -200,6 +199,5 @@ public class InstallationFragment extends Fragment implements ListClickListener,
                 break;
         }
     }
-
     //endregion
 }
