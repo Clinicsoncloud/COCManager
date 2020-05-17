@@ -30,13 +30,19 @@ import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.model.ClinicListModel;
+import com.coc.cocmanager.model.CreateUserModel;
 import com.coc.cocmanager.model.ItemCategoryInfo;
 import com.coc.cocmanager.model.ItemCategoryModel;
 import com.coc.cocmanager.model.ItemListModel;
+import com.coc.cocmanager.model.StockUsingTypeModel;
 import com.coc.cocmanager.model.UserData;
+import com.coc.cocmanager.services.DateService;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,6 +60,7 @@ public class PipelineDetailFragment extends Fragment {
 
     //region variables
 
+    // butterknief view binding
     @BindView(R.id.tv_installation_type)
     MaterialTextView tvInstallationType;
     @BindView(R.id.tv_clinic_name)
@@ -87,14 +94,21 @@ public class PipelineDetailFragment extends Fragment {
 
     private int mYear, mMonth, mDay;
 
+    //string and arraylist objects
     private String item_id;
     private String clinic_id;
+    private JSONArray itemsArray;
     private String assign_user_id;
     private String item_category_id;
     private String selected_position;
     private ArrayList<String> itemList;
     private ArrayList<String> categoryList;
     private ArrayList<String> clientNamelist;
+
+    //model class objects
+    private ItemListModel itemListData;
+    private ClinicListModel clinicData;
+    private StockUsingTypeModel updateStockData;
 
     //endregion
 
@@ -121,7 +135,6 @@ public class PipelineDetailFragment extends Fragment {
         initializeData();
         return rootView;
     }
-
 
     private void setupEvents() {
         btnSave.setOnClickListener(v -> {moveToTransport();});
@@ -158,42 +171,45 @@ public class PipelineDetailFragment extends Fragment {
     }
 
     private void moveToTransport() {
-        try {
-            if (Utils.isOnline(getContext())) {
-                Map<String, String> params = new HashMap<>();
-                clinic_id = tvClinicId.getText().toString();
-                params.put(Constants.Fields.ASSIGN_USER_ID, assign_user_id);
-                params.put(Constants.Fields.GMAIL_ID, edtGmailId.getText().toString());
-                params.put(Constants.Fields.ACTOFIT_ID, edtActofitId.getText().toString());
-                params.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_TRANASPORT);
-                params.put(Constants.Fields.GMAIL_PASSWORD, edtGmailPassword.getText().toString());
-                params.put(Constants.Fields.ACTOFIT_PASSWORD, edtActofitPassword.getText().toString());
-                params.put(Constants.Fields.ACTOFIT_END_DATE, Utils.get_yyyy_mm_dd_HMS(tvActofitExpiry.getText().toString()));
-                Map<String, String> headerParams = new HashMap<>();
+            try {
+                itemsArray = new JSONArray();
+                for (int i = 0; i < itemListData.getData().size(); i++) {
+                    JSONObject itemsObj = new JSONObject();
+                    itemsObj.put(Constants.Fields.CLIENT_NAME, itemListData.getData().get(i).getId());
+                    itemsObj.put(Constants.Fields.QUANTITY, edtQuantity.getText().toString());
+                    itemsArray.put(itemsObj);
+                }
 
-                String url = ApiUtils.ADD_TO_PIPELINE + clinic_id;
+                Map<String, String> headerParams = new HashMap<>();
+                Map<String, String> requestBodyParams = new HashMap<>();
+
+                requestBodyParams.put(Constants.Fields.DESCRIPTION, "removed from manager app");
+                requestBodyParams.put(Constants.Fields.STOCK_TYPE, Constants.Fields.OUT);
+                requestBodyParams.put(Constants.Fields.CLINIC_ID, clinic_id);
+                requestBodyParams.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_TRANASPORT);
+                requestBodyParams.put(Constants.Fields.CREATED_AT, DateService.getCurrentDateTime(DateService.MM_DD_YYY_HH_MM));
+                requestBodyParams.put(Constants.Fields.CREATED_BY, "1");
+                requestBodyParams.put(Constants.Fields.STOCK_ITEMS, itemsArray.toString());
 
                 HttpService.accessWebServicess(
                         getContext(),
-                        url,
-                        Request.Method.PUT,
-                        params,
+                        ApiUtils.STOCK_OUT,
+                        Request.Method.POST,
+                        requestBodyParams,
                         headerParams,
                         (response, error, status) -> handleMoveToTransportResponse(response, error, status));
-
-            } else {
-                Toast.makeText(getContext(), "No Internet connection, Please Try again", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
         }
-    }
-
     private void handleMoveToTransportResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                ClinicListModel clinicData = (ClinicListModel) Utils.parseResponse(response, ClinicListModel.class);
-                if (clinicData.getFound()) {
+                updateStockData = (StockUsingTypeModel) Utils.parseResponse(response, StockUsingTypeModel.class);
+                if (updateStockData.getSuccess()) {
                     //TODO AFTER SUCCESS
+                    Toast.makeText(getContext(), "Moved to Transport Successfully", Toast.LENGTH_SHORT).show();
+                    gotoTransportFragment();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -201,6 +217,12 @@ public class PipelineDetailFragment extends Fragment {
         } else if (status.equals("error")) {
             Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void gotoTransportFragment() {
+        Fragment fragment = new TransportFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
+                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -298,7 +320,7 @@ public class PipelineDetailFragment extends Fragment {
     private void handleItemListResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                ItemListModel itemListData = (ItemListModel) Utils.parseResponse(response, ItemListModel.class);
+                itemListData = (ItemListModel) Utils.parseResponse(response, ItemListModel.class);
                 if (itemListData.getFound()) {
                     //TODO AFTER SUCCESS
                     setItemListofSelectedCategory(itemListData.getData());
@@ -368,9 +390,10 @@ public class PipelineDetailFragment extends Fragment {
     private void handleAPIResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                ClinicListModel clinicData = (ClinicListModel) Utils.parseResponse(response, ClinicListModel.class);
+                clinicData = (ClinicListModel) Utils.parseResponse(response, ClinicListModel.class);
                 if (clinicData.getFound()) {
                     //TODO AFTER SUCCESS
+                    clinic_id = clinicData.getData().get(Integer.parseInt(selected_position)).getId();
                     setPipelineDetailData(clinicData.getData().get(Integer.parseInt(selected_position)));
                     getClientList();
                 }

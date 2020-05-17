@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ItemCategoryInfo{
+
         @SerializedName("name")
         @Expose
         private String name;
@@ -111,4 +112,5 @@ public class ItemCategoryInfo{
         public void setId(String id) {
             this.id = id;
         }
+
     }

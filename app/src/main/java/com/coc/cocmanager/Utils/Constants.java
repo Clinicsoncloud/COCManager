@@ -23,6 +23,8 @@ public class Constants {
         public static final String CLINIC_ID = "clinic_id";
         public static final String OPERATION = "operation";
         public static final String FIRST_NAME = "first_name";
+        public static final String CREATED_AT = "created_at";
+        public static final String CREATED_BY = "created_by";
         public static final String ACTOFIT_ID = "actofit_id";
         public static final String LOCATION_ID = "location_id";
         public static final String CLIENT_NAME = "client_name";
@@ -36,6 +38,12 @@ public class Constants {
         public static final String TYPE_INSTALLED = "Installed";
         public static final String TYPE_TRANASPORT = "Transport";
 
+        public static final String OUT = "Out";
+        public static final String ITEM_ID = "item_id";
+        public static final String QUANTITY = "quantity";
+        public static final String STOCK_TYPE = "stock_type";
+        public static final String DESCRIPTION = "description";
+        public static final String STOCK_ITEMS = "stock_items";
         public static final String ITEM_CATEGORY_ID = "item_category_id";
     }
 
