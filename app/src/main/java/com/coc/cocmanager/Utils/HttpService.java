@@ -270,11 +270,11 @@ public class HttpService {
         requestQueue.add(stringRequest);
     }
 
-    public static void accessWebServicesJSON(final Context context, String url, final JSONObject jsonObject,
+    public static void accessWebServicesJSON(final Context context, String url, int method, final JSONObject jsonObject,
                                              final VolleyResponse responseListner) {
         final ProgressDialog loading = ProgressDialog.show(context, "Loading.....", "Please wait...", true);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, url, jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

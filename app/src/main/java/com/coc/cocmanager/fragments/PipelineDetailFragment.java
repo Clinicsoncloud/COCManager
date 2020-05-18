@@ -5,18 +5,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -29,15 +26,13 @@ import com.coc.cocmanager.Utils.ApiUtils;
 import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
+import com.coc.cocmanager.interfaces.VolleyResponse;
 import com.coc.cocmanager.model.ClinicListModel;
-import com.coc.cocmanager.model.CreateUserModel;
-import com.coc.cocmanager.model.ItemCategoryInfo;
 import com.coc.cocmanager.model.ItemCategoryModel;
 import com.coc.cocmanager.model.ItemListModel;
 import com.coc.cocmanager.model.StockUsingTypeModel;
 import com.coc.cocmanager.model.UserData;
 import com.coc.cocmanager.services.DateService;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -137,8 +132,12 @@ public class PipelineDetailFragment extends Fragment {
     }
 
     private void setupEvents() {
-        btnSave.setOnClickListener(v -> {moveToTransport();});
-        tvActofitExpiry.setOnClickListener(v -> {openCalender();});
+        btnSave.setOnClickListener(v -> {
+            moveToTransport();
+        });
+        tvActofitExpiry.setOnClickListener(v -> {
+            openCalender();
+        });
     }
 
     private boolean valid() {
@@ -171,38 +170,45 @@ public class PipelineDetailFragment extends Fragment {
     }
 
     private void moveToTransport() {
-            try {
-                itemsArray = new JSONArray();
-                for (int i = 0; i < itemListData.getData().size(); i++) {
-                    JSONObject itemsObj = new JSONObject();
-                    itemsObj.put(Constants.Fields.CLIENT_NAME, itemListData.getData().get(i).getId());
-                    itemsObj.put(Constants.Fields.QUANTITY, edtQuantity.getText().toString());
-                    itemsArray.put(itemsObj);
-                }
+        try {
+            itemsArray = new JSONArray();
+            JSONObject itemsObj = new JSONObject();
+            itemsObj.put(Constants.Fields.ITEM_ID, item_id);
+            itemsObj.put(Constants.Fields.QUANTITY, edtQuantity.getText().toString());
+            itemsArray.put(itemsObj);
 
-                Map<String, String> headerParams = new HashMap<>();
-                Map<String, String> requestBodyParams = new HashMap<>();
+            Map<String, String> headerParams = new HashMap<>();
+            JSONObject rquestObject = new JSONObject();
 
-                requestBodyParams.put(Constants.Fields.DESCRIPTION, "removed from manager app");
-                requestBodyParams.put(Constants.Fields.STOCK_TYPE, Constants.Fields.OUT);
-                requestBodyParams.put(Constants.Fields.CLINIC_ID, clinic_id);
-                requestBodyParams.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_TRANASPORT);
-                requestBodyParams.put(Constants.Fields.CREATED_AT, DateService.getCurrentDateTime(DateService.MM_DD_YYY_HH_MM));
-                requestBodyParams.put(Constants.Fields.CREATED_BY, "1");
-                requestBodyParams.put(Constants.Fields.STOCK_ITEMS, itemsArray.toString());
+            rquestObject.put(Constants.Fields.DESCRIPTION, "removed from manager app");
+            rquestObject.put(Constants.Fields.STOCK_TYPE, Constants.Fields.OUT);
+            rquestObject.put(Constants.Fields.CLINIC_ID, clinic_id);
+            rquestObject.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_TRANASPORT);
+            rquestObject.put(Constants.Fields.CREATED_AT, DateService.getCurrentDateTime(DateService.MM_DD_YYY_HH_MM));
+            rquestObject.put(Constants.Fields.CREATED_BY, "1");
+            rquestObject.put(Constants.Fields.STOCK_ITEMS, itemsArray);
 
-                HttpService.accessWebServicess(
-                        getContext(),
-                        ApiUtils.STOCK_OUT,
-                        Request.Method.POST,
-                        requestBodyParams,
-                        headerParams,
-                        (response, error, status) -> handleMoveToTransportResponse(response, error, status));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Log.e("params_log_Obj", " = " + rquestObject);
+
+            HttpService.accessWebServicesJSON(
+                    getContext(),
+                    ApiUtils.STOCK_OUT,
+                    Request.Method.POST,
+                    rquestObject,
+                    new VolleyResponse() {
+                        @Override
+                        public void onProcessFinish(String response, VolleyError error, String status) {
+                            handleMoveToTransportResponse(response, error, status);
+                        }
+
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
     private void handleMoveToTransportResponse(String response, VolleyError error, String status) {
+        Log.e("response_log", " = " + response);
         if (status.equals("response")) {
             try {
                 updateStockData = (StockUsingTypeModel) Utils.parseResponse(response, StockUsingTypeModel.class);
@@ -363,7 +369,7 @@ public class PipelineDetailFragment extends Fragment {
     }
 
     private void getPosition() {
-        selected_position = getArguments().getString("position");
+        selected_position = getArguments().getString(Constants.Fields.POSITION);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

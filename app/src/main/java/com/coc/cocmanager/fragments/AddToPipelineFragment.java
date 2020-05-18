@@ -69,13 +69,16 @@ public class AddToPipelineFragment extends Fragment {
     @BindView(R.id.tv_clinic_id)
     MaterialTextView tvClinicId;
 
+    //integer variables
     private int mDay;
     private int mYear;
     private int mMonth;
 
+    //model class objects
     private LocationModel locationModel;
     private ClinicListModel clinicListData;
 
+    // string variables
     private String clinic_id;
     private String location_id;
     private String selectedItem;
@@ -156,12 +159,21 @@ public class AddToPipelineFragment extends Fragment {
         return true;
     }
 
+    /**
+     * initializeData
+     * calls the getClinetList() for showing client list
+     * calls the getLocationList() for showing locations
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initializeData() {
         getLocationList();
         getClientList();
     }
 
+    /**
+     * open calender
+     * set selected date to the textview of Actofit End Date
+     */
     private void openCalender() {
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -178,11 +190,15 @@ public class AddToPipelineFragment extends Fragment {
         datePickerDialog.show();
     }
 
+    /**
+     * API call to get the Clinet List
+     * call handleClientNameResponse to handle the received response from server
+     */
     private void getClientList() {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put("status", "true");
+                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
 
                 Map<String, String> headerParams = new HashMap<>();
 
@@ -193,17 +209,18 @@ public class AddToPipelineFragment extends Fragment {
             } else {
                 Utils.showToast(getContext(), "No Internet connectivity..!");
             }
-        } catch (Exception e) {
-        }
+        } catch (Exception e) { }
     }
 
+    /**
+     * API call to get location list
+     *call handleLocationResponse method to handle the response
+     */
     private void getLocationList() {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-
-                Map<String, String> headerParams;
-                headerParams = new HashMap<>();
+                Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServicesGet(
                         getContext(), ApiUtils.LOCATION_LIST,
@@ -216,6 +233,11 @@ public class AddToPipelineFragment extends Fragment {
         }
     }
 
+    /**
+     * API call to Add To Pipeline
+     * send params
+     * call handlePipelineResponse to handle the received response
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void addNewKioskTOPipeline() {
         try {
@@ -249,18 +271,26 @@ public class AddToPipelineFragment extends Fragment {
         }
     }
 
+    /**
+     *  go back to the pipeline listing screen
+     */
     private void goToPipelineListScreen() {
         Fragment fragment = new PipelineFragment();
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }
 
+    /**
+     * send location id as param to the clinic list filter
+     * call the handleClinicAPIResponse to handle the response
+     * @param locationId
+     */
     private void getClinicList(String locationId) {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.STATUS, "true");
                 params.put(Constants.Fields.LOCATION_ID, locationId);
+                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
 
                 Map<String, String> headerParams = new HashMap<>();
 
@@ -325,7 +355,7 @@ public class AddToPipelineFragment extends Fragment {
 
                 if (position != 0) {
                     selectedItem = spnLocation.getSelectedItem().toString();
-                    location_id = data.get(0).getId();
+                    location_id = data.get(position - 1).getId();
                     getClinicList(location_id);
                 }
             }

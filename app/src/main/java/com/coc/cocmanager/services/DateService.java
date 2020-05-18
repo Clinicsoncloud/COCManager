@@ -20,7 +20,7 @@ public class DateService {
 
     public static final String DATE_FORMAT = "dd-MMM-yyyy hh:mm:ss";
     public static final String YYYY_MM_DD_HMS = "yyyy-MM-dd hh:mm:ss";
-    public static final String MM_DD_YYY_HH_MM = "MM-dd-yyy hh:mm:ss";
+    public static final String MM_DD_YYY_HH_MM = "MM/dd/yyyy HH:mm";
 
     /**
      * @param dateOfBirth

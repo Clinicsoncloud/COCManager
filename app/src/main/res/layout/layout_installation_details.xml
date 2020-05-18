@@ -9,17 +9,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Complete Clinic Report"
-                android:textSize="@dimen/_18sdp"
-                android:layout_margin="@dimen/_10sdp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,9 +35,9 @@
                     android:id="@+id/tv_client_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Rajdeep Meditech"
+                    android:background="@drawable/rectangle"
+                    android:hint=""
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -66,10 +60,10 @@
                     android:id="@+id/tv_clinic_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="21075"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="21075" />
 
             </LinearLayout>
 
@@ -92,13 +86,12 @@
                     android:id="@+id/tv_installation_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="20-6-2019"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="20-6-2019" />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,12 +112,14 @@
                     android:id="@+id/tv_clinic_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Jadhav Clinic"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Jadhav Clinic" />
 
             </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,12 +139,13 @@
                     android:id="@+id/tv_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Pune"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Pune" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,12 +165,13 @@
                     android:id="@+id/tv_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Market Yard"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Market Yard" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -194,10 +191,10 @@
                     android:id="@+id/tv_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Active"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Active" />
 
             </LinearLayout>
 
@@ -219,10 +216,10 @@
                     android:id="@+id/tv_app_version"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="2.0"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="2.0" />
 
             </LinearLayout>
 
@@ -244,12 +241,13 @@
                     android:id="@+id/tv_last_sync"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="2-march-2020 4:50 pm"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="2-march-2020 4:50 pm" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,12 +266,13 @@
                     android:id="@+id/tv_licence_expiry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="24-3-2021"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="24-3-2021" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -292,10 +291,10 @@
                     android:id="@+id/tv_actofit_expiry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="26-3-2021"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="26-3-2021" />
 
             </LinearLayout>
 
@@ -318,13 +317,12 @@
                     android:id="@+id/tv_gmail_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/rectangle"
                     android:hint="@string/txt_gmail_id"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -345,12 +343,14 @@
                     android:id="@+id/tv_gmail_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/rectangle"
                     android:hint="@string/txt_gmail_password"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -370,12 +370,13 @@
                     android:id="@+id/tv_actofit_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/rectangle"
                     android:hint="@string/txt_actofit_id"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -395,12 +396,13 @@
                     android:id="@+id/tv_actofit_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/rectangle"
                     android:hint="@string/txt_actofit_password"
                     android:padding="@dimen/_10sdp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -420,12 +422,13 @@
                     android:id="@+id/tv_installed_by"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Akshay"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Akshay" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -445,12 +448,13 @@
                     android:id="@+id/tv_operator_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="Akshay"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Akshay" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -470,12 +474,20 @@
                     android:id="@+id/tv_operator_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="88888888"
-                    android:padding="@dimen/_10sdp" />
+                    android:background="@drawable/rectangle"
+                    android:padding="@dimen/_10sdp"
+                    android:text="88888888" />
 
             </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="Complete Clinic Report"
+                android:textSize="@dimen/_18sdp" />
 
         </LinearLayout>
     </ScrollView>

@@ -45,6 +45,7 @@
             android:layout_margin="@dimen/_5sdp"
             android:layout_weight="1">
             <AutoCompleteTextView
+                android:id="@+id/auto_tv_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_7sdp"
@@ -59,6 +60,7 @@
             android:layout_margin="@dimen/_5sdp"
             android:layout_weight="1">
             <AutoCompleteTextView
+                android:id="@+id/auto_tv_clinet_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/txt_client_name"

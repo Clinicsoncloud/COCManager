@@ -164,7 +164,7 @@ public class PipelineFragment extends Fragment implements ListClickListener {
     public void click(int position, int value) {
         Fragment fragment = new PipelineDetailFragment();
         Bundle args = new Bundle();
-        args.putString("position",""+position);
+        args.putString(Constants.Fields.POSITION,""+position);
         fragment.setArguments(args);
 
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,

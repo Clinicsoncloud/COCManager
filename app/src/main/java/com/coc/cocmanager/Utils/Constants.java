@@ -40,6 +40,7 @@ public class Constants {
 
         public static final String OUT = "Out";
         public static final String ITEM_ID = "item_id";
+        public static final String POSITION = "position";
         public static final String QUANTITY = "quantity";
         public static final String STOCK_TYPE = "stock_type";
         public static final String DESCRIPTION = "description";
