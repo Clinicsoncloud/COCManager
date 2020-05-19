@@ -10,6 +10,7 @@ public class Constants {
     public static class Fields {
         public static final String TRUE = "true";
         public static final String TOKEN = "token";
+        public static final String LOGGED = "logged";
         public static final String EMAIL = "email";
         public static final String PHONE = "phone";
         public static final String GENDER = "gender";
@@ -38,11 +39,15 @@ public class Constants {
         public static final String TYPE_INSTALLED = "Installed";
         public static final String TYPE_TRANASPORT = "Transport";
 
+        public static final String IN = "In";
         public static final String OUT = "Out";
         public static final String ITEM_ID = "item_id";
+        public static final String END_DATE = "end_date";
         public static final String POSITION = "position";
         public static final String QUANTITY = "quantity";
         public static final String STOCK_TYPE = "stock_type";
+        public static final String SELECTED_ID = "selected_id";
+        public static final String START_DATE = "start_date";
         public static final String DESCRIPTION = "description";
         public static final String STOCK_ITEMS = "stock_items";
         public static final String ITEM_CATEGORY_ID = "item_category_id";

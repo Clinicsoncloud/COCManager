@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class User_Role_Info {
+public class User_Role_Info {
 
     @SerializedName("name")
     @Expose

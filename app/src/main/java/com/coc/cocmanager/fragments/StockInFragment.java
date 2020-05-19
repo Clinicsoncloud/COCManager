@@ -4,26 +4,39 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
+import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.Constants;
+import com.coc.cocmanager.Utils.HttpService;
+import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.adapter.AddOnListAdapter;
 import com.coc.cocmanager.adapter.ConsumableListAdapter;
 import com.coc.cocmanager.adapter.ItemListAdapter;
+import com.coc.cocmanager.adapter.StockInListAdapter;
 import com.coc.cocmanager.interfaces.ListClickListener;
+import com.coc.cocmanager.model.StockInListModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,9 +68,18 @@ public class StockInFragment extends Fragment implements ListClickListener, View
     LinearLayout llConsumablesOns;
     @BindView(R.id.iv_add_stock)
     ImageView ivAddStock;
+    @BindView(R.id.rv_stock_in_list)
+    RecyclerView rvStockInList;
+    @BindView(R.id.btn_filter)
+    Button btnFilter;
+
     private int mYear;
     private int mMonth;
     private int mDay;
+
+    private String selected_id;
+    private StockInListModel stockData;
+    private StockInListAdapter adapter;
 
     //endregion
 
@@ -80,7 +102,7 @@ public class StockInFragment extends Fragment implements ListClickListener, View
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_stock_in, container, false);
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
 
         setupEvents();
         initializeData();
@@ -91,59 +113,54 @@ public class StockInFragment extends Fragment implements ListClickListener, View
         tvStartDate.setOnClickListener(this);
         tvEndDate.setOnClickListener(this);
         ivAddStock.setOnClickListener(this);
+        btnFilter.setOnClickListener(this);
     }
 
     private void initializeData() {
-        setItemListAdapter();
-        setAddOnListAdapter();
-        setConsumableListAdapter();
+        getStockInItemList();
     }
 
-    /**
-     *
-     */
-    private void setConsumableListAdapter() {
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
+    private void getStockInItemList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.STOCK_TYPE, Constants.Fields.IN);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvConsumablesList.setLayoutManager(linearLayoutManager);
-        ConsumableListAdapter adapter = new ConsumableListAdapter(getContext(), list);
-        rvConsumablesList.setAdapter(adapter);
-        adapter.setListClickListener(this);
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.STOCK_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleAPIResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
     }
 
-    /**
-     *
-     */
-    private void setAddOnListAdapter() {
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvAddonList.setLayoutManager(linearLayoutManager);
-        AddOnListAdapter adapter = new AddOnListAdapter(getContext(), list);
-        rvAddonList.setAdapter(adapter);
-        adapter.setListClickListener(this);
+    private void handleAPIResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                stockData = (StockInListModel) Utils.parseResponse(response, StockInListModel.class);
+                if (stockData.getFound()) {
+                    //TODO AFTER SUCCESS
+                    setStockInListAdapter(stockData.getData());
+                    Toast.makeText(getContext(), "Stock List Successfully loaded", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
-    /**
-     *
-     */
-    private void setItemListAdapter() {
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-
+    private void setStockInListAdapter(List<StockInListModel.StockInInfo> data) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvItemList.setLayoutManager(linearLayoutManager);
-        ItemListAdapter adapter = new ItemListAdapter(getContext(), list);
-        rvItemList.setAdapter(adapter);
+        rvStockInList.setLayoutManager(linearLayoutManager);
+        adapter = new StockInListAdapter(getContext(), data);
+        rvStockInList.setAdapter(adapter);
         adapter.setListClickListener(this);
     }
 
@@ -162,11 +179,27 @@ public class StockInFragment extends Fragment implements ListClickListener, View
     }
 
     @Override
-    public void click(int position, int value) { }
+    public void click(int position, int value) {
+        if(value == 0){
+            openDetailView(position);
+        }
+    }
+
+    private void openDetailView(int position) {
+       selected_id = stockData.getData().get(position).getId();
+
+        Fragment fragment = new StockInDetailFragment();
+        Bundle args = new Bundle();
+        args.putString(Constants.Fields.SELECTED_ID,selected_id);
+        fragment.setArguments(args);
+
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
+                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
+    }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_start_date:
                 openCalender(tvStartDate);
                 break;
@@ -178,11 +211,54 @@ public class StockInFragment extends Fragment implements ListClickListener, View
             case R.id.iv_add_stock:
                 openAddStock();
                 break;
+
+            case R.id.btn_filter:
+                filterStockList();
+                break;
+
+        }
+    }
+
+    private void filterStockList() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.STOCK_TYPE, Constants.Fields.IN);
+                params.put(Constants.Fields.END_DATE, tvEndDate.getText().toString());
+                params.put(Constants.Fields.START_DATE, tvStartDate.getText().toString());
+
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServices(
+                        getContext(), ApiUtils.STOCK_LIST,
+                        params, headerParams,
+                        (response, error, status) -> handleFilterAPIResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleFilterAPIResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+                stockData = (StockInListModel) Utils.parseResponse(response, StockInListModel.class);
+                if (stockData.getFound()) {
+                    //TODO AFTER SUCCESS
+                    setStockInListAdapter(stockData.getData());
+                    Toast.makeText(getContext(), "Stock List Filterd Successfully", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
-     *
+     * open add stock screen
      */
     private void openAddStock() {
         Fragment fragment = new AddNewStockFragment();
@@ -191,7 +267,8 @@ public class StockInFragment extends Fragment implements ListClickListener, View
     }
 
     /**
-     *
+     * open a calender
+     * set the data to the textview passed as parameter in this method
      * @param textView
      */
     private void openCalender(TextView textView) {
@@ -204,7 +281,7 @@ public class StockInFragment extends Fragment implements ListClickListener, View
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        textView.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        textView.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();

@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.adapter.UsersListAdapter;
@@ -94,7 +95,7 @@ public class UsersFragment extends Fragment implements ListClickListener {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String,String> params = new HashMap<>();
-                params.put("status","true");
+                params.put(Constants.Fields.STATUS,Constants.Fields.TRUE);
 
                 Map<String, String> headerParams  = new HashMap<>();
 
