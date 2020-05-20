@@ -125,8 +125,8 @@ public class Loginctivity extends AppCompatActivity {
 
     private void writePersonalSharedPreferences(String token) {
         prefInfo = getSharedPreferences(Utils.PREFERENCE_PERSONAL, MODE_PRIVATE);
-
         SharedPreferences.Editor editor = prefInfo.edit();
+
         editor.putString(Constants.Fields.TOKEN,token);
         editor.putBoolean(Constants.Fields.LOGGED,true);
         editor.commit();

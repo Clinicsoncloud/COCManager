@@ -20,6 +20,7 @@ import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.model.ClinicListModel;
+import com.coc.cocmanager.services.DateService;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.HashMap;
@@ -170,13 +171,13 @@ public class InstallationDetailFragment extends Fragment {
         tvInstalledBy.setText(data.getInstalled_by());
         tvLocation.setText(data.getLocation().getName());
         tvGmailPassword.setText(data.getGmail_password());
-        tvActofitExpiry.setText(data.getActofit_end_date());
         tvActofitPassword.setText(data.getActofit_password());
-        tvLicenceExpiry.setText(data.getLicense_expiry_date());
         tvOperatorName.setText(data.getMachine_operator_name());
-        tvInstallationDate.setText(data.getInstallation_date());
         tvOperatorNumber.setText(data.getMachine_operator_mobile_number());
         tvClientName.setText(data.getUser().getFirstname() + data.getUser().getLastname());
+        tvActofitExpiry.setText(DateService.formatDateFromString(data.getActofit_end_date()));
+        tvLicenceExpiry.setText(DateService.formatDateFromString(data.getLicense_expiry_date()));
+        tvInstallationDate.setText(DateService.formatDateFromString(data.getInstallation_date()));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

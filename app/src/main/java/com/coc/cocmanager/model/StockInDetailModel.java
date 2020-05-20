@@ -61,9 +61,17 @@ public class StockInDetailModel {
         @Expose
         private String id;
 
+        @SerializedName("is_approved")
+        @Expose
+        private Boolean is_approved;
+
         @SerializedName("stockItems")
         @Expose
         public List<StockInListModel.StockItems> stockItems;
+
+        @SerializedName("clinic")
+        @Expose
+        private ClinicModel clinic;
 
         public String getClinic_id() {
             return clinic_id;
@@ -127,6 +135,22 @@ public class StockInDetailModel {
 
         public void setStockItems(List<StockInListModel.StockItems> stockItems) {
             this.stockItems = stockItems;
+        }
+
+        public Boolean getIs_approved() {
+            return is_approved;
+        }
+
+        public void setIs_approved(Boolean is_approved) {
+            this.is_approved = is_approved;
+        }
+
+        public ClinicModel getClinic() {
+            return clinic;
+        }
+
+        public void setClinic(ClinicModel clinic) {
+            this.clinic = clinic;
         }
     }
 
