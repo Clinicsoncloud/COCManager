@@ -1,8 +1,6 @@
 package com.coc.cocmanager.fragments;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
@@ -26,10 +26,14 @@ import com.coc.cocmanager.Utils.ApiUtils;
 import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
+import com.coc.cocmanager.adapter.AddItemsListAdapter;
+import com.coc.cocmanager.interfaces.RvClickListener;
 import com.coc.cocmanager.interfaces.VolleyResponse;
 import com.coc.cocmanager.model.ClinicListModel;
-import com.coc.cocmanager.model.ItemCategoryModel;
 import com.coc.cocmanager.model.ItemListModel;
+import com.coc.cocmanager.model.ItemsCategory_Response;
+import com.coc.cocmanager.model.Request_Item_Data;
+import com.coc.cocmanager.model.StockModel;
 import com.coc.cocmanager.model.StockUsingTypeModel;
 import com.coc.cocmanager.model.UserData;
 import com.coc.cocmanager.services.DateService;
@@ -51,11 +55,9 @@ import butterknife.ButterKnife;
 /**
  * created by ketan 23-3-2020
  */
-public class PipelineDetailFragment extends Fragment {
+public class PipelineDetailFragment extends Fragment implements RvClickListener {
 
     //region variables
-
-    // butterknief view binding
     @BindView(R.id.tv_installation_type)
     MaterialTextView tvInstallationType;
     @BindView(R.id.tv_clinic_name)
@@ -74,18 +76,16 @@ public class PipelineDetailFragment extends Fragment {
     MaterialTextView tvActofitExpiry;
     @BindView(R.id.tv_client_name)
     Spinner spnClientName;
-    @BindView(R.id.spn_category)
-    Spinner spnCategory;
-    @BindView(R.id.spn_item_list)
-    Spinner spnItemList;
     @BindView(R.id.edt_location)
     TextInputEditText edtLocation;
-    @BindView(R.id.edt_item_quantity)
-    TextInputEditText edtQuantity;
     @BindView(R.id.edt_address)
     TextInputEditText edtAddress;
     @BindView(R.id.btn_save)
     Button btnSave;
+    @BindView(R.id.btn_add_item)
+    Button btnAddItem;
+    @BindView(R.id.rv_add_item_list)
+    RecyclerView rvAddItemList;
 
     private int mYear, mMonth, mDay;
 
@@ -104,6 +104,14 @@ public class PipelineDetailFragment extends Fragment {
     private ItemListModel itemListData;
     private ClinicListModel clinicData;
     private StockUsingTypeModel updateStockData;
+
+    private StockModel stockData;
+    private ArrayList itemsCategoryList;
+    private ArrayList itemsCategoryIDList;
+    private List<Request_Item_Data> itemsList;
+    private Request_Item_Data request_item_data;
+    private AddItemsListAdapter addItemsListAdapter;
+    private ItemsCategory_Response itemsCategory_response;
 
     //endregion
 
@@ -137,6 +145,10 @@ public class PipelineDetailFragment extends Fragment {
         });
         tvActofitExpiry.setOnClickListener(v -> {
             openCalender();
+        });
+
+        btnAddItem.setOnClickListener(v -> {
+            createStockItemArray();
         });
     }
 
@@ -172,20 +184,19 @@ public class PipelineDetailFragment extends Fragment {
     private void moveToTransport() {
         try {
             itemsArray = new JSONArray();
-            JSONObject itemsObj = new JSONObject();
-            itemsObj.put(Constants.Fields.ITEM_ID, item_id);
-            itemsObj.put(Constants.Fields.QUANTITY, edtQuantity.getText().toString());
-            itemsArray.put(itemsObj);
+            for (int i = 0; i < itemsList.size(); i++) {
+                JSONObject itemsObj = new JSONObject();
+                itemsObj.put(Constants.Fields.ITEM_ID, itemsList.get(i).getId());
+                itemsObj.put(Constants.Fields.QUANTITY, itemsList.get(i).getQuantity());
+                itemsArray.put(itemsObj);
+            }
 
-            Map<String, String> headerParams = new HashMap<>();
             JSONObject rquestObject = new JSONObject();
-
-            rquestObject.put(Constants.Fields.DESCRIPTION, "removed from manager app");
+            rquestObject.put(Constants.Fields.DESCRIPTION, "Sent to" + tvClinicName.getText().toString());
             rquestObject.put(Constants.Fields.STOCK_TYPE, Constants.Fields.OUT);
             rquestObject.put(Constants.Fields.CLINIC_ID, clinic_id);
             rquestObject.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_TRANASPORT);
             rquestObject.put(Constants.Fields.CREATED_AT, DateService.getCurrentDateTime(DateService.MM_DD_YYY_HH_MM));
-            rquestObject.put(Constants.Fields.CREATED_BY, "1");
             rquestObject.put(Constants.Fields.STOCK_ITEMS, itemsArray);
 
             Log.e("params_log_Obj", " = " + rquestObject);
@@ -211,8 +222,8 @@ public class PipelineDetailFragment extends Fragment {
         Log.e("response_log", " = " + response);
         if (status.equals("response")) {
             try {
-                updateStockData = (StockUsingTypeModel) Utils.parseResponse(response, StockUsingTypeModel.class);
-                if (updateStockData.getSuccess()) {
+                stockData = (StockModel) Utils.parseResponse(response, StockModel.class);
+                if (stockData.getFound()) {
                     //TODO AFTER SUCCESS
                     Toast.makeText(getContext(), "Moved to Transport Successfully", Toast.LENGTH_SHORT).show();
                     gotoTransportFragment();
@@ -226,146 +237,94 @@ public class PipelineDetailFragment extends Fragment {
     }
 
     private void gotoTransportFragment() {
-        Fragment fragment = new TransportFragment();
+        Fragment fragment = new InstallationHomeFragment();
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initializeData() {
+        itemsList = new ArrayList<>();
+
         getPosition();
-        getCategoryList();
+        getCategoryData();
         showPipelineDetails();
+        createStockItemArray();
     }
 
-    private void getCategoryList() {
+    private void createStockItemArray() {
+        request_item_data = new Request_Item_Data();
+        request_item_data.setId("");
+        request_item_data.setQuantity("");
+        itemsList.add(request_item_data);
+
+        if (addItemsListAdapter != null) {
+            addItemsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void getCategoryData() {
         try {
-            if (Utils.isOnline(getContext())) {
-                Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
+            Map<String, String> headerParams = new HashMap<>();
+            Map<String, String> requestBodyParams = new HashMap<>();
 
-                Map<String, String> headerParams = new HashMap<>();
+            requestBodyParams.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
 
-                HttpService.accessWebServices(
-                        getContext(), ApiUtils.ITEM_CATEGORY_LIST,
-                        params, headerParams,
-                        (response, error, status) -> handleCategoryItemResponse(response, error, status));
-            } else {
-                Toast.makeText(getContext(), "No Internet Connection..!", Toast.LENGTH_SHORT).show();
-            }
+            HttpService.accessWebServices(
+                    getContext(),
+                    ApiUtils.ITEM_CATEGORY_LIST,
+                    requestBodyParams,
+                    headerParams,
+                    (response, error, status) -> handleCategoryAPIResponse(response, error, status));
         } catch (Exception e) {
         }
     }
 
-    private void handleCategoryItemResponse(String response, VolleyError error, String status) {
-        if (status.equals("response")) {
-            try {
-                ItemCategoryModel itemCategoryData = (ItemCategoryModel) Utils.parseResponse(response, ItemCategoryModel.class);
-                if (itemCategoryData.getFound()) {
-                    //TODO AFTER SUCCESS
-                    setItemCategoryList(itemCategoryData.getData());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (status.equals("error")) {
-            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void setItemCategoryList(List<ItemCategoryModel.ItemCategoryInfo> data) {
-        int i;
-        categoryList = new ArrayList<>();
-        categoryList.add("Select Item Category");
-
-        for (i = 0; i < data.size(); i++) {
-            categoryList.add(data.get(i).getName());
-        }
-
-        ArrayAdapter<String> dataAdapter;
-        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
-                R.layout.simple_item_selected, categoryList);
-        dataAdapter.setDropDownViewResource(R.layout.simple_item);
-        spnCategory.setAdapter(dataAdapter);
-
-        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    item_category_id = data.get(position - 1).getId();
-                    getItemListofSelectedCategory(item_category_id);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-    }
-
-    private void getItemListofSelectedCategory(String item_category_id) {
+    private void handleCategoryAPIResponse(String response, VolleyError error, String status) {
         try {
-            if (Utils.isOnline(getContext())) {
-                Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
-                params.put(Constants.Fields.ITEM_CATEGORY_ID, item_category_id);
+            Log.e("res_Category", ":" + response);
 
-                Map<String, String> headerParams = new HashMap<>();
+            if (status.equals("response")) {
 
-                HttpService.accessWebServices(
-                        getContext(), ApiUtils.ITEM_LIST,
-                        params, headerParams,
-                        (response, error, status) -> handleItemListResponse(response, error, status));
-            } else {
-                Utils.showToast(getContext(), "No Internet connectivity..!");
+                itemsCategory_response = (ItemsCategory_Response) Utils.parseResponse(response, ItemsCategory_Response.class);
+
+                if (itemsCategory_response.getFound()) {
+
+                    itemsCategoryList = new ArrayList();
+                    itemsCategoryIDList = new ArrayList();
+
+                    itemsCategoryList.add("Select Category");
+                    itemsCategoryIDList.add("0");
+
+                    for (int i = 0; i < itemsCategory_response.getData().size(); i++) {
+
+                        itemsCategoryList.add(itemsCategory_response.getData().get(i).getName());
+                        itemsCategoryIDList.add(itemsCategory_response.getData().get(i).getId());
+                    }
+                    Log.e("itemsCategoryList_Size", ":" + itemsCategoryList.size());
+
+                    setItemsListAdapter();
+                }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private void handleItemListResponse(String response, VolleyError error, String status) {
-        if (status.equals("response")) {
-            try {
-                itemListData = (ItemListModel) Utils.parseResponse(response, ItemListModel.class);
-                if (itemListData.getFound()) {
-                    //TODO AFTER SUCCESS
-                    setItemListofSelectedCategory(itemListData.getData());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (status.equals("error")) {
-            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-        }
+    private void setItemsListAdapter() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        rvAddItemList.setLayoutManager(gridLayoutManager);
+        addItemsListAdapter = new AddItemsListAdapter(getContext(), itemsList, itemsCategoryList, itemsCategoryIDList);
+        rvAddItemList.setAdapter(addItemsListAdapter);
+        addItemsListAdapter.setRvClickListener(this);
     }
 
-    private void setItemListofSelectedCategory(List<ItemListModel.ItemListInfo> data) {
-        int i;
-        itemList = new ArrayList<>();
-        itemList.add("Select Item");
-
-        for (i = 0; i < data.size(); i++) {
-            itemList.add(data.get(i).getName());
+    @Override
+    public void rv_click(int position, int value, String key) {
+        if (key.equals("remove_item")) {
+            itemsList.remove(position);
         }
-
-        ArrayAdapter<String> dataAdapter;
-        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
-                R.layout.simple_item_selected, itemList);
-        dataAdapter.setDropDownViewResource(R.layout.simple_item);
-        spnItemList.setAdapter(dataAdapter);
-
-        spnItemList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    item_id = data.get(position - 1).getId();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        addItemsListAdapter.notifyDataSetChanged();
     }
 
     private void getPosition() {
@@ -508,17 +467,4 @@ public class PipelineDetailFragment extends Fragment {
         tvActofitExpiry = rootView.findViewById(R.id.tv_actofit_expiry);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 }

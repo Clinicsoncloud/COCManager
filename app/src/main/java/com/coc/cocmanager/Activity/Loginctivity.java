@@ -63,8 +63,25 @@ public class Loginctivity extends AppCompatActivity {
      */
     private void setupEvents() {
         btnLogin.setOnClickListener(View -> {
-        doLogin();
+            if (valid())
+                doLogin();
         });
+    }
+
+    /**
+     * validation of the login
+     * @return
+     */
+    private boolean valid() {
+        if (edtEmail.getText().length() == 0) {
+            edtEmail.setError("Please Enter valid Email");
+            edtEmail.setFocusable(true);
+            return false;
+        } else if (edtPassword.getText().length() == 0) {
+            edtPassword.setError("Please Enter valid password");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -91,6 +108,7 @@ public class Loginctivity extends AppCompatActivity {
      * check if getFount is true
      * then move to next
      * else show error message
+     *
      * @param response
      * @param error
      * @param status
@@ -98,18 +116,18 @@ public class Loginctivity extends AppCompatActivity {
     private void handleAPIResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                loginData = (LoginData) Utils.parseResponse(response,LoginData.class);
-                if(loginData.getFound()){
-                    if(loginData.getData().getValid()) {
+                loginData = (LoginData) Utils.parseResponse(response, LoginData.class);
+                if (loginData.getFound()) {
+                    if (loginData.getData().getValid()) {
                         Toast.makeText(context, "Login successfull", Toast.LENGTH_SHORT).show();
                         Intent objIntent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(objIntent);
                         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
                         writePersonalSharedPreferences(loginData.getData().getToken());
-                    }else{
+                    } else {
                         Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
@@ -127,8 +145,8 @@ public class Loginctivity extends AppCompatActivity {
         prefInfo = getSharedPreferences(Utils.PREFERENCE_PERSONAL, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefInfo.edit();
 
-        editor.putString(Constants.Fields.TOKEN,token);
-        editor.putBoolean(Constants.Fields.LOGGED,true);
+        editor.putString(Constants.Fields.TOKEN, token);
+        editor.putBoolean(Constants.Fields.LOGGED, true);
         editor.commit();
     }
 }

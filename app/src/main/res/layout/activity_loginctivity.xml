@@ -36,6 +36,7 @@
             android:background="@drawable/rectangle"
             android:layout_marginTop="@dimen/_20sdp"
             android:hint="@string/txt_password"
+            android:inputType="textPassword"
             android:padding="@dimen/_10sdp"/>
 
         <Button

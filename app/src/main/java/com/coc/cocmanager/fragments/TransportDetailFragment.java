@@ -12,13 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
@@ -28,7 +26,6 @@ import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.model.ClinicListModel;
 import com.coc.cocmanager.model.UserData;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -44,7 +41,7 @@ import butterknife.ButterKnife;
 /**
  * created by ketan 23-3-2020
  */
-public class TransportDetailFragment extends Fragment{
+public class TransportDetailFragment extends Fragment {
 
     @BindView(R.id.tv_installation_type)
     MaterialTextView tvInstallationType;
@@ -68,27 +65,12 @@ public class TransportDetailFragment extends Fragment{
     TextInputEditText edtLocation;
     @BindView(R.id.edt_address)
     TextInputEditText edtAddress;
-    @BindView(R.id.btn_consumables)
-    Button btnConsumables;
-    ImageView ivMinusLancets;
-    MaterialTextView tvQtyLancets;
-    ImageView ivPlusLancets;
-    ImageView ivMinusHbStrips;
-    MaterialTextView tvQtyHbStrips;
-    ImageView ivPlusHbStrips;
-    ImageView ivMinusSugarStrips;
-    MaterialTextView tvQtySugarStrips;
-    ImageView ivPlusSugarStrips;
-    ImageView ivMinusScrewDrivers;
-    MaterialTextView tvQtyScrewDrivers;
-    ImageView ivPlusScrewDrivers;
-    ImageView ivMinusCells;
-    MaterialTextView tvQtyCells;
-    ImageView ivPlusCells;
-    @BindView(R.id.expandable_consumables)
-    ExpandableRelativeLayout expandableConsumables;
     @BindView(R.id.btn_move_to_pipeline)
     Button btnMoveToPipeline;
+    @BindView(R.id.btn_add_item)
+    Button btnAddItem;
+    @BindView(R.id.rv_add_item_list)
+    RecyclerView rvAddItemList;
 
     // region variables
 
@@ -118,33 +100,11 @@ public class TransportDetailFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.layout_transport_detail, container, false);
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
 
-        setupUI(rootView);
         setupEvents();
         initializeData();
         return rootView;
-    }
-
-    private void setupUI(View rootView) {
-
-        tvQtyCells = rootView.findViewById(R.id.tv_qty_cells);
-        tvQtyLancets = rootView.findViewById(R.id.tv_qty_lancets);
-        tvQtyHbStrips = rootView.findViewById(R.id.tv_qty_hb_strips);
-        tvQtySugarStrips = rootView.findViewById(R.id.tv_qty_sugar_strips);
-        tvQtyScrewDrivers = rootView.findViewById(R.id.tv_qty_screw_drivers);
-
-        ivMinusCells = rootView.findViewById(R.id.iv_minus_cell);
-        ivMinusLancets = rootView.findViewById(R.id.iv_minus_lancet);
-        ivMinusHbStrips = rootView.findViewById(R.id.iv_minus_hb_strip);
-        ivMinusSugarStrips = rootView.findViewById(R.id.iv_minus_sugar_strip);
-        ivMinusScrewDrivers = rootView.findViewById(R.id.iv_minus_screw_driver);
-
-        ivPlusCells = rootView.findViewById(R.id.iv_plus_cell);
-        ivPlusLancets = rootView.findViewById(R.id.iv_plus_lancet);
-        ivPlusHbStrips = rootView.findViewById(R.id.iv_plus_hb_strip);
-        ivPlusSugarStrips = rootView.findViewById(R.id.iv_plus_sugar_strip);
-        ivPlusScrewDrivers = rootView.findViewById(R.id.iv_plus_screw_driver);
     }
 
     private void initializeData() {
@@ -193,7 +153,7 @@ public class TransportDetailFragment extends Fragment{
         clientNamelist.add("Select Client");
 
         for (i = 0; i < data.size(); i++) {
-            clientNamelist.add(data.get(i).getFirst_name()+ " " +data.get(i).getLast_name());
+            clientNamelist.add(data.get(i).getFirst_name() + " " + data.get(i).getLast_name());
         }
 
         ArrayAdapter<String> dataAdapter;
@@ -209,6 +169,7 @@ public class TransportDetailFragment extends Fragment{
                     assign_user_id = data.get(position - 1).getId();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -221,25 +182,13 @@ public class TransportDetailFragment extends Fragment{
             openCalender();
         });
 
-        btnConsumables.setOnClickListener(v -> {
-            expandView();
+        btnAddItem.setOnClickListener(v -> {
+
         });
 
-        ivMinusCells.setOnClickListener(v -> {removeCount(tvQtyCells);});
-        ivMinusLancets.setOnClickListener(v -> {removeCount(tvQtyLancets);});
-        ivMinusHbStrips.setOnClickListener(v -> {removeCount(tvQtyHbStrips);});
-        ivMinusSugarStrips.setOnClickListener(v -> {removeCount(tvQtySugarStrips);});
-        ivMinusScrewDrivers.setOnClickListener(v -> {removeCount(tvQtyScrewDrivers);});
+        btnMoveToPipeline.setOnClickListener(v -> {
 
-        ivPlusCells.setOnClickListener(v -> {addCount(tvQtyCells);});
-        ivPlusLancets.setOnClickListener(v -> {addCount(tvQtyLancets);});
-        ivPlusHbStrips.setOnClickListener(v -> {addCount(tvQtyHbStrips);});
-        ivPlusSugarStrips.setOnClickListener(v -> {addCount(tvQtySugarStrips);});
-        ivPlusScrewDrivers.setOnClickListener(v -> {addCount(tvQtyScrewDrivers);});
-    }
-
-    private void expandView() {
-        expandableConsumables.toggle();
+        });
     }
 
     private void openCalender() {
@@ -276,7 +225,8 @@ public class TransportDetailFragment extends Fragment{
             } else {
                 Utils.showToast(getContext(), "No Internet connectivity..!");
             }
-        } catch (Exception e) { }
+        } catch (Exception e) {
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -329,7 +279,7 @@ public class TransportDetailFragment extends Fragment{
         if (count != 0) {
             count = count + 1;
             tvAddCount.setText("" + count);
-            Log.e("countplus_log"," = "+count);
+            Log.e("countplus_log", " = " + count);
         }
     }
 
@@ -337,7 +287,7 @@ public class TransportDetailFragment extends Fragment{
         if (count > 0) {
             count = count - 1;
             tvCount.setText("" + count);
-            Log.e("countminus_log"," = "+count);
+            Log.e("countminus_log", " = " + count);
         }
     }
 }

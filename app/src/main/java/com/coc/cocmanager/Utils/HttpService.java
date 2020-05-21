@@ -158,8 +158,6 @@ public class HttpService {
     }
 
     public static void accessWebServicesGet(final Context context, String url, final Map param, final Map headerParam, final VolleyResponse responseListner) {
-//        final ProgressDialog loading = ProgressDialog.show(context, "Loading.....", "Please wait...", true);
-
         Dialog loading = showImageDialog(context);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -270,10 +268,8 @@ public class HttpService {
         requestQueue.add(stringRequest);
     }
 
-    public static void accessWebServicesJSON(final Context context, String url, int method, final JSONObject jsonObject,
-                                             final VolleyResponse responseListner) {
-        final ProgressDialog loading = ProgressDialog.show(context, "Loading.....", "Please wait...", true);
-
+    public static void accessWebServicesJSON(final Context context, String url, int method, final JSONObject jsonObject, final VolleyResponse responseListner) {
+        Dialog loading = showImageDialog(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, url, jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -376,7 +372,5 @@ public class HttpService {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(jsonObjectRequest);
     }
-
-
 }
 

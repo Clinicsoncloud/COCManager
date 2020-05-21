@@ -42,6 +42,8 @@ public class InstallationSummaryFragment extends Fragment {
 
     //endregion
 
+    //region methods
+
     public InstallationSummaryFragment() {
         // Required empty public constructor
     }
@@ -129,5 +131,7 @@ public class InstallationSummaryFragment extends Fragment {
         tvTransportCount.setText(data.getTransportCount());
         tvInstallationCount.setText(data.getInstalledCount());
     }
+
+    //endregion
 
 }

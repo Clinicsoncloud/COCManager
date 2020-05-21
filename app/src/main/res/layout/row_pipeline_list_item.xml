@@ -12,7 +12,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview_pipeline"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_height="@dimen/_60sdp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
@@ -42,7 +42,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center"
                     android:text="@string/txt_clinic_name"
-                    android:textSize="@dimen/_18sdp" />
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/txt_clinic_id_name"
-                            android:textSize="@dimen/_13sdp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                 </LinearLayout>
