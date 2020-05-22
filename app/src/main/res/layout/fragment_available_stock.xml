@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone"
         android:weightSum="2">
         <LinearLayout
             android:layout_width="0dp"
@@ -36,6 +37,17 @@
                 android:textSize="25sp"
                 android:text="50"/>
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/rectangle">
+        <Spinner
+            android:id="@+id/spn_select_category"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

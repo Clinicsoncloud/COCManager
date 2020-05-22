@@ -147,6 +147,7 @@ public class Loginctivity extends AppCompatActivity {
 
         editor.putString(Constants.Fields.TOKEN, token);
         editor.putBoolean(Constants.Fields.LOGGED, true);
+        editor.putString(Constants.Fields.FIRST_NAME, loginData.getData().getUser().getFirst_name());
         editor.commit();
     }
 }

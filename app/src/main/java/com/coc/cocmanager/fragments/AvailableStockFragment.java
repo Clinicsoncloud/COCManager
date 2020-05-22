@@ -8,24 +8,48 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
+import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
+import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.Constants;
+import com.coc.cocmanager.Utils.HttpService;
+import com.coc.cocmanager.Utils.Utils;
+import com.coc.cocmanager.adapter.ItemListAdapter;
 import com.coc.cocmanager.adapter.StockListAdapter;
+import com.coc.cocmanager.adapter.StockOutListAdapter;
+import com.coc.cocmanager.interfaces.ListClickListener;
+import com.coc.cocmanager.model.ItemCategoryInfo;
+import com.coc.cocmanager.model.ItemsCategory_Response;
+import com.coc.cocmanager.model.Items_Response;
 import com.coc.cocmanager.model.StockItem;
 import com.coc.cocmanager.model.StockSubItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * created by ketan 25-3-2020
  */
-public class AvailableStockFragment extends Fragment {
+public class AvailableStockFragment extends Fragment implements ListClickListener {
 
     //region variables
+    private Spinner spnCategory;
+    private ItemListAdapter adapter;
+    private String item_category_id;
+    private ArrayList itemsCategoryList;
+    private ArrayList itemsCategoryIDList;
     private RecyclerView rvAvailableStock;
+    private ItemsCategory_Response itemsCategory_response;
     //endregion
 
     public AvailableStockFragment() {
@@ -47,71 +71,119 @@ public class AvailableStockFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_available_stock, container, false);
+
         setupUI(rootView);
-        setupEvents();
         initializeData();
         return rootView;
     }
 
     private void initializeData() {
-        setStockListAdapter();
+        getCategoryList();
     }
 
-    private void setStockListAdapter() {
-        rvAvailableStock.setLayoutManager(new LinearLayoutManager(getContext()));
+    private void getCategoryList() {
+        try {
+            Map<String, String> headerParams = new HashMap<>();
+            Map<String, String> requestBodyParams = new HashMap<>();
+            requestBodyParams.put(Constants.Fields.STATUS,Constants.Fields.TRUE);
 
-        ArrayList<StockItem> list = new ArrayList<>();
-        ArrayList<StockSubItem> Items = new ArrayList<>();
+            HttpService.accessWebServices(
+                    getContext(),
+                    ApiUtils.ITEM_CATEGORY_LIST,
+                    requestBodyParams,
+                    headerParams,
+                    (response, error, status) -> handleCategoryAPIResponse(response, error, status));
+        } catch (Exception e) {
+        }
+    }
 
-        Items.add(new StockSubItem("demo item 1","demo item 1"));
-        Items.add(new StockSubItem("demo item 2","demo item 2"));
-        Items.add(new StockSubItem("demo item 3","demo item 3"));
-        Items.add(new StockSubItem("demo item 4","demo item 4"));
+    private void handleCategoryAPIResponse(String response, VolleyError error, String status) {
+        try {
+          if (status.equals("response")) {
+                itemsCategory_response = (ItemsCategory_Response) Utils.parseResponse(response, ItemsCategory_Response.class);
+                if (itemsCategory_response.getFound()) {
+                    setCategoryList(itemsCategory_response.getData());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-        StockItem stockItem = new StockItem("Items",Items);
-        list.add(stockItem);
+    private void setCategoryList(List<ItemCategoryInfo> data) {
+        itemsCategoryList = new ArrayList<>();
+        itemsCategoryList.add("Select Category");
 
-        ArrayList<StockSubItem> AddOns = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            itemsCategoryList.add(data.get(i).getName());
+        }
 
-        AddOns.add(new StockSubItem("demo add on 1","demo add on 1"));
-        AddOns.add(new StockSubItem("demo add on 2","demo add on 2"));
-        AddOns.add(new StockSubItem("demo add on 3","demo add on 3"));
-        AddOns.add(new StockSubItem("demo add on 4","demo add on 4"));
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<String>(getContext().getApplicationContext(),
+                R.layout.simple_item_selected, itemsCategoryList);
+        dataAdapter.setDropDownViewResource(R.layout.simple_item);
+        spnCategory.setAdapter(dataAdapter);
 
-        StockItem StockItem = new StockItem("AddOns",AddOns);
-        list.add(StockItem);
+        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    item_category_id = data.get(position -1).getId();
+                    getItemListOfSelectedCategory(item_category_id);
+                }
+            }
 
-        ArrayList<StockSubItem> Consumables = new ArrayList<>();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
 
-        Consumables.add(new StockSubItem("consumable 1","consumable 1"));
-        Consumables.add(new StockSubItem("consumable 2","consumable 2"));
-        Consumables.add(new StockSubItem("consumable 3","consumable 3"));
-        Consumables.add(new StockSubItem("consumable 4","consumable 4"));
+    private void getItemListOfSelectedCategory(String item_category_id) {
+        try {
+            Map<String, String> headerParams = new HashMap<>();
+            Map<String, String> requestBodyParams = new HashMap<>();
 
-        StockItem consumables = new StockItem("Consumables",AddOns);
-        list.add(consumables);
+            requestBodyParams.put(Constants.Fields.ITEM_CATEGORY_ID, item_category_id);
+            requestBodyParams.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
+            HttpService.accessWebServices(
+                    getContext(),
+                    ApiUtils.ITEM_LIST,
+                    requestBodyParams,
+                    headerParams,
+                    (response, error, status) -> handleItemsAPIResponse(response, error, status));
+        } catch (Exception e) {
+        }
+    }
 
-        StockListAdapter adapter = new StockListAdapter(list);
+    private void handleItemsAPIResponse(String response, VolleyError error, String status) {
+        try {
+            if (status.equals("response")) {
+                Items_Response items_response = (Items_Response) Utils.parseResponse(response, Items_Response.class);
+                if (items_response.getFound()) {
+                    setStockListAdapter(items_response.getData());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setStockListAdapter(List<Items_Response.Items_Data> data) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvAvailableStock.setLayoutManager(linearLayoutManager);
+        adapter = new ItemListAdapter(getContext(), data);
         rvAvailableStock.setAdapter(adapter);
+        adapter.setListClickListener(this);
+        adapter.notifyDataSetChanged();
     }
-
-    private void setupEvents() { }
 
     private void setupUI(View rootView) {
+        spnCategory = rootView.findViewById(R.id.spn_select_category);
         rvAvailableStock = rootView.findViewById(R.id.rv_available_stock_list);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) { }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+    public void click(int position, int value) {
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
-
 }

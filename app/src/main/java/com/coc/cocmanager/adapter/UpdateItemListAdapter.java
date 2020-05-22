@@ -4,42 +4,42 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.interfaces.ListClickListener;
-import com.coc.cocmanager.model.Items_Response;
+import com.coc.cocmanager.model.StockInListModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder> {
+public class UpdateItemListAdapter extends RecyclerView.Adapter<UpdateItemListAdapter.ViewHolder> {
 
     private View itemView;
     private Context context;
     private ListClickListener listClickListener;
-    private final List<Items_Response.Items_Data> list;
+    private final List<StockInListModel.StockItems> list;
 
-    public ItemListAdapter(Context context, List<Items_Response.Items_Data> list) {
+    public UpdateItemListAdapter(Context context, List<StockInListModel.StockItems> list) {
         this.context = context;
         this.list = list;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvCount;
         TextView tvItemName;
+        EditText tvQuantity;
+        TextView tvCategoryName;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tvCount = itemView.findViewById(R.id.tv_count);
+            tvQuantity = itemView.findViewById(R.id.tv_quantity);
             tvItemName = itemView.findViewById(R.id.tv_item_name);
-
+            tvCategoryName = itemView.findViewById(R.id.tv_category_name);
         }
-
     }
 
     public void setListClickListener(ListClickListener listClickListener) {
@@ -49,7 +49,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_list_item_clinic_name, parent, false);
+                .inflate(R.layout.row_stock_in_details_list_item, parent, false);
         ViewHolder vh = new ViewHolder(itemView);
         return vh;
     }
@@ -58,7 +58,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     public long getItemId(int position) {
         return position;
     }
-
 
     public Object getItem(int position) {
         return list.get(position);
@@ -72,8 +71,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.tvItemName.setText(list.get(position).getName());
-        holder.tvCount.setText(list.get(position).getInventory_count());
+        holder.tvQuantity.setText(list.get(position).getQuantity());
+        holder.tvItemName.setText(list.get(position).getItem().getName());
+        holder.tvCategoryName.setText(list.get(position).getItem().getItemCategory().getName());
     }
 
     @Override

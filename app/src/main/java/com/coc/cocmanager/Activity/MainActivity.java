@@ -1,5 +1,6 @@
 package com.coc.cocmanager.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -7,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.os.Bundle;
 import android.content.Intent;
@@ -14,6 +20,8 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.coc.cocmanager.Utils.Constants;
+import com.coc.cocmanager.Utils.Utils;
 import com.coc.cocmanager.fragments.InventoryFragment;
 import com.coc.cocmanager.fragments.SummaryFragment;
 import com.coc.cocmanager.fragments.UsersFragment;
@@ -38,7 +46,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     RelativeLayout navHeaderContainer;
 
     private DrawerLayout drawerLayout;
+    private SharedPreferences prefInfo;
     private static String TAG = MainActivity.class.getSimpleName();
+    private int counter = 0;
 
     //endregion
 
@@ -60,11 +70,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     }
 
     private void initializeData() {
+        prefInfo = getSharedPreferences(Utils.PREFERENCE_PERSONAL, MODE_PRIVATE);
 
+        tv_name.setText(prefInfo.getString(Constants.Fields.FIRST_NAME,""));
     }
 
     private void setupEvents() {
-
+        iv_back.setOnClickListener(v -> {
+            drawerLayout.closeDrawer(Gravity.LEFT);
+        });
     }
 
     private void setupUI() {
@@ -106,27 +120,25 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
 
             case 4:
-                fragment = new HomeFragment();
                 startActivity(new Intent(getApplicationContext(), Loginctivity.class));
-                finish();
+                finishAffinity();
                 int count = getSupportFragmentManager().getBackStackEntryCount();
 
                 for (int i = 0; i < count; ++i) {
                     getFragmentManager().popBackStackImmediate();
                 }
                 getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
                 break;
-
 
             default:
                 break;
         }
 
-        // set the toolbar title
-        getSupportActionBar().setTitle(title);
-
-        this.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
-                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
+        if (fragment != null) {
+            // set the toolbar title
+            getSupportActionBar().setTitle(title);
+            this.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
+                    R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
+        }
     }
 }
