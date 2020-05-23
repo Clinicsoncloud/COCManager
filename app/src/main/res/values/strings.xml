@@ -1,6 +1,7 @@
 <resources>
     <array name="nav_drawer_icons">
         <item>@drawable/appmenu5</item>
+        <item>@drawable/appmenu5</item>
         <item>@drawable/appmenu1</item>
         <item>@drawable/ic_mypackges</item>
         <item>@drawable/appmenu2</item>

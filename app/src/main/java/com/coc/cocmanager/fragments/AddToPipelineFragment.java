@@ -45,7 +45,6 @@ import butterknife.ButterKnife;
 public class AddToPipelineFragment extends Fragment {
 
     //region variables
-
     @BindView(R.id.tv_installation_type)
     MaterialTextView edtInstallationType;
     @BindView(R.id.spn_location)

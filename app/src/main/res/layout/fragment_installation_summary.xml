@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.InstallationSummaryFragment">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_installation"
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/_15sdp"
-                android:textSize="25sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
 
 
@@ -47,8 +46,8 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No of Total Installations"
-                        android:textSize="20sp"
+                        android:text="Total Installations"
+                        android:textSize="15sp"
                         android:gravity="center"/>
                 </LinearLayout>
                 <LinearLayout
@@ -62,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="25"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -78,8 +77,8 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No of Machine in Transport"
-                        android:textSize="20sp"
+                        android:text="Machines in Transport"
+                        android:textSize="15sp"
                         android:gravity="center"/>
                 </LinearLayout>
                 <LinearLayout
@@ -93,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="20"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -112,8 +111,8 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No of Machine in Pipeline"
-                        android:textSize="20sp"
+                        android:text="Machines in Pipeline"
+                        android:textSize="15sp"
                         android:gravity="center"/>
                 </LinearLayout>
                 <LinearLayout
@@ -127,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>

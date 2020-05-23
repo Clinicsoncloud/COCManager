@@ -3,15 +3,16 @@ package com.coc.cocmanager.Utils;
 public class ApiUtils {
 
     private static String PROTOCOL = "http://";
-        private static String STAGING_URL = "45.252.190.200";
-        private static String SERVER_URL = "45.252.190.200";
+    private static String STAGING_URL = "45.252.190.200";
+    private static String SERVER_URL = "45.252.190.200";
 
 
     public static String STOCK_OUT = PROTOCOL + SERVER_URL + "/api/v1/stock";
-    public static String DELETE_USER = PROTOCOL + SERVER_URL +"/api/v1/user/";
+    public static String AVAILABLE_STOCK = PROTOCOL + SERVER_URL + "/api/v1/clinic/get-available-count";
+    public static String DELETE_USER = PROTOCOL + SERVER_URL + "/api/v1/user/";
     public static String CREATE_USER = PROTOCOL + SERVER_URL + "/api/v1/user";
     public static String UPDATE_USER = PROTOCOL + SERVER_URL + "/api/v1/user/";
-    public static String USER_LIST = PROTOCOL + SERVER_URL +"/api/v1/user/filter";
+    public static String USER_LIST = PROTOCOL + SERVER_URL + "/api/v1/user/filter";
     public static String LOGIN_URL = PROTOCOL + SERVER_URL + "/api/v1/login/user";
     public static String ITEM_LIST = PROTOCOL + SERVER_URL + "/api/v1/item/filter";
     public static String STOCK_IN_DETAILS = PROTOCOL + SERVER_URL + "/api/v1/stock";

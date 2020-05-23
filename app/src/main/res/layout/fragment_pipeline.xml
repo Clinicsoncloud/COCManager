@@ -24,7 +24,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:src="@drawable/ic_add_circle_outline_black_24dp"/>
+            android:src="@drawable/add"/>
 
     </RelativeLayout>
 

@@ -23,17 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:weightSum="2">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:text="Description"/>
-        </LinearLayout>
+        android:weightSum="1">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,10 +33,21 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:text="20-May-2020"/>
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Description"/>
     </LinearLayout>
 
     <LinearLayout
@@ -58,15 +59,15 @@
             android:id="@+id/tv_descreption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"/>
+            android:padding="@dimen/_8sdp"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="@string/txt_clinic_name"
-        android:layout_margin="@dimen/_10sdp"/>
+        android:layout_marginLeft="@dimen/_10sdp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,37 +78,36 @@
             android:id="@+id/tv_clinic_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"/>
+            android:padding="@dimen/_8sdp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
         android:weightSum="3">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="0.8">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Item"/>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1.2">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Category"/>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -119,13 +119,12 @@
                 android:textSize="18sp"
                 android:text="Quantity"/>
         </LinearLayout>
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_stock_out_descreption_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"/>
+        android:layout_marginTop="@dimen/_15sdp"/>
 
 </LinearLayout>

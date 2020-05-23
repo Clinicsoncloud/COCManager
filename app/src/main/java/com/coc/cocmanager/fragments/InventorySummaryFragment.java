@@ -6,12 +6,24 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.coc.cocmanager.R;
+import com.coc.cocmanager.Utils.ApiUtils;
+import com.coc.cocmanager.Utils.HttpService;
+import com.coc.cocmanager.Utils.Utils;
+import com.coc.cocmanager.model.AvailableModel;
+import com.coc.cocmanager.model.StockInDetailModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * created by ketan 24-3-2020
@@ -19,6 +31,7 @@ import com.coc.cocmanager.R;
 public class InventorySummaryFragment extends Fragment {
 
     //region variables
+    private TextView tvAvailableCount;
     private Button btnCheckAvailability;
     //endregion
 
@@ -47,7 +60,45 @@ public class InventorySummaryFragment extends Fragment {
 
         setupUI(rootView);
         setupEvents();
+        initializeData();
         return rootView;
+    }
+
+    private void initializeData() {
+        getAvailableCount();
+    }
+
+    private void getAvailableCount() {
+        try {
+            if (Utils.isOnline(getContext())) {
+                Map<String, String> params = new HashMap<>();
+                Map<String, String> headerParams = new HashMap<>();
+
+                HttpService.accessWebServicesGet(
+                        getContext(), ApiUtils.AVAILABLE_STOCK,
+                        params, headerParams,
+                        (response, error, status) -> handleAPIResponse(response, error, status));
+            } else {
+                Utils.showToast(getContext(), "No Internet connectivity..!");
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleAPIResponse(String response, VolleyError error, String status) {
+        if (status.equals("response")) {
+            try {
+               AvailableModel stockData = (AvailableModel) Utils.parseResponse(response, AvailableModel.class);
+                if (stockData.getFound()) {
+                    //TODO AFTER SUCCESS
+                    tvAvailableCount.setText(stockData.getData());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (status.equals("error")) {
+            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setupEvents() {
@@ -61,6 +112,7 @@ public class InventorySummaryFragment extends Fragment {
     }
 
     private void setupUI(View rootView) {
+        tvAvailableCount = rootView.findViewById(R.id.tv_available_count);
         btnCheckAvailability = rootView.findViewById(R.id.btn_check_availability);
     }
 

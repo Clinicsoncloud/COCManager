@@ -59,7 +59,7 @@ public class CheckAvailabilityFragment extends Fragment implements ListClickList
     }
 
     private void initializeData() {
-        setAvailableListAdapter();
+//        setAvailableListAdapter();
     }
 
     private void setAvailableListAdapter() {

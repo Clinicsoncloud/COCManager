@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -36,14 +37,14 @@ public class PipelineListAdapter extends RecyclerView.Adapter<PipelineListAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvClinicId;
         TextView tvClinicName;
-        CardView cardviewPipeline;
+        LinearLayout cardviewPipeline;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             tvClinicId = itemView.findViewById(R.id.tv_clinic_id);
-            tvClinicName = itemView.findViewById(R.id.tv_clinic_name_pipeline);
             cardviewPipeline =itemView.findViewById(R.id.cardview_pipeline);
+            tvClinicName = itemView.findViewById(R.id.tv_clinic_name_pipeline);
         }
     }
 
@@ -76,7 +77,7 @@ public class PipelineListAdapter extends RecyclerView.Adapter<PipelineListAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvClinicName.setText(list.get(position).getName());
-        holder.tvClinicId.setText("Clinic ID "+list.get(position).getId());
+        holder.tvClinicId.setText("Id :"+list.get(position).getId());
         holder.cardviewPipeline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

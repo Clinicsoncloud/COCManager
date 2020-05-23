@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -38,7 +39,7 @@ public class InstallationsListAdapter extends RecyclerView.Adapter<Installations
         TextView tvClinicName;
         TextView tvClientName;
         TextView tvClinicLocation;
-        CardView cardViewInstallation;
+        LinearLayout cardViewInstallation;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -47,7 +48,7 @@ public class InstallationsListAdapter extends RecyclerView.Adapter<Installations
             tvClinicName = itemView.findViewById(R.id.tv_clinic_name);
             tvClientName = itemView.findViewById(R.id.tv_client_name);
             tvClinicLocation = itemView.findViewById(R.id.tv_clinic_location);
-            cardViewInstallation = itemView.findViewById(R.id.cardview_installation);
+            cardViewInstallation = itemView.findViewById(R.id.ll_card_item);
         }
     }
 
@@ -80,10 +81,10 @@ public class InstallationsListAdapter extends RecyclerView.Adapter<Installations
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.tvClinicId.setText(list.get(position).getId());
+        holder.tvClinicId.setText("Id :"+list.get(position).getId());
         holder.tvClinicName.setText(list.get(position).getName());
-        holder.tvClientName.setText(list.get(position).getUser().getFirstname());
-        holder.tvClinicLocation.setText(list.get(position).getLocation().getName());
+        holder.tvClientName.setText("Client :"+list.get(position).getUser().getFirstname());
+        holder.tvClinicLocation.setText("Location :"+list.get(position).getLocation().getName());
 
         holder.cardViewInstallation.setOnClickListener(v -> {listClickListener.click(position,0);});
     }

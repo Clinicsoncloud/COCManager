@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -37,7 +38,7 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
         TextView tvClinicId;
         TextView tvClientName;
         TextView tvClinicName;
-        CardView cardviewTransport;
+        LinearLayout cardviewTransport;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -80,8 +81,8 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.tvClinicName.setText(list.get(position).getName());
-        holder.tvClinicId.setText("Id -"+list.get(position).getId());
-        holder.tvClientName.setText("Client -"+list.get(position).getUser().getFirstname());
+        holder.tvClinicId.setText("Id :"+list.get(position).getId());
+        holder.tvClientName.setText("Client :"+list.get(position).getUser().getFirstname());
 
         holder.cardviewTransport.setOnClickListener(new View.OnClickListener() {
             @Override

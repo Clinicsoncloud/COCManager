@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -34,15 +35,15 @@ public class StockInListAdapter extends RecyclerView.Adapter<StockInListAdapter.
         TextView tvDate;
         TextView tvItemCount;
         TextView tvDescription;
-        CardView cardViewStockListItem;
+//        CardView cardViewStockListItem;
+        LinearLayout cardViewStockListItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             tvDate = itemView.findViewById(R.id.tv_date);
-            tvItemCount = itemView.findViewById(R.id.tv_item_count);
             tvDescription = itemView.findViewById(R.id.tv_descreption);
-            cardViewStockListItem = itemView.findViewById(R.id.cardview_stock_list_item);
+            cardViewStockListItem = itemView.findViewById(R.id.ll_item);
         }
     }
 
@@ -53,7 +54,7 @@ public class StockInListAdapter extends RecyclerView.Adapter<StockInListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_stock_in_list_item, parent, false);
+                .inflate(R.layout.row_updated_design_list_item, parent, false);
         ViewHolder vh = new ViewHolder(itemView);
         return vh;
     }

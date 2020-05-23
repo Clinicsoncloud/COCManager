@@ -5,30 +5,11 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/ll_card_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview_installation"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:elevation="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="@dimen/_5sdp"
-            app:cardElevation="@dimen/_5sdp">
-
-            <View
-                android:id="@+id/view_green"
-                android:layout_width="@dimen/_5sdp"
-                android:layout_height="match_parent"
-                android:background="@color/colorGreen"
-                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +28,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:gravity="center">
+                        android:gravity="left">
 
                         <TextView
                             android:id="@+id/tv_clinic_name"
@@ -63,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:gravity="center">
+                        android:gravity="left">
 
                         <TextView
                             android:id="@+id/tv_clinic_location"
@@ -88,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:gravity="center">
+                        android:gravity="left">
 
                         <TextView
                             android:id="@+id/tv_clinic_id"
@@ -102,7 +83,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:layout_weight="1">
 
                         <TextView
@@ -115,6 +96,10 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/color_black"/>
     </LinearLayout>
 </RelativeLayout>

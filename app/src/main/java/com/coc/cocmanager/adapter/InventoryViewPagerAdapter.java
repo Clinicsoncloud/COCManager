@@ -14,7 +14,7 @@ import com.coc.cocmanager.fragments.StockOutListingFragment;
 
 public class InventoryViewPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] tabTitles = new String[]{"Available Stock", "Stock In", "Stock Out"};
+    private String[] tabTitles = new String[]{"Available", "Stock In", "Stock Out"};
 
     public InventoryViewPagerAdapter(FragmentManager fm) {
         super(fm);

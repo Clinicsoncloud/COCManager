@@ -6,6 +6,7 @@
     <color name="colorGreen">#61B664</color>
     <color name="transparent">#00000000</color>
     <color name="colordrawer">#5D747A</color>
+    <color name="color_black">#474747</color>
     <color name="textColorPrimary">#ffff</color>
     <color name="navigationBarColor">#000000</color>
     <color name="toolbarcolor">#9EC0C9</color>
