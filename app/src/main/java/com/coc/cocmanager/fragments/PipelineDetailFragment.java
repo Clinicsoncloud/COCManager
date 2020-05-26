@@ -106,6 +106,7 @@ public class PipelineDetailFragment extends Fragment implements RvClickListener 
     private StockUsingTypeModel updateStockData;
 
     private StockModel stockData;
+    private String selectedClient = "";
     private ArrayList itemsCategoryList;
     private ArrayList itemsCategoryIDList;
     private List<Request_Item_Data> itemsList;
@@ -420,6 +421,11 @@ public class PipelineDetailFragment extends Fragment implements RvClickListener 
         dataAdapter.setDropDownViewResource(R.layout.simple_item);
         spnClientName.setAdapter(dataAdapter);
 
+        if (selectedClient != null) {
+            int spinnerPosition = dataAdapter.getPosition(selectedClient);
+            spnClientName.setSelection(spinnerPosition);
+        }
+
         spnClientName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -442,8 +448,9 @@ public class PipelineDetailFragment extends Fragment implements RvClickListener 
         edtActofitId.setText(clinicListInfo.getActofit_id());
         edtLocation.setText(clinicListInfo.getLocation().getName());
         edtGmailPassword.setText(clinicListInfo.getGmail_password());
-        tvActofitExpiry.setText(clinicListInfo.getActofit_end_date());
         edtActofitPassword.setText(clinicListInfo.getActofit_password());
+        tvActofitExpiry.setText(DateService.formatDateFromString(clinicListInfo.getActofit_end_date()));
+        selectedClient = clinicListInfo.getUser().getFirstname() + " " +clinicListInfo.getUser().getLastname();
     }
 
     private void openCalender() {

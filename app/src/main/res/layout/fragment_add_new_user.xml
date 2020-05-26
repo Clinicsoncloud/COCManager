@@ -35,7 +35,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_name"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_name"
@@ -43,7 +43,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp" />
+                    android:textSize="15sp"
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -58,7 +59,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_email"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_email"
@@ -66,7 +67,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp" />
+                    android:textSize="15sp"
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -81,7 +83,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_phone"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_phone"
@@ -89,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp" />
+                    android:textSize="15sp"
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -104,7 +107,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_username"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_user_name"
@@ -112,7 +115,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp" />
+                    android:textSize="15sp"
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -127,7 +131,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_user_password"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_user_password"
@@ -135,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
+                    android:textSize="15sp"
                     android:padding="@dimen/_5sdp" />
 
             </LinearLayout>
@@ -151,7 +156,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_user_type"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <Spinner
                     android:id="@+id/spn_user_type"
@@ -161,7 +166,7 @@
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/rectangle"
                     android:entries="@array/array_user_type"
-                    android:padding="@dimen/_5sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -176,7 +181,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_spn_gender"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <Spinner
                     android:id="@+id/spn_gender"
@@ -186,7 +191,7 @@
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/rectangle"
                     android:entries="@array/array_user_gender"
-                    android:padding="@dimen/_5sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
 

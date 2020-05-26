@@ -47,7 +47,6 @@ public class Loginctivity extends AppCompatActivity {
     private Context context = Loginctivity.this;
     //endregion
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +137,6 @@ public class Loginctivity extends AppCompatActivity {
             Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             // TODO: Handle error
         }
-
     }
 
     private void writePersonalSharedPreferences(String token) {

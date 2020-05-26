@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import java.util.Map;
 public class InstallationFragment extends Fragment implements ListClickListener, View.OnClickListener {
 
     //region variables
+
     private int mYear, mMonth, mDay;
     private RecyclerView rvInstallations;
     private Context context = getContext();
@@ -50,9 +52,12 @@ public class InstallationFragment extends Fragment implements ListClickListener,
     private LocationModel locationModel;
     private AutoCompleteTextView autotvLocation;
     private AutoCompleteTextView autotvClientName;
-    final Calendar c = Calendar.getInstance();
+
+    private ImageView ivFilter;
     private List<String> clientList;
     private List<String> locationList;
+    final Calendar c = Calendar.getInstance();
+
     //endregion
 
     //region methods
@@ -88,6 +93,7 @@ public class InstallationFragment extends Fragment implements ListClickListener,
      * set up the click events on views
      */
     private void setupEvents() {
+        ivFilter.setOnClickListener(this);
         tvEndDate.setOnClickListener(this);
         tvStartDate.setOnClickListener(this);
     }
@@ -256,6 +262,7 @@ public class InstallationFragment extends Fragment implements ListClickListener,
     }
 
     private void setupUI(View rootView) {
+        ivFilter = rootView.findViewById(R.id.iv_filter);
         tvEndDate = rootView.findViewById(R.id.tv_end_date);
         tvStartDate = rootView.findViewById(R.id.tv_start_date);
         autotvLocation = rootView.findViewById(R.id.auto_tv_location);
@@ -310,7 +317,17 @@ public class InstallationFragment extends Fragment implements ListClickListener,
             case R.id.tv_end_date:
                 openCalender(tvEndDate);
                 break;
+
+            case R.id.iv_filter:
+                openFilterScreen();
+                break;
         }
+    }
+
+    private void openFilterScreen() {
+        Fragment fragment = new InstallationFilterFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
+                R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }
     //endregion
 }

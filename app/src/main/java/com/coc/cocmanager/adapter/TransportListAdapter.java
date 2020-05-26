@@ -80,9 +80,9 @@ public class TransportListAdapter extends RecyclerView.Adapter<TransportListAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.tvClinicName.setText(list.get(position).getName());
-        holder.tvClinicId.setText("Id :"+list.get(position).getId());
-        holder.tvClientName.setText("Client :"+list.get(position).getUser().getFirstname());
+        holder.tvClinicId.setText("Token : "+list.get(position).getId());
+        holder.tvClientName.setText("Client : "+list.get(position).getUser().getFirstname());
+        holder.tvClinicName.setText(list.get(position).getName()+ " ( "+list.get(position).getLocation().getName()+" )");
 
         holder.cardviewTransport.setOnClickListener(new View.OnClickListener() {
             @Override

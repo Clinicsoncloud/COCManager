@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:text="Description"/>
     </LinearLayout>
@@ -65,7 +65,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:text="@string/txt_clinic_name"
         android:layout_marginLeft="@dimen/_10sdp"/>
 
@@ -94,7 +94,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:text="Item"/>
         </LinearLayout>
         <LinearLayout
@@ -105,7 +105,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:text="Category"/>
         </LinearLayout>
         <LinearLayout
@@ -116,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:text="Quantity"/>
         </LinearLayout>
     </LinearLayout>

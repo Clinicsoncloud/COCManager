@@ -37,7 +37,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_installataion_type"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_installation_type"
@@ -46,7 +46,7 @@
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
                     android:text="Transport"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -61,7 +61,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_clinic_name"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_clinic_name"
@@ -71,7 +71,7 @@
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/rectangle"
                     android:entries="@array/array_clinic_name"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
 
@@ -87,7 +87,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_clinic_id_name"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
 
@@ -112,7 +112,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_gmail_id"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -122,7 +122,7 @@
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
                     android:hint="21075"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
 
@@ -138,7 +138,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_gmail_password"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -148,7 +148,7 @@
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
                     android:hint="@string/txt_gmail_password"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -163,7 +163,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_actofit_id"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -173,7 +173,7 @@
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
                     android:hint="actofit@actofit.com"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -188,7 +188,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_actofit_password"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -198,7 +198,7 @@
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
                     android:hint="@string/txt_actofit_password"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -213,7 +213,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_actofit_expiry"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -223,7 +223,7 @@
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
                     android:hint="20 july 2020"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
 
@@ -239,20 +239,17 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_client_name"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <Spinner
-                    android:id="@+id/spn_client_name"
+                    android:id="@+id/spn_client_name_transposrt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/rectangle"
-                    android:entries="@array/array_clinic_name"
-                    android:padding="@dimen/_10sdp" />
-
+                    android:padding="@dimen/_8sdp" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -266,7 +263,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_clinic_location"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_location"
@@ -274,8 +271,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
+                    android:textSize="15sp"
                     android:hint="Location"
-                    android:padding="@dimen/_10sdp" />
+                    android:padding="@dimen/_8sdp" />
 
             </LinearLayout>
             <LinearLayout
@@ -290,7 +288,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:gravity="center"
                     android:text="@string/txt_address"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_address"
@@ -299,7 +297,8 @@
                     android:background="@drawable/rectangle"
                     android:layout_margin="@dimen/_10sdp"
                     android:hint="Address"
-                    android:padding="@dimen/_10sdp" />
+                    android:textSize="15sp"
+                    android:padding="@dimen/_8sdp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

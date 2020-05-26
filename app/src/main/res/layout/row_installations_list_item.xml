@@ -15,13 +15,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="1">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -52,6 +53,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:text="@string/txt_clinic_location"
+                            android:visibility="gone"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -72,10 +74,10 @@
                         android:gravity="left">
 
                         <TextView
-                            android:id="@+id/tv_clinic_id"
+                            android:id="@+id/tv_client_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_clinic_id_name"
+                            android:text="@string/txt_client_name"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -85,12 +87,11 @@
                         android:layout_gravity="center_vertical"
                         android:gravity="left"
                         android:layout_weight="1">
-
                         <TextView
-                            android:id="@+id/tv_client_name"
+                            android:id="@+id/tv_clinic_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_client_name"
+                            android:text="@string/txt_clinic_id_name"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -99,7 +100,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:background="@color/color_black"/>
     </LinearLayout>
 </RelativeLayout>

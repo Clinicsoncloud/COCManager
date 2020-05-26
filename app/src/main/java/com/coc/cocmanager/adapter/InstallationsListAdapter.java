@@ -81,10 +81,9 @@ public class InstallationsListAdapter extends RecyclerView.Adapter<Installations
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.tvClinicId.setText("Id :"+list.get(position).getId());
-        holder.tvClinicName.setText(list.get(position).getName());
-        holder.tvClientName.setText("Client :"+list.get(position).getUser().getFirstname());
-        holder.tvClinicLocation.setText("Location :"+list.get(position).getLocation().getName());
+        holder.tvClinicId.setText("Token : "+list.get(position).getId());
+        holder.tvClientName.setText("Client : "+list.get(position).getUser().getFirstname());
+        holder.tvClinicName.setText(""+list.get(position).getName()+" ( " +list.get(position).getLocation().getName() +")");
 
         holder.cardViewInstallation.setOnClickListener(v -> {listClickListener.click(position,0);});
     }

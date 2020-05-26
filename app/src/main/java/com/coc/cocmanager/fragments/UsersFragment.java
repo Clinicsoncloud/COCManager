@@ -41,6 +41,7 @@ public class UsersFragment extends Fragment implements ListClickListener {
     //region variables
     private RecyclerView rvUserList;
     private ImageView ivAddNewUser;
+    private UsersListAdapter adapter;
 
     UserData userData;
     //endregion
@@ -94,17 +95,17 @@ public class UsersFragment extends Fragment implements ListClickListener {
     private void getUserList() {
         try {
             if (Utils.isOnline(getContext())) {
-                Map<String,String> params = new HashMap<>();
-                params.put(Constants.Fields.STATUS,Constants.Fields.TRUE);
+                Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
 
-                Map<String, String> headerParams  = new HashMap<>();
+                Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(
                         getContext(), ApiUtils.USER_LIST,
                         params, headerParams,
                         (response, error, status) -> handleAPIResponse(response, error, status));
             } else {
-                Utils.showToast(getContext(),"No Internet connectivity..!");
+                Utils.showToast(getContext(), "No Internet connectivity..!");
             }
         } catch (Exception e) {
         }
@@ -114,12 +115,12 @@ public class UsersFragment extends Fragment implements ListClickListener {
     private void handleAPIResponse(String response, VolleyError error, String status) {
         if (status.equals("response")) {
             try {
-                userData = (UserData) Utils.parseResponse(response,UserData.class);
-                if(userData.getFound()){
+                userData = (UserData) Utils.parseResponse(response, UserData.class);
+                if (userData.getFound()) {
                     //TODO AFTER SUCCESS
-                    if(userData.getData() != null) {
+                    if (userData.getData() != null) {
                         setUserListAdapter(userData.getData());
-                    }else{
+                    } else {
                         Toast.makeText(getContext(), "No users created", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -134,15 +135,16 @@ public class UsersFragment extends Fragment implements ListClickListener {
     /**
      * delete user API call method
      * handle response usign handleRespone method
+     *
      * @param position
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void deleteUserAPI(int position) {
         try {
             if (Utils.isOnline(getContext())) {
-                Map<String, String> headerParams  = new HashMap<>();
+                Map<String, String> headerParams = new HashMap<>();
                 String url = ApiUtils.DELETE_USER + position;
-                Log.e("url_log"," = "+url);
+                Log.e("url_log", " = " + url);
                 HttpService.accessWebServicess(
                         getContext(),
                         url,
@@ -151,7 +153,7 @@ public class UsersFragment extends Fragment implements ListClickListener {
                         headerParams,
                         (response, error, status) -> handleResponse(response, error, status));
             } else {
-                Utils.showToast(getContext(),"No Internet connectivity..!");
+                Utils.showToast(getContext(), "No Internet connectivity..!");
             }
         } catch (Exception e) {
         }
@@ -159,13 +161,16 @@ public class UsersFragment extends Fragment implements ListClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void handleResponse(String response, VolleyError error, String status) {
-        Log.e("response_log"," = "+response);
         if (status.equals("response")) {
             try {
                 DeleteUserModel userModel = (DeleteUserModel) Utils.parseResponse(response, DeleteUserModel.class);
-                if(userModel.getSuccess()){
+                if (userModel.getSuccess()) {
                     //TODO AFTER SUCCESS
-                    setUserListAdapter(userData.getData());
+                    if (adapter != null)
+                        adapter.notifyDataSetChanged();
+                    else
+                        setUserListAdapter(userData.getData());
+
                     Toast.makeText(getContext(), "User Deleted Successfully", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
@@ -179,10 +184,9 @@ public class UsersFragment extends Fragment implements ListClickListener {
     private void setUserListAdapter(List<UserData.User_Info> list) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvUserList.setLayoutManager(linearLayoutManager);
-        UsersListAdapter adapter = new UsersListAdapter(getContext(),list);
+        adapter = new UsersListAdapter(getContext(), list);
         rvUserList.setAdapter(adapter);
         adapter.setListClickListener(this);
-        adapter.notifyDataSetChanged();
     }
 
     private void setupUI(View rootView) {
@@ -191,7 +195,8 @@ public class UsersFragment extends Fragment implements ListClickListener {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) { }
+    public void onButtonPressed(Uri uri) {
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -205,6 +210,7 @@ public class UsersFragment extends Fragment implements ListClickListener {
 
     /**
      * list item click listener
+     *
      * @param position
      * @param value
      */
@@ -213,18 +219,18 @@ public class UsersFragment extends Fragment implements ListClickListener {
     public void click(int position, int value) {
         int id = 0;
         id = Integer.parseInt(userData.getData().get(position).getId());
-        if(value == 0) {
+        if (value == 0) {
             deleteUser(id);
-        }else if(value == 1){
-            editUser(id,position);
+        } else if (value == 1) {
+            editUser(id, position);
         }
     }
 
-    private void editUser(int id,int position) {
+    private void editUser(int id, int position) {
         Fragment fragment = new EditUserFragment();
         Bundle args = new Bundle();
-        args.putString("id",""+id);
-        args.putString("position",""+position);
+        args.putString("id", "" + id);
+        args.putString("position", "" + position);
         fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();

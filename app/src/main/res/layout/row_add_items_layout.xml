@@ -47,13 +47,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:hint="10"
+                android:hint="Qty"
                 android:background="@android:color/transparent"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 

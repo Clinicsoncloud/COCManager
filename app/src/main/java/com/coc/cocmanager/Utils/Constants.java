@@ -29,6 +29,7 @@ public class Constants {
         public static final String ACTOFIT_ID = "actofit_id";
         public static final String LOCATION_ID = "location_id";
         public static final String CLIENT_NAME = "client_name";
+        public static final String KIOSK_COUNT = "kiosk_count";
         public static final String GMAIL_PASSWORD = "gmail_password";
         public static final String ASSIGN_USER_ID = "assigned_user_id";
         public static final String ACTOFIT_PASSWORD = "actofit_password";

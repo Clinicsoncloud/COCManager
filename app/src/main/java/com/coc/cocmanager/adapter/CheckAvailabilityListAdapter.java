@@ -4,47 +4,38 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.coc.cocmanager.R;
 import com.coc.cocmanager.interfaces.ListClickListener;
-import com.coc.cocmanager.model.ClinicListModel;
+import com.coc.cocmanager.model.CheckAvailabilityModel;
+import com.coc.cocmanager.model.Items_Response;
 
 import java.util.List;
 
-import butterknife.BindView;
-
-/**
- * created by ketan 11-5-2020
- */
-
-public class PipelineListAdapter extends RecyclerView.Adapter<PipelineListAdapter.ViewHolder> {
+public class CheckAvailabilityListAdapter extends RecyclerView.Adapter<CheckAvailabilityListAdapter.ViewHolder> {
 
     private View itemView;
     private Context context;
     private ListClickListener listClickListener;
-    private final List<ClinicListModel.ClinicListInfo> list;
+    private final List<CheckAvailabilityModel.CheckAvailabilityInfo> list;
 
-    public PipelineListAdapter(Context context, List<ClinicListModel.ClinicListInfo> list) {
+    public CheckAvailabilityListAdapter(Context context, List<CheckAvailabilityModel.CheckAvailabilityInfo> list) {
         this.context = context;
         this.list = list;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvClinicId;
-        TextView tvClinicName;
-        LinearLayout cardviewPipeline;
+        TextView tvCount;
+        TextView tvItemName;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tvClinicId = itemView.findViewById(R.id.tv_clinic_id);
-            cardviewPipeline =itemView.findViewById(R.id.cardview_pipeline);
-            tvClinicName = itemView.findViewById(R.id.tv_clinic_name_pipeline);
+            tvCount = itemView.findViewById(R.id.tv_count);
+            tvItemName = itemView.findViewById(R.id.tv_item_name);
         }
     }
 
@@ -55,7 +46,7 @@ public class PipelineListAdapter extends RecyclerView.Adapter<PipelineListAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_pipeline_list_item, parent, false);
+                .inflate(R.layout.row_list_item_clinic_name, parent, false);
         ViewHolder vh = new ViewHolder(itemView);
         return vh;
     }
@@ -76,14 +67,9 @@ public class PipelineListAdapter extends RecyclerView.Adapter<PipelineListAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvClinicId.setText("Token : "+list.get(position).getId());
-        holder.tvClinicName.setText(list.get(position).getName() + " ( " +list.get(position).getLocation().getName()+ " ) ");
-        holder.cardviewPipeline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listClickListener.click(position, 0);
-            }
-        });
+
+        holder.tvCount.setText(list.get(position).getCount_required());
+        holder.tvItemName.setText(list.get(position).getItem().getName());
     }
 
     @Override

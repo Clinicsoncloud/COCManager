@@ -316,7 +316,7 @@ public class StockOutFragment extends Fragment implements RvClickListener {
     }
 
     private void goToStockListingScreen() {
-        Fragment fragment = new StockOutListingFragment();
+        Fragment fragment = new InventoryFragment();
         getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
                 R.anim.slide_left_in, R.anim.slide_right_out).replace(R.id.container_body, fragment).addToBackStack(null).commit();
     }

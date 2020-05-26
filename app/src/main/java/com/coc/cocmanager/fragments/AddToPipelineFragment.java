@@ -3,6 +3,7 @@ package com.coc.cocmanager.fragments;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -255,6 +256,9 @@ public class AddToPipelineFragment extends Fragment {
 
                 String url = ApiUtils.ADD_TO_PIPELINE + clinic_id;
 
+                Log.e("url_log"," = "+url);
+                Log.e("parms_log"," = "+params);
+
                 HttpService.accessWebServicess(
                         getContext(),
                         url,
@@ -386,6 +390,11 @@ public class AddToPipelineFragment extends Fragment {
                     selectedItem = spnClinicName.getSelectedItem().toString();
                     clinic_id = data.get(position -1).getId();
                     tvClinicId.setText(clinic_id);
+                    edtGmailId.setText(data.get(position - 1).getGmailid());
+                    edtActofitId.setText(data.get(position - 1).getActofit_id());
+                    edtGmailPassword.setText(data.get(position - 1).getGmail_password());
+                    tvActofitExpiry.setText(data.get(position - 1).getActofit_end_date());
+                    edtActofitPassword.setText(data.get(position - 1).getActofit_password());
                 }
             }
 

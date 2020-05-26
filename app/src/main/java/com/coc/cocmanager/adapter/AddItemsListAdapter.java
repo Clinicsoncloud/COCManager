@@ -66,10 +66,10 @@ public class AddItemsListAdapter extends RecyclerView.Adapter<AddItemsListAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
-            snpItemCategory = itemView.findViewById(R.id.snp_ItemCategory);
             snpItem = itemView.findViewById(R.id.spn_Item);
-            edtItemQuantity = itemView.findViewById(R.id.edt_itemQuantity);
             imgRemoveItem = itemView.findViewById(R.id.img_RemoveItem);
+            edtItemQuantity = itemView.findViewById(R.id.edt_itemQuantity);
+            snpItemCategory = itemView.findViewById(R.id.snp_ItemCategory);
         }
     }
 

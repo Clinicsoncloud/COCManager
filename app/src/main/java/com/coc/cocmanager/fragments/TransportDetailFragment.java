@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
@@ -24,8 +25,14 @@ import com.coc.cocmanager.Utils.ApiUtils;
 import com.coc.cocmanager.Utils.Constants;
 import com.coc.cocmanager.Utils.HttpService;
 import com.coc.cocmanager.Utils.Utils;
+import com.coc.cocmanager.adapter.AddItemsListAdapter;
+import com.coc.cocmanager.interfaces.RvClickListener;
 import com.coc.cocmanager.model.ClinicListModel;
+import com.coc.cocmanager.model.ItemListModel;
+import com.coc.cocmanager.model.ItemsCategory_Response;
+import com.coc.cocmanager.model.Request_Item_Data;
 import com.coc.cocmanager.model.UserData;
+import com.coc.cocmanager.services.DateService;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -41,7 +48,8 @@ import butterknife.ButterKnife;
 /**
  * created by ketan 23-3-2020
  */
-public class TransportDetailFragment extends Fragment {
+
+public class TransportDetailFragment extends Fragment implements RvClickListener {
 
     @BindView(R.id.tv_installation_type)
     MaterialTextView tvInstallationType;
@@ -59,7 +67,7 @@ public class TransportDetailFragment extends Fragment {
     MaterialTextView tvActofitPassword;
     @BindView(R.id.tv_actofit_expiry)
     MaterialTextView tvActofitExpiry;
-    @BindView(R.id.spn_client_name)
+    @BindView(R.id.spn_client_name_transposrt)
     Spinner spnClientName;
     @BindView(R.id.edt_location)
     TextInputEditText edtLocation;
@@ -72,6 +80,8 @@ public class TransportDetailFragment extends Fragment {
     @BindView(R.id.rv_add_item_list)
     RecyclerView rvAddItemList;
 
+    private String selectedClientName = "";
+
     // region variables
 
     private int count = 0;
@@ -79,6 +89,14 @@ public class TransportDetailFragment extends Fragment {
     private int mYear, mMonth, mDay;
     private String selected_position;
     private ArrayList<String> clientNamelist;
+    private String selectedClient = "";
+    private ArrayList<String> itemList;
+    private ArrayList itemsCategoryList;
+    private ArrayList itemsCategoryIDList;
+    private List<Request_Item_Data> itemsList;
+    private Request_Item_Data request_item_data;
+    private AddItemsListAdapter addItemsListAdapter;
+    private ItemsCategory_Response itemsCategory_response;
     //endregion
 
     public TransportDetailFragment() {
@@ -108,16 +126,78 @@ public class TransportDetailFragment extends Fragment {
     }
 
     private void initializeData() {
-        getClientNameList();
+        itemsList = new ArrayList<>();
+
         getSelectedPosition();
+        getCategoryData();
         getTransportDetails();
+        createStockItemArray();
+    }
+
+    private void getCategoryData() {
+        try {
+            Map<String, String> headerParams = new HashMap<>();
+            Map<String, String> requestBodyParams = new HashMap<>();
+
+            requestBodyParams.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
+
+            HttpService.accessWebServices(
+                    getContext(),
+                    ApiUtils.ITEM_CATEGORY_LIST,
+                    requestBodyParams,
+                    headerParams,
+                    (response, error, status) -> handleCategoryAPIResponse(response, error, status));
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleCategoryAPIResponse(String response, VolleyError error, String status) {
+        try {
+            if (status.equals("response")) {
+                itemsCategory_response = (ItemsCategory_Response) Utils.parseResponse(response, ItemsCategory_Response.class);
+                if (itemsCategory_response.getFound()) {
+                    itemsCategoryList = new ArrayList();
+                    itemsCategoryIDList = new ArrayList();
+
+                    itemsCategoryList.add("Select Category");
+                    itemsCategoryIDList.add("0");
+
+                    for (int i = 0; i < itemsCategory_response.getData().size(); i++) {
+                        itemsCategoryList.add(itemsCategory_response.getData().get(i).getName());
+                        itemsCategoryIDList.add(itemsCategory_response.getData().get(i).getId());
+                    }
+                    setItemsListAdapter();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setItemsListAdapter() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        rvAddItemList.setLayoutManager(gridLayoutManager);
+        addItemsListAdapter = new AddItemsListAdapter(getContext(), itemsList, itemsCategoryList, itemsCategoryIDList);
+        rvAddItemList.setAdapter(addItemsListAdapter);
+        addItemsListAdapter.setRvClickListener(this);
+    }
+
+    private void createStockItemArray() {
+        request_item_data = new Request_Item_Data();
+        request_item_data.setId("");
+        request_item_data.setQuantity("");
+        itemsList.add(request_item_data);
+
+        if (addItemsListAdapter != null) {
+            addItemsListAdapter.notifyDataSetChanged();
+        }
     }
 
     private void getClientNameList() {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put("status", "true");
+                params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
                 Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(
@@ -162,6 +242,11 @@ public class TransportDetailFragment extends Fragment {
         dataAdapter.setDropDownViewResource(R.layout.simple_item);
         spnClientName.setAdapter(dataAdapter);
 
+        if (selectedClientName != null) {
+            int spinnerPosition = dataAdapter.getPosition(selectedClientName);
+            spnClientName.setSelection(spinnerPosition);
+        }
+
         spnClientName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -171,8 +256,7 @@ public class TransportDetailFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 
@@ -215,7 +299,7 @@ public class TransportDetailFragment extends Fragment {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.INSTALLATION_STEP, "Transport");
+                params.put(Constants.Fields.INSTALLATION_STEP, Constants.Fields.TYPE_TRANASPORT);
                 Map<String, String> headerParams = new HashMap<>();
 
                 HttpService.accessWebServices(
@@ -229,22 +313,8 @@ public class TransportDetailFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     private void getSelectedPosition() {
-        selected_position = getArguments().getString("position");
+        selected_position = getArguments().getString(Constants.Fields.POSITION);
     }
 
     private void setTransportDetails(ClinicListModel.ClinicListInfo clinicListInfo) {
@@ -255,8 +325,10 @@ public class TransportDetailFragment extends Fragment {
         tvActofitId.setText(clinicListInfo.getActofit_id());
         edtLocation.setText(clinicListInfo.getLocation().getName());
         tvGmailPassword.setText(clinicListInfo.getGmail_password());
-        tvActofitExpiry.setText(clinicListInfo.getActofit_end_date());
         tvActofitPassword.setText(clinicListInfo.getActofit_password());
+        tvActofitExpiry.setText(DateService.formatDateFromString(clinicListInfo.getActofit_end_date()));
+        selectedClientName = clinicListInfo.getUser().getFirstname() + " " +clinicListInfo.getUser().getLastname();
+        Log.e("selectedClientName_log", " = "+selectedClientName);
     }
 
     private void handleAPIResponse(String response, VolleyError error, String status) {
@@ -266,6 +338,7 @@ public class TransportDetailFragment extends Fragment {
                 if (clinicData.getFound()) {
                     //TODO AFTER SUCCESS
                     setTransportDetails(clinicData.getData().get(Integer.parseInt(selected_position)));
+                    getClientNameList();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -275,19 +348,11 @@ public class TransportDetailFragment extends Fragment {
         }
     }
 
-    private void addCount(MaterialTextView tvAddCount) {
-        if (count != 0) {
-            count = count + 1;
-            tvAddCount.setText("" + count);
-            Log.e("countplus_log", " = " + count);
+    @Override
+    public void rv_click(int position, int value, String key) {
+        if (key.equals("remove_item")) {
+            itemsList.remove(position);
         }
-    }
-
-    private void removeCount(MaterialTextView tvCount) {
-        if (count > 0) {
-            count = count - 1;
-            tvCount.setText("" + count);
-            Log.e("countminus_log", " = " + count);
-        }
+        addItemsListAdapter.notifyDataSetChanged();
     }
 }

@@ -1,71 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.InstallationFragment">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".fragments.InstallationFilterFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:weightSum="4">
+
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_margin="@dimen/_10sdp"
             android:layout_gravity="center_vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             android:gravity="center"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
-                android:textSize="13sp"
+                android:padding="@dimen/_8sdp"
+                android:textSize="15sp"
                 android:text="Start Date"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle"
             android:layout_gravity="center_vertical"
-            android:visibility="gone"
+            android:layout_margin="@dimen/_10sdp"
+            android:visibility="visible"
             android:gravity="center"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
-                android:visibility="gone"
-                android:textSize="13sp"
+                android:padding="@dimen/_8sdp"
+                android:visibility="visible"
+                android:textSize="15sp"
                 android:text="End Date"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_7sdp"
+            android:layout_margin="@dimen/_10sdp"
             android:layout_weight="1">
             <AutoCompleteTextView
                 android:id="@+id/auto_tv_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:visibility="gone"
+                android:textSize="15sp"
+                android:visibility="visible"
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
                 android:background="@drawable/rectangle"
                 android:hint="@string/txt_clinic_location"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_7sdp"
-            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_margin="@dimen/_10sdp"
             android:layout_weight="1">
             <AutoCompleteTextView
                 android:id="@+id/auto_tv_clinet_name"
@@ -74,26 +77,22 @@
                 android:hint="@string/txt_client_name"
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@drawable/rectangle"
-                android:textSize="10sp"/>
+                android:textSize="15sp"/>
         </LinearLayout>
+
     </LinearLayout>
-    <LinearLayout
+
+    <Button
+        android:id="@+id/btn_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:layout_margin="@dimen/_10sdp">
-        <ImageView
-            android:id="@+id/iv_filter"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:src="@drawable/filter"/>
-    </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/rv_installations"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_marginTop="@dimen/_50sdp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Filter"
+        android:textSize="15sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/btn_background"/>
 
-</FrameLayout>
+</RelativeLayout>
