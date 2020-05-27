@@ -18,7 +18,7 @@ public class Constants {
         public static final String ROLE_ID = "role_id";
         public static final String PASSWORD = "password";
         public static final String USERNAME = "username";
-        public static final String USERTYPE = "usertype";
+        public static final String USERTYPE = "user_type";
         public static final String GMAIL_ID = "gmail_id";
         public static final String LAST_NAME = "last_name";
         public static final String CLINIC_ID = "clinic_id";
