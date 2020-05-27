@@ -357,7 +357,7 @@ public class StockOutFragment extends Fragment implements RvClickListener {
                     itemsCategoryList = new ArrayList();
                     itemsCategoryIDList = new ArrayList();
 
-                    itemsCategoryList.add("Select Category");
+                    itemsCategoryList.add("-Select-");
                     itemsCategoryIDList.add("0");
 
                     for (int i = 0; i < itemsCategory_response.getData().size(); i++) {

@@ -109,11 +109,11 @@ public class EditUserFragment extends Fragment {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
-                params.put(Constants.Fields.PASSWORD,"");
                 params.put(Constants.Fields.PHONE,edtPhone.getText().toString());
                 params.put(Constants.Fields.EMAIL,edtEmail.getText().toString());
                 params.put(Constants.Fields.FIRST_NAME,edtName.getText().toString());
                 params.put(Constants.Fields.USERNAME,edtUserName.getText().toString());
+                params.put(Constants.Fields.PASSWORD,edtUserPassword.getText().toString());
 
                 Map<String, String> headerParams = new HashMap<>();
                 String url = ApiUtils.UPDATE_USER + selected_id;

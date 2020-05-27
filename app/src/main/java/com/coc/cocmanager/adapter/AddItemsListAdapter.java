@@ -219,7 +219,7 @@ public class AddItemsListAdapter extends RecyclerView.Adapter<AddItemsListAdapte
                     itemsList = new ArrayList();
                     itemsIDList = new ArrayList();
 
-                    itemsList.add("Select Item");
+                    itemsList.add("-Select-");
                     itemsIDList.add("0");
 
                     for (int i = 0; i < items_response.getData().size(); i++) {

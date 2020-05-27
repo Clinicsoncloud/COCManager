@@ -311,7 +311,7 @@ public class AddToPipelineFragment extends Fragment {
     private void setClientList(List<UserData.User_Info> data) {
         int i;
         clientNamelist = new ArrayList<>();
-        clientNamelist.add("Select Client");
+        clientNamelist.add("-Select-");
 
         for (i = 0; i < data.size(); i++) {
             clientNamelist.add(data.get(i).getFirst_name() + " " + data.get(i).getLast_name());
@@ -340,7 +340,7 @@ public class AddToPipelineFragment extends Fragment {
     private void setLocationListToSpinner(List<LocationModel.LocationInfo> data) {
         int i;
         locationList = new ArrayList<>();
-        locationList.add("Select Location");
+        locationList.add("-Select-");
 
         for (i = 0; i < data.size(); i++) {
             locationList.add(data.get(i).getName());

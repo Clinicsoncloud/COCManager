@@ -37,7 +37,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
 
             tvCount = itemView.findViewById(R.id.tv_count);
             tvItemName = itemView.findViewById(R.id.tv_item_name);
-
         }
 
     }

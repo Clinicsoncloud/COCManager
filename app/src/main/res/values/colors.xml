@@ -3,10 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="black">#F1000000</color>
     <color name="colorGreen">#61B664</color>
+    <color name="dark_gray">#242b31</color>
     <color name="transparent">#00000000</color>
     <color name="colordrawer">#5D747A</color>
     <color name="color_black">#474747</color>
+    <color name="color_gray">#C6BEBE</color>
+    <color name="text_color">#3d4f5f</color>
     <color name="textColorPrimary">#ffff</color>
     <color name="navigationBarColor">#000000</color>
     <color name="toolbarcolor">#9EC0C9</color>

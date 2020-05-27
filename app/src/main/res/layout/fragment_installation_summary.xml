@@ -30,7 +30,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/_15sdp"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                android:textColor="@color/text_color"
                 android:gravity="center"/>
 
 
@@ -38,22 +39,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_15sdp"
+                android:orientation="vertical"
                 android:weightSum="2">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Installations"
-                        android:textSize="15sp"
+                        android:text="Installations"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorAccent"
                         android:gravity="center"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"
                     android:layout_weight="1">
                     <com.google.android.material.textview.MaterialTextView
@@ -61,7 +66,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="25"
-                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:textSize="25sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -69,22 +75,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_15sdp"
+                android:orientation="vertical"
                 android:weightSum="2">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_weight="1">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Machines in Transport"
-                        android:textSize="15sp"
+                        android:text="In Transport"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20sp"
                         android:gravity="center"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"
                     android:layout_weight="1">
                     <com.google.android.material.textview.MaterialTextView
@@ -92,7 +102,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="20"
-                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:textSize="25sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -103,22 +114,26 @@
                 android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
+                android:orientation="vertical"
                 android:weightSum="2">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_weight="1">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Machines in Pipeline"
-                        android:textSize="15sp"
+                        android:text="In Pipeline"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20sp"
                         android:gravity="center"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"
                     android:layout_weight="1">
                     <com.google.android.material.textview.MaterialTextView
@@ -126,7 +141,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10"
-                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:textSize="25sp"
                         android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>

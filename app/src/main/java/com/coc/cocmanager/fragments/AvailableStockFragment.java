@@ -112,7 +112,7 @@ public class AvailableStockFragment extends Fragment implements ListClickListene
 
     private void setCategoryList(List<ItemCategoryInfo> data) {
         itemsCategoryList = new ArrayList<>();
-        itemsCategoryList.add("Select Category");
+        itemsCategoryList.add("-Select-");
 
         for (int i = 0; i < data.size(); i++) {
             itemsCategoryList.add(data.get(i).getName());

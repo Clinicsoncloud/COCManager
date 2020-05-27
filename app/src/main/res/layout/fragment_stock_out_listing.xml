@@ -90,14 +90,12 @@
 
     <ImageView
         android:id="@+id/iv_remove_stock"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
         android:src="@drawable/add"/>
-
-
 
 </RelativeLayout>

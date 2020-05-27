@@ -118,15 +118,15 @@ public class AddNewUserFragment extends Fragment {
         try {
             if (Utils.isOnline(getContext())) {
                 Map<String, String> params = new HashMap<>();
+                params.put(Constants.Fields.ROLE_ID,  "1");
                 params.put(Constants.Fields.STATUS, Constants.Fields.TRUE);
                 params.put(Constants.Fields.EMAIL, edtEmail.getText().toString());
                 params.put(Constants.Fields.PHONE, edtPhone.getText().toString());
                 params.put(Constants.Fields.FIRST_NAME, edtName.getText().toString());
                 params.put(Constants.Fields.USERNAME, edtUserName.getText().toString());
-                params.put(Constants.Fields.ROLE_ID,  "1");
-                params.put(Constants.Fields.USERTYPE,spnUserType.getSelectedItem().toString());
                 params.put(Constants.Fields.GENDER, spnGender.getSelectedItem().toString());
                 params.put(Constants.Fields.PASSWORD, edtUserPassword.getText().toString());
+                params.put(Constants.Fields.USERTYPE,spnUserType.getSelectedItem().toString());
 
                 Map<String, String> headerParams = new HashMap<>();
 

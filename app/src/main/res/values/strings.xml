@@ -1,10 +1,10 @@
 <resources>
     <array name="nav_drawer_icons">
-        <item>@drawable/appmenu5</item>
-        <item>@drawable/appmenu5</item>
-        <item>@drawable/appmenu1</item>
-        <item>@drawable/ic_mypackges</item>
-        <item>@drawable/appmenu2</item>
+        <item>@drawable/report</item>
+        <item>@drawable/installation</item>
+        <item>@drawable/inventory</item>
+        <item>@drawable/users</item>
+        <item>@drawable/logout</item>
     </array>
 
     <!--<Login in screen strings>-->
@@ -76,13 +76,13 @@
 
     <string name="txt_clinic_name_2">Clinic Name 2</string>
     <string name="txt_clinic_name_3">Clinic Name 3</string>
-    <string name="txt_no_user">No user Type</string>
+    <string name="txt_no_user">-Select-</string>
 
     <!--<user type>-->
     <string name="txt_user_admin">Administrator</string>
     <string name="txt_user_customer">Customer</string>
     <string name="txt_user_normal">User</string>
-    <string name="txt_no_gender">No gender Selected</string>
+    <string name="txt_no_gender">-Select-</string>
 
     <!--gender array text-->
     <string name="txt_gender_male">Male</string>
@@ -111,6 +111,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="txt_add_new">Add New Form</string>
+    <string name="txt_add_pipeline">Add Pipeline Form</string>
 
     <!--<Add new Pipeline>-->
     <string name="txt_installataion_type">Installation Type</string>

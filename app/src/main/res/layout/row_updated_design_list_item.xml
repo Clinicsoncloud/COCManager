@@ -37,8 +37,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="20-5-2020"
-                            android:textStyle="normal"
-                            android:textSize="15sp" />
+                            android:textColor="@color/text_color"
+                            android:textStyle="bold"
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
@@ -54,6 +55,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/color_black"/>
     </LinearLayout>
